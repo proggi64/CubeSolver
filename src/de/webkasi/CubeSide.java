@@ -1,8 +1,8 @@
 package de.webkasi;
 
 class CubeSide {
-    private int _dimension;
-    private CubeColor[][] _fields;
+    private final int _dimension;
+    private final CubeColor[][] _fields;
 
     CubeSide(int dimension) {
         _dimension = dimension;

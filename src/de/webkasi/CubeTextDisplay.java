@@ -3,8 +3,8 @@ package de.webkasi;
 import java.io.PrintStream;
 
 public class CubeTextDisplay implements CubeDisplay {
-    private PrintStream screen;
-    private Cube _cube;
+    private final PrintStream screen;
+    private final Cube _cube;
 
     CubeTextDisplay(Cube cube) {
         _cube = cube;

@@ -1,5 +1,5 @@
 package de.webkasi;
 
-public interface CubeDisplay {
+interface CubeDisplay {
     void display();
 }

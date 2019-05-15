@@ -3,8 +3,8 @@ package de.webkasi;
 import java.util.stream.IntStream;
 
 class Cube {
-    private int _dimension;
-    private CubeSide[] _sides;
+    private final int _dimension;
+    private final CubeSide[] _sides;
 
     Cube(int dimension) {
         _dimension = dimension;
