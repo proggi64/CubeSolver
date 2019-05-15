@@ -6,6 +6,10 @@ class Cube {
     private final int _dimension;
     private final CubeSide[] _sides;
 
+    Cube() {
+        this(3);
+    }
+
     Cube(int dimension) {
         _dimension = dimension;
         _sides = new CubeSide[6];
