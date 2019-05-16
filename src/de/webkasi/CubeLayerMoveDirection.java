@@ -2,5 +2,6 @@ package de.webkasi;
 
 enum CubeLayerMoveDirection {
     Counterclockwise,
-    Clockwise
+    Clockwise,
+    None
 }

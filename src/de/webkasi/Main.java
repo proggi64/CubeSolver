@@ -3,24 +3,34 @@ package de.webkasi;
 class Main {
 
     public static void main(String[] args) {
-        Cube cube = new Cube(3);
+        Cube cube = new Cube(4);
         CubeLayerMover mover = new CubeLayerMover(cube);
 
         CubeDisplay display = new CubeTextDisplay(cube);
         display.display();
 
-        cube.getSides()[CubeColor.White.ordinal()].setField(0, 0, CubeColor.Green);
-
-        mover.move(CubeLayerMoveDirection.Clockwise, CubeColor.Orange, 1);
+        mover.move(CubeLayerMoveDirection.Clockwise, CubeColor.Yellow, 1);
         display.display();
 
-        mover.move(CubeLayerMoveDirection.Clockwise, CubeColor.Orange, 1);
+        mover.move(CubeLayerMoveDirection.Counterclockwise, CubeColor.Blue, 1);
         display.display();
 
-        mover.move(CubeLayerMoveDirection.Clockwise, CubeColor.Orange, 1);
+        mover.move(CubeLayerMoveDirection.Clockwise, CubeColor.White, 1);
         display.display();
 
-        mover.move(CubeLayerMoveDirection.Clockwise, CubeColor.Orange, 1);
+        mover.move(CubeLayerMoveDirection.Clockwise, CubeColor.Green, 2);
+        display.display();
+
+        mover.move(CubeLayerMoveDirection.Counterclockwise, CubeColor.Green, 2);
+        display.display();
+
+        mover.move(CubeLayerMoveDirection.Counterclockwise, CubeColor.White, 1);
+        display.display();
+
+        mover.move(CubeLayerMoveDirection.Clockwise, CubeColor.Blue, 1);
+        display.display();
+
+        mover.move(CubeLayerMoveDirection.Counterclockwise, CubeColor.Yellow, 1);
         display.display();
     }
 }

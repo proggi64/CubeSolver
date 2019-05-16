@@ -1,10 +1,60 @@
 package de.webkasi;
 
 class CubeLayerMover {
-    private Cube _cube;
-    private CubeSide[][] _topToSides;
-    private int _sideRotations[][];
-    private CubeLayerMoveDirection _sideRotationDirections[][];
+    private final Cube _cube;
+    private final CubeSide[][] _topToSides;
+    private static final int[][] _sideRotations = new int[][]{
+            {0, 0, 0, 0},
+            {1, 1, 1, 1},
+            {1, 0, 1, 2},
+            {1, 1, 1, 1},
+            {1, 2, 1, 0},
+            {2, 2, 2, 2},
+    };
+    private static final CubeLayerMoveDirection[][] _sideRotationDirections = new CubeLayerMoveDirection[][]{
+            // White (top left 0 0)
+            {
+                    CubeLayerMoveDirection.None,                // Orange (left)
+                    CubeLayerMoveDirection.None,                // Green
+                    CubeLayerMoveDirection.None,                // Red
+                    CubeLayerMoveDirection.None                 // Blue
+            },
+            // Orange (top left 0 0)
+            {
+                    CubeLayerMoveDirection.Counterclockwise,    // Blue (left)
+                    CubeLayerMoveDirection.Clockwise,           // Yellow
+                    CubeLayerMoveDirection.Clockwise,           // Green
+                    CubeLayerMoveDirection.Clockwise            // White
+            },
+            // Green (top left 0 0)
+            {
+                    CubeLayerMoveDirection.Counterclockwise,    // Orange (left)
+                    CubeLayerMoveDirection.None,                // Yellow
+                    CubeLayerMoveDirection.Clockwise,           // Red
+                    CubeLayerMoveDirection.Clockwise            // White
+            },
+            // Red (top left 0 0)
+            {
+                    CubeLayerMoveDirection.Counterclockwise,    // Green (left)
+                    CubeLayerMoveDirection.Counterclockwise,    // Yellow
+                    CubeLayerMoveDirection.Clockwise,           // Blue
+                    CubeLayerMoveDirection.Counterclockwise     // White
+            },
+            // Blue (top left 0 0)
+            {
+                    CubeLayerMoveDirection.Counterclockwise,    // Red (left)
+                    CubeLayerMoveDirection.Clockwise,           // Yellow
+                    CubeLayerMoveDirection.Clockwise,           // Orange
+                    CubeLayerMoveDirection.Counterclockwise     // White
+            },
+            // Yellow (top left 0 0)
+            {
+                    CubeLayerMoveDirection.Clockwise,           // Orange (left)
+                    CubeLayerMoveDirection.Clockwise,           // Blue
+                    CubeLayerMoveDirection.Clockwise,           // Red
+                    CubeLayerMoveDirection.Clockwise            // Green
+            }
+    };
 
     CubeLayerMover(Cube cube) {
         _cube = cube;
@@ -18,31 +68,11 @@ class CubeLayerMover {
 
         _topToSides = new CubeSide[][] {
                 { sides[Orange], sides[Green], sides[Red], sides[Blue] },   // White
-                { sides[White], sides[Blue], sides[Yellow], sides[Green] }, // Orange
-                { sides[White], sides[Orange], sides[Yellow], sides[Red] }, // Green
-                { sides[White], sides[Green], sides[Yellow], sides[Blue] }, // Red
-                { sides[White], sides[Red], sides[Yellow], sides[Orange] }, // Blue
+                { sides[Blue], sides[Yellow], sides[Green], sides[White] }, // Orange
+                { sides[Orange], sides[Yellow], sides[Red], sides[White] }, // Green
+                { sides[Green], sides[Yellow], sides[Blue], sides[White] }, // Red
+                { sides[Red], sides[Yellow], sides[Orange], sides[White] }, // Blue
                 { sides[Orange], sides[Blue], sides[Red], sides[Green] }    // Yellow
-        };
-
-        _sideRotations = new int[][] {
-                { 0, 0, 0, 0 },
-                { 1, 1, 1, 1 },
-        };
-
-        _sideRotationDirections = new CubeLayerMoveDirection[][] {
-                {
-                    CubeLayerMoveDirection.Clockwise,
-                        CubeLayerMoveDirection.Clockwise,
-                        CubeLayerMoveDirection.Clockwise,
-                        CubeLayerMoveDirection.Clockwise
-                },
-                {
-                    CubeLayerMoveDirection.Clockwise,
-                        CubeLayerMoveDirection.Counterclockwise,
-                        CubeLayerMoveDirection.Clockwise,
-                        CubeLayerMoveDirection.Clockwise
-                },
         };
     }
 
@@ -63,7 +93,6 @@ class CubeLayerMover {
 
     private void rotateTopClockwise(CubeSide targetSide) {
         final CubeSide sourceSide = new CubeSide(targetSide);
-
         int maxIndex = _cube.getDimension() - 1;
 
         int targetColumnIndex = maxIndex;
@@ -88,7 +117,6 @@ class CubeLayerMover {
 
     private void rotateTopCounterclockwise(CubeSide targetSide) {
         final CubeSide sourceSide = new CubeSide(targetSide);
-
         int maxIndex = _cube.getDimension() - 1;
 
         int targetColumnIndex = 0;
@@ -111,8 +139,8 @@ class CubeLayerMover {
                 new CubeSide(sidesToShift[2]),
                 new CubeSide(sidesToShift[3])
         };
+        NormalizeSides(side, sidesToShift);
         NormalizeSides(side, sources);
-
         int maxIndex = _cube.getDimension() - 1;
 
         for (int targetSideIndex = 3; targetSideIndex >= 0; targetSideIndex--) {
@@ -123,28 +151,30 @@ class CubeLayerMover {
             for (int column = 0; column <= maxIndex; column++)
                 targetSide.setField(row, column, sourceSide.getField(row, column));
         }
-
         DenormalizeSides(side, sidesToShift);
     }
 
     private void shiftSideLayerCounterclockwise(final CubeColor side, final int row) {
         CubeSide[] sidesToShift = _topToSides[side.ordinal()];
-        CubeSide[] originals = new CubeSide[] {
+        CubeSide[] sources = new CubeSide[] {
                 new CubeSide(sidesToShift[0]),
                 new CubeSide(sidesToShift[1]),
                 new CubeSide(sidesToShift[2]),
                 new CubeSide(sidesToShift[3])
         };
+        NormalizeSides(side, sidesToShift);
+        NormalizeSides(side, sources);
         int maxIndex = _cube.getDimension() - 1;
 
         for (int sourceSideIndex = 0; sourceSideIndex <= 3; sourceSideIndex++) {
             int targetSideIndex = (sourceSideIndex + 1) % 4;
             CubeSide targetSide = sidesToShift[targetSideIndex];
-            final CubeSide sourceSide = originals[sourceSideIndex];
+            final CubeSide sourceSide = sources[sourceSideIndex];
 
             for (int column = 0; column <= maxIndex; column++)
                 targetSide.setField(row, column, sourceSide.getField(row, column));
         }
+        DenormalizeSides(side, sidesToShift);
     }
 
     private void NormalizeSides(CubeColor side, CubeSide[] sides) {
