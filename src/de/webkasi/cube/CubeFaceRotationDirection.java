@@ -1,4 +1,4 @@
-package de.webkasi;
+package de.webkasi.cube;
 
 enum CubeFaceRotationDirection {
     Counterclockwise,

@@ -1,4 +1,4 @@
-package de.webkasi;
+package de.webkasi.cube;
 
 /**
  * Provides a the rotateFace() method to rotate any face of the Cube
@@ -70,7 +70,7 @@ class CubeFaceRotater {
      */
     CubeFaceRotater(Cube cube) {
         _cube = cube;
-        CubeFace[] sides = _cube.getSides();
+        CubeFace[] sides = _cube.getFaces();
         final int White     = CubeColor.White.ordinal();
         final int Orange    = CubeColor.Orange.ordinal();
         final int Green     = CubeColor.Green.ordinal();
@@ -114,7 +114,7 @@ class CubeFaceRotater {
      * @param rows The count of layers of the side faces to rotate with the face
      */
     private void rotateClockwise(final CubeColor side, final int rows) {
-        rotateTopClockwise(_cube.getSides()[side.ordinal()]);
+        rotateTopClockwise(_cube.getFaces()[side.ordinal()]);
 
         for (int row = 0; row < rows; row++) {
             shiftSideLayerClockwise(side, row);
@@ -153,7 +153,7 @@ class CubeFaceRotater {
      * @param rows The count of layers of the side faces to rotate with the face
      */
     private void rotateCounterclockwise(final CubeColor side, final int rows) {
-        rotateTopCounterclockwise(_cube.getSides()[side.ordinal()]);
+        rotateTopCounterclockwise(_cube.getFaces()[side.ordinal()]);
 
         for (int row = 0; row < rows; row++) {
             shiftSideLayerCounterclockwise(side, row);

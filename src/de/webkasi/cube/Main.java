@@ -1,4 +1,4 @@
-package de.webkasi;
+package de.webkasi.cube;
 
 class Main {
 

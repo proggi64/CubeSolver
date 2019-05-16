@@ -1,7 +1,7 @@
-package de.webkasi;
+package de.webkasi.cube;
 
 /**
- * Represents a face of a magic cube with a matrix of CubeColor fields.
+ * Represents one face of a magic cube with a matrix of CubeColor fields.
  */
 class CubeFace {
     private final int _dimension;

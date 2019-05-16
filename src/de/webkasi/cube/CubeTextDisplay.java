@@ -1,4 +1,4 @@
-package de.webkasi;
+package de.webkasi.cube;
 
 import java.io.PrintStream;
 
@@ -38,7 +38,7 @@ public class CubeTextDisplay implements CubeDisplay {
     private void displaySingleLayer(int sideIndex, int row) {
         screen.print(" ");
         for (int column=0; column<_cube.getDimension(); column++)
-            screen.printf("%1$c ", _cube.getSides()[sideIndex].getField(row, column).toString().charAt(0));
+            screen.printf("%1$c ", _cube.getFaces()[sideIndex].getField(row, column).toString().charAt(0));
     }
 
     private void displayEmptyLayer() {
