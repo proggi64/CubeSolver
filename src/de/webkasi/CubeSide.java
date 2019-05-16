@@ -25,7 +25,6 @@ class CubeSide {
     void setField(final int row, final int column, CubeColor color) {
         _fields[row][column] = color;
     }
-
     CubeColor getField(final int row, final int column) {
         return _fields[row][column];
     }

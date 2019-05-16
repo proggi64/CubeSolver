@@ -1,8 +1,8 @@
 package de.webkasi;
 
-class CubeLayerMover {
+class CubeFaceRotater {
     private final Cube _cube;
-    private final CubeSide[][] _topToSides;
+    private final CubeSide[][] _faceToSides;
     private static final int[][] _sideRotations = new int[][]{
             {0, 0, 0, 0},
             {1, 1, 1, 1},
@@ -56,7 +56,7 @@ class CubeLayerMover {
             }
     };
 
-    CubeLayerMover(Cube cube) {
+    CubeFaceRotater(Cube cube) {
         _cube = cube;
         CubeSide[] sides = _cube.getSides();
         final int White     = CubeColor.White.ordinal();
@@ -66,7 +66,7 @@ class CubeLayerMover {
         final int Blue      = CubeColor.Blue.ordinal();
         final int Yellow    = CubeColor.Yellow.ordinal();
 
-        _topToSides = new CubeSide[][] {
+        _faceToSides = new CubeSide[][] {
                 { sides[Orange], sides[Green], sides[Red], sides[Blue] },   // White
                 { sides[Blue], sides[Yellow], sides[Green], sides[White] }, // Orange
                 { sides[Orange], sides[Yellow], sides[Red], sides[White] }, // Green
@@ -76,13 +76,31 @@ class CubeLayerMover {
         };
     }
 
-    void move(CubeLayerMoveDirection direction, final CubeColor side, final int countOfLayers) {
+    /**
+     * Rotates the specified face of the cube in the specified direction.
+     *
+     * For cubes with more than 3x3 fields it is needed to be able to rotate more than the
+     * upper-most layer with the rotating face. In this cases countOfLayers is greater than
+     * one.
+     *
+     * @param direction The CubeLayerMoveDirection that specifies the direction of the rotation
+     * @param face The CubeColor of the middle field of the face that is rotated
+     * @param countOfLayers The count of layers of the side faces to rotate with the face
+     */
+    void rotateFace(CubeLayerMoveDirection direction, final CubeColor face, final int countOfLayers) {
         if (direction == CubeLayerMoveDirection.Clockwise)
-            rotateClockwise(side, countOfLayers);
+            rotateClockwise(face, countOfLayers);
         else
-            rotateCounterclockwise(side, countOfLayers);
+            rotateCounterclockwise(face, countOfLayers);
     }
 
+    /**
+     * Rotates the specified face clockwise with the specified count of layers
+     * of the connected side faces.
+     *
+     * @param side The CubeColor of the middle field of the side that is rotated
+     * @param rows The count of layers of the side faces to rotate with the face
+     */
     private void rotateClockwise(final CubeColor side, final int rows) {
         rotateTopClockwise(_cube.getSides()[side.ordinal()]);
 
@@ -91,6 +109,14 @@ class CubeLayerMover {
         }
     }
 
+    /**
+     * Rotates the specified face of the cube clockwise without shifting the
+     * connected side faces.
+     * rotateTopClockwise() is also used for the normalization of the index
+     * positions of the side faces before shifting them with the roting face.
+     *
+     * @param targetSide The CubeSide object that represents the face to rotate
+     */
     private void rotateTopClockwise(CubeSide targetSide) {
         final CubeSide sourceSide = new CubeSide(targetSide);
         int maxIndex = _cube.getDimension() - 1;
@@ -107,6 +133,13 @@ class CubeLayerMover {
         }
     }
 
+    /**
+     * Rotates the specified face counterclockwise with the specified count of layers
+     * of the connected side faces.
+     *
+     * @param side The CubeColor of the middle field of the side that is rotated
+     * @param rows The count of layers of the side faces to rotate with the face
+     */
     private void rotateCounterclockwise(final CubeColor side, final int rows) {
         rotateTopCounterclockwise(_cube.getSides()[side.ordinal()]);
 
@@ -115,6 +148,14 @@ class CubeLayerMover {
         }
     }
 
+    /**
+     * Rotates the specified face of the cube counterclockwise without shifting the
+     * connected side faces.
+     * rotateTopCounterclockwise() is also used for the normalization of the index
+     * positions of the side faces before shifting them with the roting face.
+     *
+     * @param targetSide The CubeSide object that represents the face to rotate
+     */
     private void rotateTopCounterclockwise(CubeSide targetSide) {
         final CubeSide sourceSide = new CubeSide(targetSide);
         int maxIndex = _cube.getDimension() - 1;
@@ -131,8 +172,17 @@ class CubeLayerMover {
         }
     }
 
+    /**
+     * Rotates the specified layer of the four sides of the specified face clockwise.
+     *
+     * For more than a three layer cube it is needed to be able to rotate more
+     * than one layer. The row argument determines which layer is rotated.
+     *
+     * @param side The CubeColor of the middle field of the side that is rotated
+     * @param row The row number to be shifted. 0 is the upper one.
+     */
     private void shiftSideLayerClockwise(final CubeColor side, final int row) {
-        CubeSide[] sidesToShift = _topToSides[side.ordinal()];
+        CubeSide[] sidesToShift = _faceToSides[side.ordinal()];
         CubeSide[] sources = new CubeSide[] {
                 new CubeSide(sidesToShift[0]),
                 new CubeSide(sidesToShift[1]),
@@ -154,8 +204,14 @@ class CubeLayerMover {
         DenormalizeSides(side, sidesToShift);
     }
 
+    /**
+     * Rotates the specified layer of the four sides of the specified face counterclockwise.
+     *
+     * @param side The CubeColor of the middle field of the side that is rotated
+     * @param row The row number to be shifted. 0 is the upper one.
+     */
     private void shiftSideLayerCounterclockwise(final CubeColor side, final int row) {
-        CubeSide[] sidesToShift = _topToSides[side.ordinal()];
+        CubeSide[] sidesToShift = _faceToSides[side.ordinal()];
         CubeSide[] sources = new CubeSide[] {
                 new CubeSide(sidesToShift[0]),
                 new CubeSide(sidesToShift[1]),
@@ -177,6 +233,20 @@ class CubeLayerMover {
         DenormalizeSides(side, sidesToShift);
     }
 
+    /**
+     * Normalizes the four side faces of the rotating cube face to use
+     * a standard indexing four the color fields for shift operations.
+     *
+     * The normalization rotates alle four side faces so that the row 0 and column 0
+     * is always to the upper left corner toward the rotating face. The shift algorithms
+     * can always use the same field indexes for the operations when the faces are normalized.
+     * After the operations, the faces are de-normalized (rotated back to their original
+     * position).
+     *
+     * @param side The face that is rotated
+     * @param sides The CubeSide objects that are rotated to normalize
+     *              the indexes for the shift operations
+     */
     private void NormalizeSides(CubeColor side, CubeSide[] sides) {
         int sideIndex = side.ordinal();
         int[] countOfRotations = _sideRotations[sideIndex];
@@ -192,6 +262,20 @@ class CubeLayerMover {
         }
     }
 
+    /**
+     * De-Normalizes the four side faces of the rotating cube face after
+     * a shift operation.
+     *
+     * The normalization rotates alle four side faces so that the row 0 and column 0
+     * is always to the upper left corner toward the rotating face. The shift algorithms
+     * can always use the same field indexes for the operations when the faces are normalized.
+     * After the operations, the faces are de-normalized (rotated back to their original
+     * position).
+     *
+     * @param side The face that is rotated
+     * @param sides The CubeSide objects that are rotated back to thier original index
+     *              positions
+     */
     private void DenormalizeSides(CubeColor side, CubeSide[] sides) {
         int sideIndex = side.ordinal();
         int[] countOfRotations = _sideRotations[sideIndex];
