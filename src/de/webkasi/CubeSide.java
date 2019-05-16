@@ -12,17 +12,21 @@ class CubeSide {
     @SuppressWarnings("CopyConstructorMissesField")
     CubeSide(CubeSide copy) {
         this(copy._dimension);
-        for (int i = 0; i < _dimension; i++)
-            System.arraycopy(copy._fields[i], 0, _fields[i], 0, _dimension);
+        for (int row = 0; row < _dimension; row++)
+            System.arraycopy(copy._fields[row], 0, _fields[row], 0, _dimension);
     }
 
     void setSideColor(CubeColor color) {
-        for (int i = 0; i < _dimension; i++)
-            for (int j = 0; j < _dimension; j++)
-                _fields[i][j] = color;
+        for (int row = 0; row < _dimension; row++)
+            for (int column = 0; column < _dimension; column++)
+                _fields[row][column] = color;
     }
 
-    CubeColor[][] getFields() {
-        return _fields;
+    void setField(final int row, final int column, CubeColor color) {
+        _fields[row][column] = color;
+    }
+
+    CubeColor getField(final int row, final int column) {
+        return _fields[row][column];
     }
 }
