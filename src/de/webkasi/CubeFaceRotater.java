@@ -1,8 +1,15 @@
 package de.webkasi;
 
+/**
+ * Provides a the rotateFace() method to rotate any face of the Cube
+ * in any direction.
+ *
+ * CubeFaceRotater supports cubes with multiple dimensions and rotates
+ * multiple layers in one step.
+ */
 class CubeFaceRotater {
     private final Cube _cube;
-    private final CubeSide[][] _faceToSides;
+    private final CubeFace[][] _faceToSides;
     private static final int[][] _sideRotations = new int[][]{
             {0, 0, 0, 0},
             {1, 1, 1, 1},
@@ -11,54 +18,59 @@ class CubeFaceRotater {
             {1, 2, 1, 0},
             {2, 2, 2, 2},
     };
-    private static final CubeLayerMoveDirection[][] _sideRotationDirections = new CubeLayerMoveDirection[][]{
+    private static final CubeFaceRotationDirection[][] _sideRotationDirections = new CubeFaceRotationDirection[][]{
             // White (top left 0 0)
             {
-                    CubeLayerMoveDirection.None,                // Orange (left)
-                    CubeLayerMoveDirection.None,                // Green
-                    CubeLayerMoveDirection.None,                // Red
-                    CubeLayerMoveDirection.None                 // Blue
+                    CubeFaceRotationDirection.None,                // Orange (left)
+                    CubeFaceRotationDirection.None,                // Green
+                    CubeFaceRotationDirection.None,                // Red
+                    CubeFaceRotationDirection.None                 // Blue
             },
             // Orange (top left 0 0)
             {
-                    CubeLayerMoveDirection.Counterclockwise,    // Blue (left)
-                    CubeLayerMoveDirection.Clockwise,           // Yellow
-                    CubeLayerMoveDirection.Clockwise,           // Green
-                    CubeLayerMoveDirection.Clockwise            // White
+                    CubeFaceRotationDirection.Counterclockwise,    // Blue (left)
+                    CubeFaceRotationDirection.Clockwise,           // Yellow
+                    CubeFaceRotationDirection.Clockwise,           // Green
+                    CubeFaceRotationDirection.Clockwise            // White
             },
             // Green (top left 0 0)
             {
-                    CubeLayerMoveDirection.Counterclockwise,    // Orange (left)
-                    CubeLayerMoveDirection.None,                // Yellow
-                    CubeLayerMoveDirection.Clockwise,           // Red
-                    CubeLayerMoveDirection.Clockwise            // White
+                    CubeFaceRotationDirection.Counterclockwise,    // Orange (left)
+                    CubeFaceRotationDirection.None,                // Yellow
+                    CubeFaceRotationDirection.Clockwise,           // Red
+                    CubeFaceRotationDirection.Clockwise            // White
             },
             // Red (top left 0 0)
             {
-                    CubeLayerMoveDirection.Counterclockwise,    // Green (left)
-                    CubeLayerMoveDirection.Counterclockwise,    // Yellow
-                    CubeLayerMoveDirection.Clockwise,           // Blue
-                    CubeLayerMoveDirection.Counterclockwise     // White
+                    CubeFaceRotationDirection.Counterclockwise,    // Green (left)
+                    CubeFaceRotationDirection.Counterclockwise,    // Yellow
+                    CubeFaceRotationDirection.Clockwise,           // Blue
+                    CubeFaceRotationDirection.Counterclockwise     // White
             },
             // Blue (top left 0 0)
             {
-                    CubeLayerMoveDirection.Counterclockwise,    // Red (left)
-                    CubeLayerMoveDirection.Clockwise,           // Yellow
-                    CubeLayerMoveDirection.Clockwise,           // Orange
-                    CubeLayerMoveDirection.Counterclockwise     // White
+                    CubeFaceRotationDirection.Counterclockwise,    // Red (left)
+                    CubeFaceRotationDirection.Clockwise,           // Yellow
+                    CubeFaceRotationDirection.Clockwise,           // Orange
+                    CubeFaceRotationDirection.Counterclockwise     // White
             },
             // Yellow (top left 0 0)
             {
-                    CubeLayerMoveDirection.Clockwise,           // Orange (left)
-                    CubeLayerMoveDirection.Clockwise,           // Blue
-                    CubeLayerMoveDirection.Clockwise,           // Red
-                    CubeLayerMoveDirection.Clockwise            // Green
+                    CubeFaceRotationDirection.Clockwise,           // Orange (left)
+                    CubeFaceRotationDirection.Clockwise,           // Blue
+                    CubeFaceRotationDirection.Clockwise,           // Red
+                    CubeFaceRotationDirection.Clockwise            // Green
             }
     };
 
+    /**
+     * Initializes a new CubeFaceRotater instance.
+     *
+     * @param cube Cube that should moved
+     */
     CubeFaceRotater(Cube cube) {
         _cube = cube;
-        CubeSide[] sides = _cube.getSides();
+        CubeFace[] sides = _cube.getSides();
         final int White     = CubeColor.White.ordinal();
         final int Orange    = CubeColor.Orange.ordinal();
         final int Green     = CubeColor.Green.ordinal();
@@ -66,7 +78,7 @@ class CubeFaceRotater {
         final int Blue      = CubeColor.Blue.ordinal();
         final int Yellow    = CubeColor.Yellow.ordinal();
 
-        _faceToSides = new CubeSide[][] {
+        _faceToSides = new CubeFace[][] {
                 { sides[Orange], sides[Green], sides[Red], sides[Blue] },   // White
                 { sides[Blue], sides[Yellow], sides[Green], sides[White] }, // Orange
                 { sides[Orange], sides[Yellow], sides[Red], sides[White] }, // Green
@@ -83,12 +95,12 @@ class CubeFaceRotater {
      * upper-most layer with the rotating face. In this cases countOfLayers is greater than
      * one.
      *
-     * @param direction The CubeLayerMoveDirection that specifies the direction of the rotation
+     * @param direction The CubeFaceRotationDirection that specifies the direction of the rotation
      * @param face The CubeColor of the middle field of the face that is rotated
      * @param countOfLayers The count of layers of the side faces to rotate with the face
      */
-    void rotateFace(CubeLayerMoveDirection direction, final CubeColor face, final int countOfLayers) {
-        if (direction == CubeLayerMoveDirection.Clockwise)
+    void rotateFace(CubeFaceRotationDirection direction, final CubeColor face, final int countOfLayers) {
+        if (direction == CubeFaceRotationDirection.Clockwise)
             rotateClockwise(face, countOfLayers);
         else
             rotateCounterclockwise(face, countOfLayers);
@@ -115,10 +127,10 @@ class CubeFaceRotater {
      * rotateTopClockwise() is also used for the normalization of the index
      * positions of the side faces before shifting them with the roting face.
      *
-     * @param targetSide The CubeSide object that represents the face to rotate
+     * @param targetSide The CubeFace object that represents the face to rotate
      */
-    private void rotateTopClockwise(CubeSide targetSide) {
-        final CubeSide sourceSide = new CubeSide(targetSide);
+    private void rotateTopClockwise(CubeFace targetSide) {
+        final CubeFace sourceSide = new CubeFace(targetSide);
         int maxIndex = _cube.getDimension() - 1;
 
         int targetColumnIndex = maxIndex;
@@ -154,10 +166,10 @@ class CubeFaceRotater {
      * rotateTopCounterclockwise() is also used for the normalization of the index
      * positions of the side faces before shifting them with the roting face.
      *
-     * @param targetSide The CubeSide object that represents the face to rotate
+     * @param targetSide The CubeFace object that represents the face to rotate
      */
-    private void rotateTopCounterclockwise(CubeSide targetSide) {
-        final CubeSide sourceSide = new CubeSide(targetSide);
+    private void rotateTopCounterclockwise(CubeFace targetSide) {
+        final CubeFace sourceSide = new CubeFace(targetSide);
         int maxIndex = _cube.getDimension() - 1;
 
         int targetColumnIndex = 0;
@@ -182,12 +194,12 @@ class CubeFaceRotater {
      * @param row The row number to be shifted. 0 is the upper one.
      */
     private void shiftSideLayerClockwise(final CubeColor side, final int row) {
-        CubeSide[] sidesToShift = _faceToSides[side.ordinal()];
-        CubeSide[] sources = new CubeSide[] {
-                new CubeSide(sidesToShift[0]),
-                new CubeSide(sidesToShift[1]),
-                new CubeSide(sidesToShift[2]),
-                new CubeSide(sidesToShift[3])
+        CubeFace[] sidesToShift = _faceToSides[side.ordinal()];
+        CubeFace[] sources = new CubeFace[] {
+                new CubeFace(sidesToShift[0]),
+                new CubeFace(sidesToShift[1]),
+                new CubeFace(sidesToShift[2]),
+                new CubeFace(sidesToShift[3])
         };
         NormalizeSides(side, sidesToShift);
         NormalizeSides(side, sources);
@@ -195,8 +207,8 @@ class CubeFaceRotater {
 
         for (int targetSideIndex = 3; targetSideIndex >= 0; targetSideIndex--) {
             int sourceSideIndex = (targetSideIndex + 1) % 4;
-            CubeSide targetSide = sidesToShift[targetSideIndex];
-            final CubeSide sourceSide = sources[sourceSideIndex];
+            CubeFace targetSide = sidesToShift[targetSideIndex];
+            final CubeFace sourceSide = sources[sourceSideIndex];
 
             for (int column = 0; column <= maxIndex; column++)
                 targetSide.setField(row, column, sourceSide.getField(row, column));
@@ -211,12 +223,12 @@ class CubeFaceRotater {
      * @param row The row number to be shifted. 0 is the upper one.
      */
     private void shiftSideLayerCounterclockwise(final CubeColor side, final int row) {
-        CubeSide[] sidesToShift = _faceToSides[side.ordinal()];
-        CubeSide[] sources = new CubeSide[] {
-                new CubeSide(sidesToShift[0]),
-                new CubeSide(sidesToShift[1]),
-                new CubeSide(sidesToShift[2]),
-                new CubeSide(sidesToShift[3])
+        CubeFace[] sidesToShift = _faceToSides[side.ordinal()];
+        CubeFace[] sources = new CubeFace[] {
+                new CubeFace(sidesToShift[0]),
+                new CubeFace(sidesToShift[1]),
+                new CubeFace(sidesToShift[2]),
+                new CubeFace(sidesToShift[3])
         };
         NormalizeSides(side, sidesToShift);
         NormalizeSides(side, sources);
@@ -224,8 +236,8 @@ class CubeFaceRotater {
 
         for (int sourceSideIndex = 0; sourceSideIndex <= 3; sourceSideIndex++) {
             int targetSideIndex = (sourceSideIndex + 1) % 4;
-            CubeSide targetSide = sidesToShift[targetSideIndex];
-            final CubeSide sourceSide = sources[sourceSideIndex];
+            CubeFace targetSide = sidesToShift[targetSideIndex];
+            final CubeFace sourceSide = sources[sourceSideIndex];
 
             for (int column = 0; column <= maxIndex; column++)
                 targetSide.setField(row, column, sourceSide.getField(row, column));
@@ -244,17 +256,17 @@ class CubeFaceRotater {
      * position).
      *
      * @param side The face that is rotated
-     * @param sides The CubeSide objects that are rotated to normalize
+     * @param sides The CubeFace objects that are rotated to normalize
      *              the indexes for the shift operations
      */
-    private void NormalizeSides(CubeColor side, CubeSide[] sides) {
+    private void NormalizeSides(CubeColor side, CubeFace[] sides) {
         int sideIndex = side.ordinal();
         int[] countOfRotations = _sideRotations[sideIndex];
-        CubeLayerMoveDirection[] directions = _sideRotationDirections[sideIndex];
+        CubeFaceRotationDirection[] directions = _sideRotationDirections[sideIndex];
 
         for (int shiftSideIndex = 0; shiftSideIndex < 4; shiftSideIndex++) {
             for (int count = 0; count < countOfRotations[shiftSideIndex]; count++) {
-                if (directions[shiftSideIndex] == CubeLayerMoveDirection.Clockwise)
+                if (directions[shiftSideIndex] == CubeFaceRotationDirection.Clockwise)
                     rotateTopClockwise(sides[shiftSideIndex]);
                 else
                     rotateTopCounterclockwise(sides[shiftSideIndex]);
@@ -273,17 +285,17 @@ class CubeFaceRotater {
      * position).
      *
      * @param side The face that is rotated
-     * @param sides The CubeSide objects that are rotated back to thier original index
+     * @param sides The CubeFace objects that are rotated back to thier original index
      *              positions
      */
-    private void DenormalizeSides(CubeColor side, CubeSide[] sides) {
+    private void DenormalizeSides(CubeColor side, CubeFace[] sides) {
         int sideIndex = side.ordinal();
         int[] countOfRotations = _sideRotations[sideIndex];
-        CubeLayerMoveDirection[] directions = _sideRotationDirections[sideIndex];
+        CubeFaceRotationDirection[] directions = _sideRotationDirections[sideIndex];
 
         for (int shiftSideIndex = 0; shiftSideIndex < 4; shiftSideIndex++) {
             for (int count = 0; count < countOfRotations[shiftSideIndex]; count++) {
-                if (directions[shiftSideIndex] == CubeLayerMoveDirection.Clockwise)
+                if (directions[shiftSideIndex] == CubeFaceRotationDirection.Clockwise)
                     rotateTopCounterclockwise(sides[shiftSideIndex]);
                 else
                     rotateTopClockwise(sides[shiftSideIndex]);

@@ -4,7 +4,7 @@ import java.util.stream.IntStream;
 
 class Cube {
     private final int _dimension;
-    private final CubeSide[] _sides;
+    private final CubeFace[] _sides;
 
     Cube() {
         this(3);
@@ -12,10 +12,10 @@ class Cube {
 
     Cube(int dimension) {
         _dimension = dimension;
-        _sides = new CubeSide[6];
+        _sides = new CubeFace[6];
         IntStream.rangeClosed(0, 5).forEach(side ->
         {
-            _sides[side] = new CubeSide(_dimension);
+            _sides[side] = new CubeFace(_dimension);
             _sides[side].setSideColor(CubeColor.values()[side]);
         });
     }
@@ -24,7 +24,7 @@ class Cube {
         return _dimension;
     }
 
-    CubeSide[] getSides() {
+    CubeFace[] getSides() {
         return _sides;
     }
 }

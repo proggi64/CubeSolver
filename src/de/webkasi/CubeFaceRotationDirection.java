@@ -1,6 +1,6 @@
 package de.webkasi;
 
-enum CubeLayerMoveDirection {
+enum CubeFaceRotationDirection {
     Counterclockwise,
     Clockwise,
     None

@@ -9,28 +9,28 @@ class Main {
         CubeDisplay display = new CubeTextDisplay(cube);
         display.display();
 
-        mover.rotateFace(CubeLayerMoveDirection.Clockwise, CubeColor.Yellow, 1);
+        mover.rotateFace(CubeFaceRotationDirection.Clockwise, CubeColor.Yellow, 1);
         display.display();
 
-        mover.rotateFace(CubeLayerMoveDirection.Counterclockwise, CubeColor.Blue, 1);
+        mover.rotateFace(CubeFaceRotationDirection.Counterclockwise, CubeColor.Blue, 1);
         display.display();
 
-        mover.rotateFace(CubeLayerMoveDirection.Clockwise, CubeColor.White, 1);
+        mover.rotateFace(CubeFaceRotationDirection.Clockwise, CubeColor.White, 1);
         display.display();
 
-        mover.rotateFace(CubeLayerMoveDirection.Clockwise, CubeColor.Green, 2);
+        mover.rotateFace(CubeFaceRotationDirection.Clockwise, CubeColor.Green, 2);
         display.display();
 
-        mover.rotateFace(CubeLayerMoveDirection.Counterclockwise, CubeColor.Green, 2);
+        mover.rotateFace(CubeFaceRotationDirection.Counterclockwise, CubeColor.Green, 2);
         display.display();
 
-        mover.rotateFace(CubeLayerMoveDirection.Counterclockwise, CubeColor.White, 1);
+        mover.rotateFace(CubeFaceRotationDirection.Counterclockwise, CubeColor.White, 1);
         display.display();
 
-        mover.rotateFace(CubeLayerMoveDirection.Clockwise, CubeColor.Blue, 1);
+        mover.rotateFace(CubeFaceRotationDirection.Clockwise, CubeColor.Blue, 1);
         display.display();
 
-        mover.rotateFace(CubeLayerMoveDirection.Counterclockwise, CubeColor.Yellow, 1);
+        mover.rotateFace(CubeFaceRotationDirection.Counterclockwise, CubeColor.Yellow, 1);
         display.display();
     }
 }
