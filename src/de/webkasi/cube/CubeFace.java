@@ -31,12 +31,11 @@ class CubeFace {
     }
 
     /**
-     * Initializes the cube's face this instance of CubeFace represents
-     * with the specified color.
+     * Initializes this face with the specified color.
      *
      * @param color The CubeColor each field of the cube face will get
      */
-    void setSideColor(CubeColor color) {
+    void setFaceColor(CubeColor color) {
         for (int row = 0; row < _dimension; row++)
             for (int column = 0; column < _dimension; column++)
                 _fields[row][column] = color;

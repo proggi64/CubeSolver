@@ -34,7 +34,7 @@ class Cube {
         for (int faceIndex = 0; faceIndex < _faces.length; faceIndex++)
         {
             _faces[faceIndex] = new CubeFace(_dimension);
-            _faces[faceIndex].setSideColor(colors[faceIndex]);
+            _faces[faceIndex].setFaceColor(colors[faceIndex]);
         }
     }
 
