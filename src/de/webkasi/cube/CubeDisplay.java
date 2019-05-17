@@ -3,6 +3,6 @@ package de.webkasi.cube;
 /**
  * Represents a class that displays a Cube on screen.
  */
-interface CubeDisplay {
+public interface CubeDisplay {
     void display();
 }

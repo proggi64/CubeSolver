@@ -8,14 +8,14 @@ package de.webkasi.cube;
  * argument. The six faces are initialized with the original colors
  * defined in the CubeColor enumeration.
  */
-class Cube {
+public class Cube {
     private final int _dimension;
     private final CubeFace[] _faces;
 
     /**
      * Initializes a 3x3 magic cube.
      */
-    Cube() {
+    public Cube() {
         this(3);
     }
 
@@ -27,7 +27,7 @@ class Cube {
      * @param dimension Count of rows and columns of each face of the
      *                  cube.
      */
-    Cube(int dimension) {
+    public Cube(int dimension) {
         _dimension = dimension;
         _faces = new CubeFace[6];
         CubeColor[] colors = CubeColor.values();
@@ -46,7 +46,7 @@ class Cube {
      *
      * @return The count of rows and columns of the magic cube.
      */
-    int getDimension() {
+    public int getDimension() {
         return _dimension;
     }
 
@@ -66,4 +66,14 @@ class Cube {
     CubeFace[] getFaces() {
         return _faces;
     }
+
+    /**
+     * @param faceIndex The index (0 to 5) of the face to get. The color
+     *                  of the face corresponds to CubeColor values.
+     * @return A CubeFace object representing the cube's face.
+     */
+    public CubeFace getFace(int faceIndex) {
+        return _faces[faceIndex];
+    }
+
 }

@@ -1,6 +1,6 @@
 package de.webkasi.cube;
 
-enum CubeFaceRotationDirection {
+public enum CubeFaceRotationDirection {
     Counterclockwise,
     Clockwise,
     None

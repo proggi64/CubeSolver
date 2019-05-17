@@ -3,7 +3,7 @@ package de.webkasi.cube;
 /**
  * Represents one face of a magic cube with a matrix of CubeColor fields.
  */
-class CubeFace {
+public class CubeFace {
     private final int _dimension;
     private final CubeColor[][] _fields;
 
@@ -61,7 +61,7 @@ class CubeFace {
      * @param column Index of the column of the field
      * @return Current CubeColor of the specified field
      */
-    CubeColor getField(final int row, final int column) {
+    public CubeColor getField(final int row, final int column) {
         return _fields[row][column];
     }
 }
