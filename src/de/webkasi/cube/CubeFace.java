@@ -21,6 +21,8 @@ class CubeFace {
      * Initializes a new instance of the CubeFace class with a copy
      * of the specified instance.
      *
+     * The copy constructor is used for several rotation operations.
+     *
      * @param copy The source of the copy of the new instance of CubeFace
      */
     @SuppressWarnings("CopyConstructorMissesField")
