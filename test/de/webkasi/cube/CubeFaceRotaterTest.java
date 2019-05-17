@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CubeFaceRotaterTest {
 
     class CubeTestFieldExpectation {
-        CubeFace face;
+        final CubeFace face;
         CubeColor[][] expectedColors;
 
         CubeTestFieldExpectation(CubeFace face) {

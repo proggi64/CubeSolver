@@ -47,8 +47,7 @@ class CubeTest {
     void getFaces_notNull() {
         Cube cube = new Cube();
         CubeFace[] faces = cube.getFaces();
-        for (int index = 0; index < faces.length; index++)
-            assertNotNull(faces[index]);
+        for (CubeFace face : faces) assertNotNull(face);
     }
 
     @Test

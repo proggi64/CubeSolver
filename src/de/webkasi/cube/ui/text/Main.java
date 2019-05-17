@@ -1,11 +1,24 @@
 package de.webkasi.cube.ui.text;
 
 import de.webkasi.cube.*;
-import de.webkasi.cube.ui.text.CubeTextDisplay;
 
+@SuppressWarnings("ALL")
 class Main {
 
     public static void main(String[] args) {
+        testScramble(4, 15);
+    }
+
+    private static void testScramble(int dimension, int depth)
+    {
+        Cube cube = new Cube(dimension);
+        CubeScrambler.scrambleCube(cube, depth);
+
+        CubeDisplay display = new CubeTextDisplay(cube);
+        display.display();
+    }
+
+    private static void testForthBack() {
         Cube cube = new Cube(4);
         CubeFaceRotater mover = new CubeFaceRotater(cube);
 
@@ -36,4 +49,5 @@ class Main {
         mover.rotateFace(CubeFaceRotationDirection.Counterclockwise, CubeColor.Yellow, 1);
         display.display();
     }
+
 }
