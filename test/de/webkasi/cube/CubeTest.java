@@ -7,6 +7,29 @@ import static org.junit.jupiter.api.Assertions.*;
 class CubeTest {
 
     @Test
+    void constructor_defaultColors3x3() {
+        Cube cube = new Cube();
+        CubeAssertion.assertFace(cube, CubeColor.White, "WWW WWW WWW");
+        CubeAssertion.assertFace(cube, CubeColor.Orange, "OOO OOO OOO");
+        CubeAssertion.assertFace(cube, CubeColor.Green, "GGG GGG GGG");
+        CubeAssertion.assertFace(cube, CubeColor.Red, "RRR RRR RRR");
+        CubeAssertion.assertFace(cube, CubeColor.Blue, "BBB BBB BBB");
+        CubeAssertion.assertFace(cube, CubeColor.Yellow, "YYY YYY YYY");
+
+    }
+
+    @Test
+    void constructor_defaultColors4x4() {
+        Cube cube = new Cube(4);
+        CubeAssertion.assertFace(cube, CubeColor.White, "WWWW WWWW WWWW WWWW");
+        CubeAssertion.assertFace(cube, CubeColor.Orange, "OOOO OOOO OOOO OOOO");
+        CubeAssertion.assertFace(cube, CubeColor.Green, "GGGG GGGG GGGG GGGG");
+        CubeAssertion.assertFace(cube, CubeColor.Red, "RRRR RRRR RRRR RRRR");
+        CubeAssertion.assertFace(cube, CubeColor.Blue, "BBBB BBBB BBBB BBBB");
+        CubeAssertion.assertFace(cube, CubeColor.Yellow, "YYYY YYYY YYYY YYYY");
+    }
+
+    @Test
     void getDimension_is2() {
         Cube cube = new Cube(2);
         assertEquals(2, cube.getDimension());

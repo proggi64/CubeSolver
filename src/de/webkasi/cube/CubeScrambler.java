@@ -20,7 +20,7 @@ public class CubeScrambler {
      */
     public static void scrambleCube(Cube cube, int depth) {
         Random generator = new Random(System.nanoTime());
-        CubeFaceRotater rotater = new CubeFaceRotater(cube);
+        CubeFaceRotator rotater = new CubeFaceRotator(cube);
         int dimension = cube.getDimension();
 
         for (int i = 0; i < depth; i++) {

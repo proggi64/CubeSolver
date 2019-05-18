@@ -6,7 +6,7 @@ import de.webkasi.cube.*;
 class Main {
 
     public static void main(String[] args) {
-        testScramble(4, 15);
+        testScramble(3, 25);
     }
 
     private static void testScramble(int dimension, int depth)
@@ -20,7 +20,7 @@ class Main {
 
     private static void testForthBack() {
         Cube cube = new Cube(4);
-        CubeFaceRotater mover = new CubeFaceRotater(cube);
+        CubeFaceRotator mover = new CubeFaceRotator(cube);
 
         CubeDisplay display = new CubeTextDisplay(cube);
         display.display();

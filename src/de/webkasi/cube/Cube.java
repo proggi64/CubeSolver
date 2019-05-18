@@ -68,12 +68,30 @@ public class Cube {
     }
 
     /**
+     * Gets the specified CubeFace by its numeric index.
+     *
+     * 0 is white, 1 is orange, 2 is green, 3 is red, 4 is blue,
+     * and 5 is yellow.
+     *
      * @param faceIndex The index (0 to 5) of the face to get. The color
      *                  of the face corresponds to CubeColor values.
-     * @return A CubeFace object representing the cube's face.
+     * @return A CubeFace object representing the current matrix of
+     * color fields of the face.
      */
-    public CubeFace getFace(int faceIndex) {
+    public CubeFace getFaceByIndex(int faceIndex) {
         return _faces[faceIndex];
     }
+
+    /**
+     * Gets the specified CubeFace by its color.
+     *
+     * The color specifies the initial color of the face when the
+     * cube has been created.
+     *
+     * @param face The CubeColor taht represents the cube's face.*
+     * @return A CubeFace object representing the current matrix of
+     * color fields of the face.
+     */
+    public CubeFace getFace(CubeColor face) { return _faces[face.ordinal()]; }
 
 }
