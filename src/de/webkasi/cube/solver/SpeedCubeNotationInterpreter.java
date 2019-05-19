@@ -9,6 +9,63 @@ import de.webkasi.cube.*;
  * This notation is valid only for 3x3 or 2x2 cubes.
  */
 public class SpeedCubeNotationInterpreter {
+
+    class Orientation {
+        CubeColor up = CubeColor.White;
+        CubeColor left = CubeColor.Orange;
+        CubeColor front = CubeColor.Green;
+        CubeColor right = CubeColor.Red;
+        CubeColor back = CubeColor.Blue;
+        CubeColor down = CubeColor.Yellow;
+
+        void rotate(char axis, CubeFaceRotationDirection direction, int count)
+        {
+            if (direction == CubeFaceRotationDirection.Counterclockwise && count == 1)
+                count = 3;
+            for (int i = 0; i < count; i++)
+                rotate(axis);
+        }
+
+        private void rotate(char axis)
+        {
+            switch (axis) {
+                case 'x':
+                    x();
+                    break;
+                case 'y':
+                    y();
+                    break;
+                case 'z':
+                    z();
+                    break;
+            }
+        }
+
+        private void x() {
+            CubeColor oldLeft = left;
+            left = front;
+            front = right;
+            right = back;
+            back = oldLeft;
+        }
+
+        private void y() {
+            CubeColor oldUp = up;
+            up = back;
+            back = down;
+            down = front;
+            front = oldUp;
+        }
+
+        private void z() {
+            CubeColor oldLeft = left;
+            left = down;
+            down = right;
+            right = up;
+            up = oldLeft;
+        }
+    }
+
     private CubeFaceRotationRecords records;
 
     /**
@@ -22,68 +79,91 @@ public class SpeedCubeNotationInterpreter {
     /**
      * Adds the specified sequence of cube moves to the rotation record.
      *
-     * U (Up) is always the white face, L (Left) is orange. Each single move
+     * U (Up) is ínitially always the white face, L (Left) is orange. Each single move
      * must be closed by a blank or the end of the string. Unknown characters
-     * will be ignored.
+     * will be ignored. Turning the cube is valid only for the current moves
+     * sequence. Each further call of addMoves() uses initially the default
+     * orientation.
      *
      * @param moves A String containing a sequence of moves in
      *              Speedcube.de notation. See https://speedcube.de/notation.php.
      */
     public void addMoves(String moves) {
         CubeFaceRotationRecord record = null;
+        Orientation orientation = new Orientation();
+
+        CubeFaceRotationDirection cubeRotationDirection = CubeFaceRotationDirection.Clockwise;
+        int countOfCubeRotations = 1;
+        char cubeRotationAxis = '\0';
+
         for (int i = 0; i < moves.length(); i++) {
-            switch (moves.charAt(i)) {
+            char c = moves.charAt(i);
+            switch (c) {
                 case 'U':
-                    record = new CubeFaceRotationRecord(CubeColor.White);
+                    record = new CubeFaceRotationRecord(orientation.up);
                     break;
                 case 'u':
-                    record = new CubeFaceRotationRecord(CubeColor.White, 2);
+                    record = new CubeFaceRotationRecord(orientation.up, 2);
                     break;
                 case 'L':
-                    record = new CubeFaceRotationRecord(CubeColor.Orange);
+                    record = new CubeFaceRotationRecord(orientation.left);
                     break;
                 case 'l':
-                    record = new CubeFaceRotationRecord(CubeColor.Orange, 2);
+                    record = new CubeFaceRotationRecord(orientation.left, 2);
                     break;
                 case 'F':
-                    record = new CubeFaceRotationRecord(CubeColor.Green);
+                    record = new CubeFaceRotationRecord(orientation.front);
                     break;
                 case 'f':
-                    record = new CubeFaceRotationRecord(CubeColor.Green, 2);
+                    record = new CubeFaceRotationRecord(orientation.front, 2);
                     break;
                 case 'R':
-                    record = new CubeFaceRotationRecord(CubeColor.Red);
+                    record = new CubeFaceRotationRecord(orientation.right);
                     break;
                 case 'r':
-                    record = new CubeFaceRotationRecord(CubeColor.Red, 2);
+                    record = new CubeFaceRotationRecord(orientation.right, 2);
                     break;
                 case 'B':
-                    record = new CubeFaceRotationRecord(CubeColor.Blue);
+                    record = new CubeFaceRotationRecord(orientation.back);
                     break;
                 case 'b':
-                    record = new CubeFaceRotationRecord(CubeColor.Blue, 2);
+                    record = new CubeFaceRotationRecord(orientation.back, 2);
                     break;
                 case 'D':
-                    record = new CubeFaceRotationRecord(CubeColor.Yellow);
+                    record = new CubeFaceRotationRecord(orientation.down);
                     break;
                 case 'd':
-                    record = new CubeFaceRotationRecord(CubeColor.Yellow, 2);
+                    record = new CubeFaceRotationRecord(orientation.down, 2);
                     break;
                 case '\'':
                     if (record != null)
                         record.setDirection(CubeFaceRotationDirection.Counterclockwise);
+                    else
+                        cubeRotationDirection = CubeFaceRotationDirection.Counterclockwise;
                     break;
                 case '2':
-                    records.add(record);
+                    if (record != null)
+                        records.add(record);
+                    else
+                        countOfCubeRotations = 2;
                     break;
                 case 'w':
                     if (record != null)
                         record.setCountOfLayers(2);
                     break;
+                case 'x':
+                case 'y':
+                case 'z':
+                    cubeRotationAxis = c;
+                    break;
                 case ' ':
                     if (record != null) {
                         records.add(record);
                         record = null;
+                    }
+                    else if (cubeRotationAxis != '\0'){
+                        orientation.rotate(cubeRotationAxis, cubeRotationDirection, countOfCubeRotations);
+                        cubeRotationAxis = '\0';
                     }
                     break;
             }
