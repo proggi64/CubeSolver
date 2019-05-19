@@ -93,5 +93,4 @@ public class Cube {
      * color fields of the face.
      */
     public CubeFace getFace(CubeColor face) { return _faces[face.ordinal()]; }
-
 }

@@ -2,7 +2,7 @@ package de.webkasi.cube;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class CubeAssertion {
+public class CubeAssertion {
     /**
      * Asserts the expected colors of the cube's face by specifying
      * a String with one character for each field.
@@ -19,7 +19,7 @@ class CubeAssertion {
      * @param colors A String that encodes the exppected colors of the
      *               cube's face.
      */
-    static void assertFace(Cube cube, CubeColor face, String colors) {
+    public static void assertFace(Cube cube, CubeColor face, String colors) {
         int dimension = cube.getDimension();
         CubeFace cubeFace = cube.getFace(face);
         int row = 0;
