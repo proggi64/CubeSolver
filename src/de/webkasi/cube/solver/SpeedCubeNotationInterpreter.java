@@ -10,6 +10,12 @@ import de.webkasi.cube.*;
  */
 public class SpeedCubeNotationInterpreter {
 
+    /**
+     * Represents the orientation of the cube.
+     *
+     * The orientation determines which face is on which side when interpreting
+     * the moves.
+     */
     class Orientation {
         CubeColor up = CubeColor.White;
         CubeColor left = CubeColor.Orange;
@@ -41,6 +47,9 @@ public class SpeedCubeNotationInterpreter {
             }
         }
 
+        /**
+         * Turns the orientation of the cube around the x-axis.
+         */
         private void x() {
             CubeColor oldLeft = left;
             left = front;
@@ -49,6 +58,9 @@ public class SpeedCubeNotationInterpreter {
             back = oldLeft;
         }
 
+        /**
+         * Turns the orientation of the cube around the y-axis.
+         */
         private void y() {
             CubeColor oldUp = up;
             up = back;
@@ -57,6 +69,9 @@ public class SpeedCubeNotationInterpreter {
             front = oldUp;
         }
 
+        /**
+         * Turns the orientation of the cube around the z-axis.
+         */
         private void z() {
             CubeColor oldLeft = left;
             left = down;
@@ -69,6 +84,8 @@ public class SpeedCubeNotationInterpreter {
     private CubeFaceRotationRecords records;
 
     /**
+     * Initializes a new instance of the SpeedCubeNotationInterpreter class.
+     *
      * @param records The CubeFaceRotationRecords object that receives
      *                the move records of the addMoves() method.
      */
