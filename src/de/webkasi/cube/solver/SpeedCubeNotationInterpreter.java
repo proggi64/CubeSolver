@@ -186,7 +186,7 @@ public class SpeedCubeNotationInterpreter {
      * @param moves The current notation string that is interpreted.
      * @param i The index of the next character in moves.
      * @param orientation The current CubeOrientation that may be changed.
-     * @param axis A character specifying the axis (x, y, or z)
+     * @param axis A character specifying the axis (x, y, or z) of the rotation.
      * @param faceA The color of the first face to rotate.
      * @param faceB The color of the secons face to rotate.
      * @return The index of the last character that has been interpreted by this method.
