@@ -2,8 +2,6 @@ package de.webkasi.cube;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class CubeFaceRotationPlayerTest {
 
 
@@ -31,7 +29,7 @@ class CubeFaceRotationPlayerTest {
         CubeFaceRotationRecords records = new CubeFaceRotationRecords();
         records.add(new CubeFaceRotationRecord(
                 CubeColor.White,
-                CubeFaceRotationDirection.Clockwise,
+                RotationDirection.Clockwise,
                 1)
         );
         CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(rotator);

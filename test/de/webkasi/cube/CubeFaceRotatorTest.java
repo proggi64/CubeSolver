@@ -9,7 +9,7 @@ class CubeFaceRotatorTest {
         Cube cube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(cube);
 
-        rotator.rotateFace(CubeFaceRotationDirection.Clockwise, CubeColor.White, 1);
+        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.White, 1);
 
         CubeAssertion.assertFace(cube, CubeColor.White, "WWW WWW WWW");
         CubeAssertion.assertFace(cube, CubeColor.Orange, "GGG OOO OOO");
@@ -24,7 +24,7 @@ class CubeFaceRotatorTest {
         Cube cube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(cube);
 
-        rotator.rotateFace(CubeFaceRotationDirection.Counterclockwise, CubeColor.White, 1);
+        rotator.rotateFace(RotationDirection.Counterclockwise, CubeColor.White, 1);
 
         CubeAssertion.assertFace(cube, CubeColor.White, "WWW WWW WWW");
         CubeAssertion.assertFace(cube, CubeColor.Orange, "BBB OOO OOO");
@@ -39,7 +39,7 @@ class CubeFaceRotatorTest {
         Cube cube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(cube);
 
-        rotator.rotateFace(CubeFaceRotationDirection.Clockwise, CubeColor.Orange, 1);
+        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.Orange, 1);
 
         CubeAssertion.assertFace(cube, CubeColor.White, "BWW BWW BWW");
         CubeAssertion.assertFace(cube, CubeColor.Orange, "OOO OOO OOO");
@@ -54,7 +54,7 @@ class CubeFaceRotatorTest {
         Cube cube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(cube);
 
-        rotator.rotateFace(CubeFaceRotationDirection.Counterclockwise, CubeColor.Orange, 1);
+        rotator.rotateFace(RotationDirection.Counterclockwise, CubeColor.Orange, 1);
 
         CubeAssertion.assertFace(cube, CubeColor.White, "GWW GWW GWW");
         CubeAssertion.assertFace(cube, CubeColor.Orange, "OOO OOO OOO");
@@ -68,18 +68,18 @@ class CubeFaceRotatorTest {
     void rotateFace_Pattern() {
         Cube cube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(cube);
-        rotator.rotateFace(CubeFaceRotationDirection.Counterclockwise, CubeColor.Orange, 1);
-        rotator.rotateFace(CubeFaceRotationDirection.Counterclockwise, CubeColor.Orange, 1);
-        rotator.rotateFace(CubeFaceRotationDirection.Counterclockwise, CubeColor.Red, 1);
-        rotator.rotateFace(CubeFaceRotationDirection.Counterclockwise, CubeColor.Red, 1);
-        rotator.rotateFace(CubeFaceRotationDirection.Clockwise, CubeColor.Blue, 1);
-        rotator.rotateFace(CubeFaceRotationDirection.Clockwise, CubeColor.Blue, 1);
-        rotator.rotateFace(CubeFaceRotationDirection.Clockwise, CubeColor.Green, 1);
-        rotator.rotateFace(CubeFaceRotationDirection.Clockwise, CubeColor.Green, 1);
-        rotator.rotateFace(CubeFaceRotationDirection.Counterclockwise, CubeColor.White, 1);
-        rotator.rotateFace(CubeFaceRotationDirection.Counterclockwise, CubeColor.White, 1);
-        rotator.rotateFace(CubeFaceRotationDirection.Clockwise, CubeColor.Yellow, 1);
-        rotator.rotateFace(CubeFaceRotationDirection.Clockwise, CubeColor.Yellow, 1);
+        rotator.rotateFace(RotationDirection.Counterclockwise, CubeColor.Orange, 1);
+        rotator.rotateFace(RotationDirection.Counterclockwise, CubeColor.Orange, 1);
+        rotator.rotateFace(RotationDirection.Counterclockwise, CubeColor.Red, 1);
+        rotator.rotateFace(RotationDirection.Counterclockwise, CubeColor.Red, 1);
+        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.Blue, 1);
+        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.Blue, 1);
+        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.Green, 1);
+        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.Green, 1);
+        rotator.rotateFace(RotationDirection.Counterclockwise, CubeColor.White, 1);
+        rotator.rotateFace(RotationDirection.Counterclockwise, CubeColor.White, 1);
+        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.Yellow, 1);
+        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.Yellow, 1);
 
         CubeAssertion.assertFace(cube, CubeColor.White, "WYW YWY WYW");
         CubeAssertion.assertFace(cube, CubeColor.Orange, "ORO ROR ORO");

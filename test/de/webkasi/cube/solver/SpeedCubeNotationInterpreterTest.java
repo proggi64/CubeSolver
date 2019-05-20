@@ -97,7 +97,28 @@ class SpeedCubeNotationInterpreterTest {
         CubeFaceRotationRecords records = new CubeFaceRotationRecords();
         SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(records);
 
-        interpreter.addMoves("L2 R2 z L2 R2 y z' L2 R2");
+        interpreter.addMoves("L2 R2 z L2 R2 y' L2 R2");
+
+        CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(rotator);
+
+        player.play(records);
+
+        CubeAssertion.assertFace(cube, CubeColor.White, "WYW YWY WYW");
+        CubeAssertion.assertFace(cube, CubeColor.Orange, "ORO ROR ORO");
+        CubeAssertion.assertFace(cube, CubeColor.Green, "GBG BGB GBG");
+        CubeAssertion.assertFace(cube, CubeColor.Red, "ROR ORO ROR");
+        CubeAssertion.assertFace(cube, CubeColor.Blue, "BGB GBG BGB");
+        CubeAssertion.assertFace(cube, CubeColor.Yellow, "YWY WYW YWY");
+    }
+
+    @Test
+    void addMoves_PatternWithMiddleLayerMoves() {
+        Cube cube = new Cube();
+        CubeFaceRotator rotator = new CubeFaceRotator(cube);
+        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
+        SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(records);
+
+        interpreter.addMoves("M2 S2 E2");
 
         CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(rotator);
 

@@ -10,77 +10,6 @@ import de.webkasi.cube.*;
  */
 public class SpeedCubeNotationInterpreter {
 
-    /**
-     * Represents the orientation of the cube.
-     *
-     * The orientation determines which face is on which side when interpreting
-     * the moves.
-     */
-    class Orientation {
-        CubeColor up = CubeColor.White;
-        CubeColor left = CubeColor.Orange;
-        CubeColor front = CubeColor.Green;
-        CubeColor right = CubeColor.Red;
-        CubeColor back = CubeColor.Blue;
-        CubeColor down = CubeColor.Yellow;
-
-        void rotate(char axis, CubeFaceRotationDirection direction, int count)
-        {
-            if (direction == CubeFaceRotationDirection.Counterclockwise && count == 1)
-                count = 3;
-            for (int i = 0; i < count; i++)
-                rotate(axis);
-        }
-
-        private void rotate(char axis)
-        {
-            switch (axis) {
-                case 'x':
-                    x();
-                    break;
-                case 'y':
-                    y();
-                    break;
-                case 'z':
-                    z();
-                    break;
-            }
-        }
-
-        /**
-         * Turns the orientation of the cube around the x-axis.
-         */
-        private void x() {
-            CubeColor oldLeft = left;
-            left = front;
-            front = right;
-            right = back;
-            back = oldLeft;
-        }
-
-        /**
-         * Turns the orientation of the cube around the y-axis.
-         */
-        private void y() {
-            CubeColor oldUp = up;
-            up = back;
-            back = down;
-            down = front;
-            front = oldUp;
-        }
-
-        /**
-         * Turns the orientation of the cube around the z-axis.
-         */
-        private void z() {
-            CubeColor oldLeft = left;
-            left = down;
-            down = right;
-            right = up;
-            up = oldLeft;
-        }
-    }
-
     private CubeFaceRotationRecords records;
 
     /**
@@ -107,9 +36,9 @@ public class SpeedCubeNotationInterpreter {
      */
     public void addMoves(String moves) {
         CubeFaceRotationRecord record = null;
-        Orientation orientation = new Orientation();
+        CubeOrientation orientation = new CubeOrientation();
 
-        CubeFaceRotationDirection cubeRotationDirection = CubeFaceRotationDirection.Clockwise;
+        RotationDirection cubeRotationDirection = RotationDirection.Clockwise;
         int countOfCubeRotations = 1;
         char cubeRotationAxis = '\0';
 
@@ -152,11 +81,23 @@ public class SpeedCubeNotationInterpreter {
                 case 'd':
                     record = new CubeFaceRotationRecord(orientation.down, 2);
                     break;
+                case 'M':
+                    i = middle(moves, ++i, orientation);
+                    record = null;
+                    break;
+                case 'E':
+                    i = equator(moves, ++i, orientation);
+                    record = null;
+                    break;
+                case 'S':
+                    i = stand(moves, ++i, orientation);
+                    record = null;
+                    break;
                 case '\'':
                     if (record != null)
-                        record.setDirection(CubeFaceRotationDirection.Counterclockwise);
+                        record.setDirection(RotationDirection.Counterclockwise);
                     else
-                        cubeRotationDirection = CubeFaceRotationDirection.Counterclockwise;
+                        cubeRotationDirection = RotationDirection.Counterclockwise;
                     break;
                 case '2':
                     if (record != null)
@@ -188,5 +129,106 @@ public class SpeedCubeNotationInterpreter {
         if (record != null) {
             records.add(record);
         }
+    }
+
+    /**
+     * Moves the vertical middle layer around the x axis.
+     *
+     * The direction and count of moves are determined by additional characters
+     * beginning at the specified index i.
+     *
+     * @param moves The current notation string that is interpreted.
+     * @param i The index of the next character in moves.
+     * @param orientation The current CubeOrientation that may be changed.
+     * @return The index of the last character that has been interpreted by this method.
+     */
+    private int middle(String moves, int i, CubeOrientation orientation) {
+        return rotateMiddleLayer(moves, i, orientation, 'x', orientation.left, orientation.right);
+    }
+
+    /**
+     * Moves the horizontal middle layer around the y axis.
+     *
+     * The direction and count of moves are determined by additional characters
+     * beginning at the specified index i.
+     *
+     * @param moves The current notation string that is interpreted.
+     * @param i The index of the next character in moves.
+     * @param orientation The current CubeOrientation that may be changed.
+     * @return The index of the last character that has been interpreted by this method.
+     */
+    private int equator(String moves, int i, CubeOrientation orientation) {
+        return rotateMiddleLayer(moves, i, orientation, 'y', orientation.up, orientation.down);
+    }
+
+    /**
+     * Moves the frontal middle layer around the z axis.
+     *
+     * The direction and count of moves are determined by additional characters
+     * beginning at the specified index i.
+     *
+     * @param moves The current notation string that is interpreted.
+     * @param i The index of the next character in moves.
+     * @param orientation The current CubeOrientation that may be changed.
+     * @return The index of the last character that has been interpreted by this method.
+     */
+    private int stand(String moves, int i, CubeOrientation orientation) {
+        return rotateMiddleLayer(moves, i, orientation, 'z', orientation.front, orientation.back);
+    }
+
+    /**
+     * Translates the rotation of a specified middle layer of the cube into
+     * side face and complete cube rotations.
+     *
+     * This is necessary because the CubeFaceRotationRecord class does not
+     * support middle layer rotations directly.
+     *
+     * @param moves The current notation string that is interpreted.
+     * @param i The index of the next character in moves.
+     * @param orientation The current CubeOrientation that may be changed.
+     * @param axis A character specifying the axis (x, y, or z)
+     * @param faceA The color of the first face to rotate.
+     * @param faceB The color of the secons face to rotate.
+     * @return The index of the last character that has been interpreted by this method.
+     */
+    private int rotateMiddleLayer(
+            String moves,
+            int i,
+            CubeOrientation orientation,
+            char axis,
+            CubeColor faceA,
+            CubeColor faceB) {
+
+        CubeFaceRotationRecord recordA = new CubeFaceRotationRecord(faceA);
+        CubeFaceRotationRecord recordB = new CubeFaceRotationRecord(faceB);
+        boolean ready = false;
+        boolean reverse = false;
+        int count = 1;
+
+        while (!ready && moves.length() > i) {
+            char c = moves.charAt(i++);
+            switch (c) {
+                case '\'':
+                    reverse = true;
+                    break;
+                case '2':
+                    count = 2;
+                    break;
+                case ' ':
+                    ready = true;
+                    break;
+            }
+        }
+
+        recordA.setDirection(reverse ? RotationDirection.Clockwise : RotationDirection.Counterclockwise);
+        recordB.setDirection(reverse ? RotationDirection.Counterclockwise : RotationDirection.Clockwise);
+
+        for (int c = 0; c < count; c++) {
+            records.add(recordA);
+            records.add(recordB);
+        }
+        orientation.rotate(axis, reverse ? RotationDirection.Counterclockwise : RotationDirection.Clockwise, count);
+
+        return i - 1;
     }
 }

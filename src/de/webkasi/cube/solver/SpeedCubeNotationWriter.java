@@ -7,6 +7,19 @@ import de.webkasi.cube.*;
  * a SpeedCube notation syntax string.
  */
 public class SpeedCubeNotationWriter {
+    private CubeOrientation _orientation;
+    StringBuilder _builder;
+    CubeFaceRotationRecords _records;
+    int _recordIndex;
+
+    private SpeedCubeNotationWriter(CubeFaceRotationRecords records) {
+        _orientation = new CubeOrientation();
+        _builder = new StringBuilder(1024);
+        _records = records;
+        _recordIndex = 0;
+    }
+
+
     /**
      * Writes the specified cube rotation records into a String
      * in SpeedCube notation syntax.
@@ -17,30 +30,39 @@ public class SpeedCubeNotationWriter {
      * syntax.
      */
     public static String Write(CubeFaceRotationRecords records) {
-        StringBuilder builder = new StringBuilder(1024);
-        for (int i = 0; i < records.size(); i++) {
-            writeRecord(records, i, builder);
+        SpeedCubeNotationWriter writer = new SpeedCubeNotationWriter(records);
+
+        for (writer._recordIndex = 0; writer._recordIndex < writer._records.size(); writer._recordIndex++) {
+            writer.writeRecord();
         }
-        return builder.toString();
+        return writer.getResult();
     }
 
     /**
-     * Writes the specified record as SpeedCube notation into the
-     * specified StringBuilder.
+     * Writes the current record as SpeedCube notation into the
+     * result.
      *
      * writeRecord optimizes if the current and the following record
      * can be aggregated to a shorter notation. This may be two identical
      * rotations, or two rotations of side faces that can be expressed
      * as a single rotation of the middle layer.
-     *
-     * @param records The CubeFaceRotationRecords object where the current
-     *                move with the specified index is.
-     * @param index The current record's index.
-     * @param builder A StringBuilder where the record is written to.
-     * @return The new index if more than the current record has been written.
      */
-    private static int writeRecord(CubeFaceRotationRecords records, int index, StringBuilder builder) {
+    private void writeRecord() {
+        rotateCubeIfNecessary();
         // TODO implement!
-        return index;
+    }
+
+    /**
+     * Changes the current orientation of the cube to simplify the operations
+     * for real humans.
+     *
+     * rotateCubeIfNecessary()
+     */
+    private void rotateCubeIfNecessary() {
+
+    }
+
+    private String getResult() {
+        return _builder.toString();
     }
 }

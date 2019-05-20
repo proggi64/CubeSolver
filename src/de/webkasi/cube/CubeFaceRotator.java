@@ -18,48 +18,48 @@ public class CubeFaceRotator {
             {1, 2, 1, 0},
             {2, 2, 2, 2},
     };
-    private static final CubeFaceRotationDirection[][] _sideRotationDirections = new CubeFaceRotationDirection[][]{
+    private static final RotationDirection[][] _sideRotationDirections = new RotationDirection[][]{
             // White (top left 0 0)
             {
-                    CubeFaceRotationDirection.None,                // Orange (left)
-                    CubeFaceRotationDirection.None,                // Green
-                    CubeFaceRotationDirection.None,                // Red
-                    CubeFaceRotationDirection.None                 // Blue
+                    RotationDirection.None,                // Orange (left)
+                    RotationDirection.None,                // Green
+                    RotationDirection.None,                // Red
+                    RotationDirection.None                 // Blue
             },
             // Orange (top left 0 0)
             {
-                    CubeFaceRotationDirection.Counterclockwise,    // Blue (left)
-                    CubeFaceRotationDirection.Clockwise,           // Yellow
-                    CubeFaceRotationDirection.Clockwise,           // Green
-                    CubeFaceRotationDirection.Clockwise            // White
+                    RotationDirection.Counterclockwise,    // Blue (left)
+                    RotationDirection.Clockwise,           // Yellow
+                    RotationDirection.Clockwise,           // Green
+                    RotationDirection.Clockwise            // White
             },
             // Green (top left 0 0)
             {
-                    CubeFaceRotationDirection.Counterclockwise,    // Orange (left)
-                    CubeFaceRotationDirection.None,                // Yellow
-                    CubeFaceRotationDirection.Clockwise,           // Red
-                    CubeFaceRotationDirection.Clockwise            // White
+                    RotationDirection.Counterclockwise,    // Orange (left)
+                    RotationDirection.None,                // Yellow
+                    RotationDirection.Clockwise,           // Red
+                    RotationDirection.Clockwise            // White
             },
             // Red (top left 0 0)
             {
-                    CubeFaceRotationDirection.Counterclockwise,    // Green (left)
-                    CubeFaceRotationDirection.Counterclockwise,    // Yellow
-                    CubeFaceRotationDirection.Clockwise,           // Blue
-                    CubeFaceRotationDirection.Counterclockwise     // White
+                    RotationDirection.Counterclockwise,    // Green (left)
+                    RotationDirection.Counterclockwise,    // Yellow
+                    RotationDirection.Clockwise,           // Blue
+                    RotationDirection.Counterclockwise     // White
             },
             // Blue (top left 0 0)
             {
-                    CubeFaceRotationDirection.Counterclockwise,    // Red (left)
-                    CubeFaceRotationDirection.Clockwise,           // Yellow
-                    CubeFaceRotationDirection.Clockwise,           // Orange
-                    CubeFaceRotationDirection.Counterclockwise     // White
+                    RotationDirection.Counterclockwise,    // Red (left)
+                    RotationDirection.Clockwise,           // Yellow
+                    RotationDirection.Clockwise,           // Orange
+                    RotationDirection.Counterclockwise     // White
             },
             // Yellow (top left 0 0)
             {
-                    CubeFaceRotationDirection.Clockwise,           // Orange (left)
-                    CubeFaceRotationDirection.Clockwise,           // Blue
-                    CubeFaceRotationDirection.Clockwise,           // Red
-                    CubeFaceRotationDirection.Clockwise            // Green
+                    RotationDirection.Clockwise,           // Orange (left)
+                    RotationDirection.Clockwise,           // Blue
+                    RotationDirection.Clockwise,           // Red
+                    RotationDirection.Clockwise            // Green
             }
     };
 
@@ -96,14 +96,14 @@ public class CubeFaceRotator {
      * one. It is not supported to rotate a specific layer. Instead, you have to rotate
      * two faces to achieve the same effect.
      *
-     * @param direction The CubeFaceRotationDirection that specifies the direction of the rotation
+     * @param direction The RotationDirection that specifies the direction of the rotation
      * @param faceColor The CubeColor of the middle field of the face that is rotated. For even
      *                  count of layers this is the original color of the face when the cube
      *                  has been created.
      * @param countOfLayers The count of layers of the side faces to rotate with the face
      */
-    public void rotateFace(final CubeFaceRotationDirection direction, final CubeColor faceColor, final int countOfLayers) {
-        if (direction == CubeFaceRotationDirection.Clockwise)
+    public void rotateFace(final RotationDirection direction, final CubeColor faceColor, final int countOfLayers) {
+        if (direction == RotationDirection.Clockwise)
             rotateClockwise(faceColor, countOfLayers);
         else
             rotateCounterclockwise(faceColor, countOfLayers);
@@ -282,11 +282,11 @@ public class CubeFaceRotator {
     private void normalizeSides(CubeColor side, CubeFace[] sides) {
         int sideIndex = side.ordinal();
         int[] countOfRotations = _sideRotations[sideIndex];
-        CubeFaceRotationDirection[] directions = _sideRotationDirections[sideIndex];
+        RotationDirection[] directions = _sideRotationDirections[sideIndex];
 
         for (int shiftSideIndex = 0; shiftSideIndex < 4; shiftSideIndex++) {
             for (int count = 0; count < countOfRotations[shiftSideIndex]; count++) {
-                if (directions[shiftSideIndex] == CubeFaceRotationDirection.Clockwise)
+                if (directions[shiftSideIndex] == RotationDirection.Clockwise)
                     rotateTopClockwise(sides[shiftSideIndex]);
                 else
                     rotateTopCounterclockwise(sides[shiftSideIndex]);
@@ -311,11 +311,11 @@ public class CubeFaceRotator {
     private void denormalizeSides(CubeColor side, CubeFace[] sides) {
         int sideIndex = side.ordinal();
         int[] countOfRotations = _sideRotations[sideIndex];
-        CubeFaceRotationDirection[] directions = _sideRotationDirections[sideIndex];
+        RotationDirection[] directions = _sideRotationDirections[sideIndex];
 
         for (int shiftSideIndex = 0; shiftSideIndex < 4; shiftSideIndex++) {
             for (int count = 0; count < countOfRotations[shiftSideIndex]; count++) {
-                if (directions[shiftSideIndex] == CubeFaceRotationDirection.Clockwise)
+                if (directions[shiftSideIndex] == RotationDirection.Clockwise)
                     rotateTopCounterclockwise(sides[shiftSideIndex]);
                 else
                     rotateTopClockwise(sides[shiftSideIndex]);

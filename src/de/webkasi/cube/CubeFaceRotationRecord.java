@@ -5,7 +5,7 @@ package de.webkasi.cube;
  */
 public class CubeFaceRotationRecord {
     private CubeColor _face;
-    private CubeFaceRotationDirection _direction;
+    private RotationDirection _direction;
     private int _countOfLayers;
 
     /**
@@ -19,7 +19,7 @@ public class CubeFaceRotationRecord {
      */
     public CubeFaceRotationRecord(CubeColor face) {
         _face = face;
-        _direction = CubeFaceRotationDirection.Clockwise;
+        _direction = RotationDirection.Clockwise;
         _countOfLayers = 1;
     }
 
@@ -33,7 +33,7 @@ public class CubeFaceRotationRecord {
      */
     public CubeFaceRotationRecord(CubeColor face, int countOfLayers) {
         _face = face;
-        _direction = CubeFaceRotationDirection.Clockwise;
+        _direction = RotationDirection.Clockwise;
         _countOfLayers = countOfLayers;
     }
 
@@ -45,7 +45,7 @@ public class CubeFaceRotationRecord {
      * @param direction The CubeRotationDirection value specifying the rotation direction.
      * @param countOfLayers The count of layers to rotate.
      */
-    public CubeFaceRotationRecord(CubeColor face, CubeFaceRotationDirection direction, int countOfLayers) {
+    public CubeFaceRotationRecord(CubeColor face, RotationDirection direction, int countOfLayers) {
         _face = face;
         _direction = direction;
         _countOfLayers = countOfLayers;
@@ -75,7 +75,7 @@ public class CubeFaceRotationRecord {
      * @param direction The CubeRotationDirection value specifying the
      *                  rotation direction.
      */
-    public void setDirection(CubeFaceRotationDirection direction) {
+    public void setDirection(RotationDirection direction) {
         _direction = direction;
     }
 
@@ -84,7 +84,7 @@ public class CubeFaceRotationRecord {
      *
      * @return The CubeRotationDirection value specifying the rotation direction.
      */
-    public CubeFaceRotationDirection getDirection() {
+    public RotationDirection getDirection() {
         return _direction;
     }
 

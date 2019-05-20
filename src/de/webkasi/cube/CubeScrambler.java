@@ -24,8 +24,8 @@ public class CubeScrambler {
         int dimension = cube.getDimension();
 
         for (int i = 0; i < depth; i++) {
-            CubeFaceRotationDirection direction = generator.nextInt(2) == 0 ?
-                    CubeFaceRotationDirection.Clockwise : CubeFaceRotationDirection.Counterclockwise;
+            RotationDirection direction = generator.nextInt(2) == 0 ?
+                    RotationDirection.Clockwise : RotationDirection.Counterclockwise;
             CubeColor faceColor = CubeColor.values()[generator.nextInt(CubeColor.values().length)];
             int countOfLayers = dimension <= 3 ? 1 : generator.nextInt(dimension / 2) + 1;
 
