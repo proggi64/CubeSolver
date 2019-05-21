@@ -5,7 +5,7 @@ import de.webkasi.cube.*;
 /**
  * Provides an LbL-solution (Layer-by-Layer) for a given 3x3 Cube.
  */
-public class LayerByLayer {
+public class LayerByLayerSolver {
 
     private Cube _cube;
     private CubeFaceRotationRecords _records;
@@ -15,7 +15,7 @@ public class LayerByLayer {
      * @param records A CubeFaceRotationRecords object that receives the
      *                moves to solve the cube. This should initially be empty.
      */
-    private LayerByLayer(Cube cube, CubeFaceRotationRecords records) {
+    private LayerByLayerSolver(Cube cube, CubeFaceRotationRecords records) {
         _cube = cube;
         _records = records;
         _records.clear();
@@ -33,7 +33,7 @@ public class LayerByLayer {
      */
     public static CubeFaceRotationRecords solve(Cube cube) {
         CubeFaceRotationRecords records = new CubeFaceRotationRecords();
-        LayerByLayer lbl = new LayerByLayer(cube, records);
+        LayerByLayerSolver lbl = new LayerByLayerSolver(cube, records);
         lbl.solve();
         return records;
     }
@@ -61,11 +61,7 @@ public class LayerByLayer {
      * red, and blue middle fields after the cross has been created.
      */
     private void createWhiteCross() {
-        // TODO Für diese Schritte eigene Klasse WhiteCrossCreator schreiben
-        // TODO für alle weißen Randsteiner:
-        // TODO Situationsanalyse: Wo ist der weiße Randstein?
-        // TODO Bewegungsalgorithmus für jede Situation anwenden
-        // TODO Ggfs. Drehung des Randsteins
+        WhiteCrossStep.solve(_cube, _records);
     }
 
     /**
@@ -75,6 +71,7 @@ public class LayerByLayer {
      * The white layer is completely ready after the call.
      */
     private void setWhiteCrossCorners() {
+        WhiteCrossCornersStep.solve(_cube, _records);
     }
 
     /**

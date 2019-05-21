@@ -31,11 +31,28 @@ public class Cube {
         _dimension = dimension;
         _faces = new CubeFace[6];
         CubeColor[] colors = CubeColor.values();
-        for (int faceIndex = 0; faceIndex < _faces.length; faceIndex++)
-        {
+        for (int faceIndex = 0; faceIndex < _faces.length; faceIndex++) {
             _faces[faceIndex] = new CubeFace(_dimension);
             _faces[faceIndex].setFaceColor(colors[faceIndex]);
         }
+    }
+
+    /**
+     * Creates a copy of the specified Cube.
+     *
+     * The new instance uses copies of all internal data, so it is completely
+     * independent after the copy and can be manipulated without any effect
+     * to the source.
+     *
+     * @param copy The source of the copy.
+     */
+    public Cube(Cube copy) {
+        _dimension = copy._dimension;
+        _faces = new CubeFace[6];
+        for (int faceIndex = 0; faceIndex < _faces.length; faceIndex++) {
+            _faces[faceIndex] = new CubeFace(copy._faces[faceIndex]);
+        }
+
     }
 
     /**
