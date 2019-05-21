@@ -12,7 +12,7 @@ public class CubeFace {
      *
      * @param dimension The count of rows and columns of each face of the cube
      */
-    CubeFace(int dimension) {
+    public CubeFace(int dimension) {
         _dimension = dimension;
         _fields = new CubeColor[dimension][dimension];
     }
@@ -23,11 +23,20 @@ public class CubeFace {
      *
      * The copy constructor is used for several rotation operations.
      *
-     * @param copy The source of the copy of the new instance of CubeFace
+     * @param copy The source of the copy of the new instance of CubeFace.
      */
     @SuppressWarnings("CopyConstructorMissesField")
     CubeFace(CubeFace copy) {
         this(copy._dimension);
+        setFace(copy);
+    }
+
+    /**
+     * Copies the color fields of the specified CubeFace into this instance.
+     *
+     * @param copy The source of the copy.
+     */
+    public void setFace(CubeFace copy) {
         for (int row = 0; row < _dimension; row++)
             System.arraycopy(copy._fields[row], 0, _fields[row], 0, _dimension);
     }
@@ -37,7 +46,7 @@ public class CubeFace {
      *
      * @param color The CubeColor each field of the cube face will get
      */
-    void setFaceColor(CubeColor color) {
+    public void setFaceColor(CubeColor color) {
         for (int row = 0; row < _dimension; row++)
             for (int column = 0; column < _dimension; column++)
                 _fields[row][column] = color;
@@ -50,7 +59,7 @@ public class CubeFace {
      * @param column Index of the column of the field
      * @param color New CubeColor of the specified field
      */
-    void setField(final int row, final int column, CubeColor color) {
+    public void setField(final int row, final int column, CubeColor color) {
         _fields[row][column] = color;
     }
 
@@ -64,4 +73,11 @@ public class CubeFace {
     public CubeColor getField(final int row, final int column) {
         return _fields[row][column];
     }
+
+    /**
+     * Gets the dimension of the CubeFace.
+     *
+     * @return The dimension of the nxn CubeFace.
+     */
+    public int getDimension() { return _dimension; }
 }

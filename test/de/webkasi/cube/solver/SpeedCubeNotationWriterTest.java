@@ -36,11 +36,11 @@ class SpeedCubeNotationWriterTest {
 
         player.play(records);
 
-        CubeAssertion.assertFace(cube, CubeColor.White, "WYW YWY WYW");
-        CubeAssertion.assertFace(cube, CubeColor.Orange, "ORO ROR ORO");
-        CubeAssertion.assertFace(cube, CubeColor.Green, "GBG BGB GBG");
-        CubeAssertion.assertFace(cube, CubeColor.Red, "ROR ORO ROR");
-        CubeAssertion.assertFace(cube, CubeColor.Blue, "BGB GBG BGB");
-        CubeAssertion.assertFace(cube, CubeColor.Yellow, "YWY WYW YWY");
+        CubeAssertion.assertCubeFace(cube, CubeColor.White, "WYW YWY WYW");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Orange, "ORO ROR ORO");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Green, "GBG BGB GBG");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Red, "ROR ORO ROR");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Blue, "BGB GBG BGB");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Yellow, "YWY WYW YWY");
     }
 }

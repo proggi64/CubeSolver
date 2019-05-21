@@ -2,6 +2,8 @@ package de.webkasi.cube;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import de.webkasi.cube.ui.text.CubeTextDescriptor;
+
 public class CubeAssertion {
     /**
      * Asserts the expected colors of the cube's face by specifying
@@ -19,46 +21,30 @@ public class CubeAssertion {
      * @param colors A String that encodes the exppected colors of the
      *               cube's face.
      */
-    public static void assertFace(Cube cube, CubeColor face, String colors) {
+    public static void assertCubeFace(Cube cube, CubeColor face, String colors) {
         int dimension = cube.getDimension();
         CubeFace cubeFace = cube.getFace(face);
+        assertFace(cubeFace, colors);
+    }
+
+    /**
+     * Asserts the expected colors of the specified CubeFace object.
+     *
+     * @param cubeFace The CubeFace the contains the color feilds to test.
+     * @param colors The String with the expected color field descritions.
+     */
+    public static void assertFace(CubeFace cubeFace, String colors) {
         int row = 0;
         int column = 0;
-        CubeColor[][] expectedColors = new CubeColor[dimension][dimension];
-        for (int i = 0; i < colors.length(); i++) {
-            switch (colors.charAt(i)) {
-                case 'W':
-                    expectedColors[row][column] = CubeColor.White;
-                    break;
-                case 'O':
-                    expectedColors[row][column] = CubeColor.Orange;
-                    break;
-                case 'G':
-                    expectedColors[row][column] = CubeColor.Green;
-                    break;
-                case 'R':
-                    expectedColors[row][column] = CubeColor.Red;
-                    break;
-                case 'B':
-                    expectedColors[row][column] = CubeColor.Blue;
-                    break;
-                case 'Y':
-                    expectedColors[row][column] = CubeColor.Yellow;
-                    break;
-                default:
-                    continue;
-            }
-            column++;
-            if (column >= dimension) {
-                column = 0;
-                row++;
-            }
-        }
-        int dim = expectedColors.length;
-        for (row = 0; row < dim; row++)
-            for (column = 0; column < dim; column++)
-                assertEquals(expectedColors[row][column], cubeFace.getField(row, column),
+        int dimension = cubeFace.getDimension();
+        CubeTextDescriptor descriptor = new CubeTextDescriptor(dimension);
+        CubeFace expectedColors = descriptor.describeFace(colors);
+        for (row = 0; row < dimension; row++)
+            for (column = 0; column < dimension; column++)
+                assertEquals(expectedColors.getField(row, column), cubeFace.getField(row, column),
                         String.format("Mismatch Row %d Column %d, Expected: %s, found: %s", row, column,
-                                expectedColors[row][column].toString(), cubeFace.getField(row, column).toString()));
+                                expectedColors.getField(row, column).toString(), cubeFace.getField(row, column).toString()));
+
     }
+
 }

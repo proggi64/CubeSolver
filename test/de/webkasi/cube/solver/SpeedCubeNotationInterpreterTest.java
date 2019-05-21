@@ -18,12 +18,12 @@ class SpeedCubeNotationInterpreterTest {
 
         player.play(records);
 
-        CubeAssertion.assertFace(cube, CubeColor.White, "WWW WWW WWW");
-        CubeAssertion.assertFace(cube, CubeColor.Orange, "OOO OOO OOO");
-        CubeAssertion.assertFace(cube, CubeColor.Green, "GGG GGG GGG");
-        CubeAssertion.assertFace(cube, CubeColor.Red, "RRR RRR RRR");
-        CubeAssertion.assertFace(cube, CubeColor.Blue, "BBB BBB BBB");
-        CubeAssertion.assertFace(cube, CubeColor.Yellow, "YYY YYY YYY");
+        CubeAssertion.assertCubeFace(cube, CubeColor.White, "WWW WWW WWW");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Orange, "OOO OOO OOO");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Green, "GGG GGG GGG");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Red, "RRR RRR RRR");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Blue, "BBB BBB BBB");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Yellow, "YYY YYY YYY");
     }
 
     @Test
@@ -39,12 +39,12 @@ class SpeedCubeNotationInterpreterTest {
 
         player.play(records);
 
-        CubeAssertion.assertFace(cube, CubeColor.White, "WYW YWY WYW");
-        CubeAssertion.assertFace(cube, CubeColor.Orange, "ORO ROR ORO");
-        CubeAssertion.assertFace(cube, CubeColor.Green, "GBG BGB GBG");
-        CubeAssertion.assertFace(cube, CubeColor.Red, "ROR ORO ROR");
-        CubeAssertion.assertFace(cube, CubeColor.Blue, "BGB GBG BGB");
-        CubeAssertion.assertFace(cube, CubeColor.Yellow, "YWY WYW YWY");
+        CubeAssertion.assertCubeFace(cube, CubeColor.White, "WYW YWY WYW");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Orange, "ORO ROR ORO");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Green, "GBG BGB GBG");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Red, "ROR ORO ROR");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Blue, "BGB GBG BGB");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Yellow, "YWY WYW YWY");
     }
 
     @Test
@@ -60,12 +60,12 @@ class SpeedCubeNotationInterpreterTest {
 
         player.play(records);
 
-        CubeAssertion.assertFace(cube, CubeColor.White, "WYW YWY WYW");
-        CubeAssertion.assertFace(cube, CubeColor.Orange, "ORO ROR ORO");
-        CubeAssertion.assertFace(cube, CubeColor.Green, "GBG BGB GBG");
-        CubeAssertion.assertFace(cube, CubeColor.Red, "ROR ORO ROR");
-        CubeAssertion.assertFace(cube, CubeColor.Blue, "BGB GBG BGB");
-        CubeAssertion.assertFace(cube, CubeColor.Yellow, "YWY WYW YWY");
+        CubeAssertion.assertCubeFace(cube, CubeColor.White, "WYW YWY WYW");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Orange, "ORO ROR ORO");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Green, "GBG BGB GBG");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Red, "ROR ORO ROR");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Blue, "BGB GBG BGB");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Yellow, "YWY WYW YWY");
     }
 
     @Test
@@ -82,12 +82,12 @@ class SpeedCubeNotationInterpreterTest {
 
         player.play(records);
 
-        CubeAssertion.assertFace(cube, CubeColor.White, "WWW WWW WWW");
-        CubeAssertion.assertFace(cube, CubeColor.Orange, "OOO OOO OOO");
-        CubeAssertion.assertFace(cube, CubeColor.Green, "GGG GGG GGG");
-        CubeAssertion.assertFace(cube, CubeColor.Red, "RRR RRR RRR");
-        CubeAssertion.assertFace(cube, CubeColor.Blue, "BBB BBB BBB");
-        CubeAssertion.assertFace(cube, CubeColor.Yellow, "YYY YYY YYY");
+        CubeAssertion.assertCubeFace(cube, CubeColor.White, "WWW WWW WWW");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Orange, "OOO OOO OOO");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Green, "GGG GGG GGG");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Red, "RRR RRR RRR");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Blue, "BBB BBB BBB");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Yellow, "YYY YYY YYY");
     }
 
     @Test
@@ -103,12 +103,12 @@ class SpeedCubeNotationInterpreterTest {
 
         player.play(records);
 
-        CubeAssertion.assertFace(cube, CubeColor.White, "WYW YWY WYW");
-        CubeAssertion.assertFace(cube, CubeColor.Orange, "ORO ROR ORO");
-        CubeAssertion.assertFace(cube, CubeColor.Green, "GBG BGB GBG");
-        CubeAssertion.assertFace(cube, CubeColor.Red, "ROR ORO ROR");
-        CubeAssertion.assertFace(cube, CubeColor.Blue, "BGB GBG BGB");
-        CubeAssertion.assertFace(cube, CubeColor.Yellow, "YWY WYW YWY");
+        CubeAssertion.assertCubeFace(cube, CubeColor.White, "WYW YWY WYW");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Orange, "ORO ROR ORO");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Green, "GBG BGB GBG");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Red, "ROR ORO ROR");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Blue, "BGB GBG BGB");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Yellow, "YWY WYW YWY");
     }
 
     @Test
@@ -124,11 +124,11 @@ class SpeedCubeNotationInterpreterTest {
 
         player.play(records);
 
-        CubeAssertion.assertFace(cube, CubeColor.White, "WYW YWY WYW");
-        CubeAssertion.assertFace(cube, CubeColor.Orange, "ORO ROR ORO");
-        CubeAssertion.assertFace(cube, CubeColor.Green, "GBG BGB GBG");
-        CubeAssertion.assertFace(cube, CubeColor.Red, "ROR ORO ROR");
-        CubeAssertion.assertFace(cube, CubeColor.Blue, "BGB GBG BGB");
-        CubeAssertion.assertFace(cube, CubeColor.Yellow, "YWY WYW YWY");
+        CubeAssertion.assertCubeFace(cube, CubeColor.White, "WYW YWY WYW");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Orange, "ORO ROR ORO");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Green, "GBG BGB GBG");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Red, "ROR ORO ROR");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Blue, "BGB GBG BGB");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Yellow, "YWY WYW YWY");
     }
 }

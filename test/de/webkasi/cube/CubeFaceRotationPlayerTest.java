@@ -14,12 +14,12 @@ class CubeFaceRotationPlayerTest {
 
         player.play(records);
 
-        CubeAssertion.assertFace(cube, CubeColor.White, "WWW WWW WWW");
-        CubeAssertion.assertFace(cube, CubeColor.Orange, "OOO OOO OOO");
-        CubeAssertion.assertFace(cube, CubeColor.Green, "GGG GGG GGG");
-        CubeAssertion.assertFace(cube, CubeColor.Red, "RRR RRR RRR");
-        CubeAssertion.assertFace(cube, CubeColor.Blue, "BBB BBB BBB");
-        CubeAssertion.assertFace(cube, CubeColor.Yellow, "YYY YYY YYY");
+        CubeAssertion.assertCubeFace(cube, CubeColor.White, "WWW WWW WWW");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Orange, "OOO OOO OOO");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Green, "GGG GGG GGG");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Red, "RRR RRR RRR");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Blue, "BBB BBB BBB");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Yellow, "YYY YYY YYY");
     }
 
     @Test
@@ -36,11 +36,11 @@ class CubeFaceRotationPlayerTest {
 
         player.play(records);
 
-        CubeAssertion.assertFace(cube, CubeColor.White, "WWW WWW WWW");
-        CubeAssertion.assertFace(cube, CubeColor.Orange, "GGG OOO OOO");
-        CubeAssertion.assertFace(cube, CubeColor.Green, "RRR GGG GGG");
-        CubeAssertion.assertFace(cube, CubeColor.Red, "BBB RRR RRR");
-        CubeAssertion.assertFace(cube, CubeColor.Blue, "OOO BBB BBB");
-        CubeAssertion.assertFace(cube, CubeColor.Yellow, "YYY YYY YYY");
+        CubeAssertion.assertCubeFace(cube, CubeColor.White, "WWW WWW WWW");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Orange, "GGG OOO OOO");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Green, "RRR GGG GGG");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Red, "BBB RRR RRR");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Blue, "OOO BBB BBB");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Yellow, "YYY YYY YYY");
     }
 }
