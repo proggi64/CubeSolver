@@ -4,15 +4,13 @@ import de.webkasi.cube.*;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class CubeFactoryTest {
 
     @Test
     void create_NonDefaultWithEmptyRecords() {
         Cube baseCube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(baseCube);
-        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.Orange, 1);
+        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.Orange.ordinal(), 1);
         CubeFaceRotationRecords records = new CubeFaceRotationRecords();
 
         Cube cube = CubeFactory.create(baseCube, records);

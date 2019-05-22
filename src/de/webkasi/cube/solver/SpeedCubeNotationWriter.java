@@ -62,7 +62,7 @@ public class SpeedCubeNotationWriter {
      */
     private void writeSingleRotation(final CubeFaceRotationRecord record) {
         final char[] notationCommands = { 'U', 'L', 'F', 'R', 'B', 'D' };
-        final char face = notationCommands[record.getFace().ordinal()];
+        final char face = notationCommands[record.getFace()];
         _builder.append(record.getCountOfLayers() == 2 ? Character.toLowerCase(face) : face);
         writeDirection(record.getDirection());
      }

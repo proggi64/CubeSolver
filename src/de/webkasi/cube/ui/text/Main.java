@@ -25,28 +25,28 @@ class Main {
         CubeDisplay display = new CubeTextDisplay(cube);
         display.display();
 
-        mover.rotateFace(RotationDirection.Clockwise, CubeColor.Yellow, 1);
+        mover.rotateFace(RotationDirection.Clockwise, CubeColor.Yellow.ordinal(), 1);
         display.display();
 
-        mover.rotateFace(RotationDirection.Counterclockwise, CubeColor.Blue, 1);
+        mover.rotateFace(RotationDirection.Counterclockwise, CubeColor.Blue.ordinal(), 1);
         display.display();
 
-        mover.rotateFace(RotationDirection.Clockwise, CubeColor.White, 1);
+        mover.rotateFace(RotationDirection.Clockwise, CubeColor.White.ordinal(), 1);
         display.display();
 
-        mover.rotateFace(RotationDirection.Clockwise, CubeColor.Green, 2);
+        mover.rotateFace(RotationDirection.Clockwise, CubeColor.Green.ordinal(), 2);
         display.display();
 
-        mover.rotateFace(RotationDirection.Counterclockwise, CubeColor.Green, 2);
+        mover.rotateFace(RotationDirection.Counterclockwise, CubeColor.Green.ordinal(), 2);
         display.display();
 
-        mover.rotateFace(RotationDirection.Counterclockwise, CubeColor.White, 1);
+        mover.rotateFace(RotationDirection.Counterclockwise, CubeColor.White.ordinal(), 1);
         display.display();
 
-        mover.rotateFace(RotationDirection.Clockwise, CubeColor.Blue, 1);
+        mover.rotateFace(RotationDirection.Clockwise, CubeColor.Blue.ordinal(), 1);
         display.display();
 
-        mover.rotateFace(RotationDirection.Counterclockwise, CubeColor.Yellow, 1);
+        mover.rotateFace(RotationDirection.Counterclockwise, CubeColor.Yellow.ordinal(), 1);
         display.display();
     }
 

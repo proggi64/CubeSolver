@@ -10,12 +10,30 @@ import de.webkasi.cube.*;
  * class provides the rotate() method to change the orientation as needed.
  */
 class CubeOrientation {
-    CubeColor up = CubeColor.White;
-    CubeColor left = CubeColor.Orange;
-    CubeColor front = CubeColor.Green;
-    CubeColor right = CubeColor.Red;
-    CubeColor back = CubeColor.Blue;
-    CubeColor down = CubeColor.Yellow;
+    /**
+     * Current index of the upper face.
+     */
+    int up = CubeColor.White.ordinal();
+    /**
+     * Current index of the left face.
+     */
+    int left = CubeColor.Orange.ordinal();
+    /**
+     * Current index of the front face.
+     */
+    int front = CubeColor.Green.ordinal();
+    /**
+     * Current index of the right face.
+     */
+    int right = CubeColor.Red.ordinal();
+    /**
+     * Current index of the back face.
+     */
+    int back = CubeColor.Blue.ordinal();
+    /**
+     * Current index of the down face.
+     */
+    int down = CubeColor.Yellow.ordinal();
 
     /**
      * Rotates the orientation of the cube as specified.
@@ -62,7 +80,7 @@ class CubeOrientation {
      * Turns the orientation of the cube 90 degrees around the x-axis.
      */
     private void x() {
-        CubeColor oldUp = up;
+        int oldUp = up;
         up = back;
         back = down;
         down = front;
@@ -73,7 +91,7 @@ class CubeOrientation {
      * Turns the orientation of the cube 90 degrees around the y-axis.
      */
     private void y() {
-        CubeColor oldLeft = left;
+        int oldLeft = left;
         left = front;
         front = right;
         right = back;
@@ -84,7 +102,7 @@ class CubeOrientation {
      * Turns the orientation of the cube 90 degrees around the z-axis.
      */
     private void z() {
-        CubeColor oldLeft = left;
+        int oldLeft = left;
         left = down;
         down = right;
         right = up;

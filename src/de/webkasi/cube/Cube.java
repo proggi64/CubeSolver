@@ -87,6 +87,7 @@ public class Cube {
     /**
      * Gets the specified CubeFace by its numeric index.
      *
+     * For the initial orientation of the cube the index values mean:
      * 0 is white, 1 is orange, 2 is green, 3 is red, 4 is blue,
      * and 5 is yellow.
      *
@@ -105,7 +106,7 @@ public class Cube {
      * The color specifies the initial color of the face when the
      * cube has been created.
      *
-     * @param face The CubeColor taht represents the cube's face.*
+     * @param face The CubeColor that represents the cube's face.
      * @return A CubeFace object representing the current matrix of
      * color fields of the face.
      */

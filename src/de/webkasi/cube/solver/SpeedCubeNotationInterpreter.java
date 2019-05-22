@@ -187,8 +187,8 @@ public class SpeedCubeNotationInterpreter {
      * @param i The index of the next character in moves.
      * @param orientation The current CubeOrientation that may be changed.
      * @param axis A character specifying the axis (x, y, or z) of the rotation.
-     * @param faceA The color of the first face to rotate.
-     * @param faceB The color of the secons face to rotate.
+     * @param faceIndexA The color of the first face to rotate.
+     * @param faceIndexB The color of the secons face to rotate.
      * @return The index of the last character that has been interpreted by this method.
      */
     private int rotateMiddleLayer(
@@ -196,11 +196,11 @@ public class SpeedCubeNotationInterpreter {
             int i,
             CubeOrientation orientation,
             char axis,
-            CubeColor faceA,
-            CubeColor faceB) {
+            int faceIndexA,
+            int faceIndexB) {
 
-        CubeFaceRotationRecord recordA = new CubeFaceRotationRecord(faceA);
-        CubeFaceRotationRecord recordB = new CubeFaceRotationRecord(faceB);
+        CubeFaceRotationRecord recordA = new CubeFaceRotationRecord(faceIndexA);
+        CubeFaceRotationRecord recordB = new CubeFaceRotationRecord(faceIndexB);
         boolean ready = false;
         boolean reverse = false;
         int count = 1;

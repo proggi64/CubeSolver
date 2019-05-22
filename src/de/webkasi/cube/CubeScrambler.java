@@ -13,7 +13,7 @@ public class CubeScrambler {
      *
      * If the cube has more than 3 rows and columns then a random number
      * of layers are rotated with each rotation. The higher the depth the
-     * more complex is the solution.
+     * more complex will the solution be.
      *
      * @param cube The Cube to scramble
      * @param depth Count of random rotations
@@ -26,10 +26,10 @@ public class CubeScrambler {
         for (int i = 0; i < depth; i++) {
             RotationDirection direction = generator.nextInt(2) == 0 ?
                     RotationDirection.Clockwise : RotationDirection.Counterclockwise;
-            CubeColor faceColor = CubeColor.values()[generator.nextInt(CubeColor.values().length)];
+            int face = generator.nextInt(CubeColor.values().length);
             int countOfLayers = dimension <= 3 ? 1 : generator.nextInt(dimension / 2) + 1;
 
-            rotater.rotateFace(direction, faceColor, countOfLayers);
+            rotater.rotateFace(direction, face, countOfLayers);
         }
     }
 }

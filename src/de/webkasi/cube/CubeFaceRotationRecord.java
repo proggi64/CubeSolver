@@ -4,7 +4,7 @@ package de.webkasi.cube;
  * Represents a cube rotation for playing rotations.
  */
 public class CubeFaceRotationRecord {
-    private CubeColor _face;
+    private int _face;
     private RotationDirection _direction;
     private int _countOfLayers;
 
@@ -15,9 +15,9 @@ public class CubeFaceRotationRecord {
      * The default direction is clockwise,
      * and the count of layers is one.
      *
-     * @param face The CubeColor specifying the face to rotate.
+     * @param face The index of the face to rotate.
      */
-    public CubeFaceRotationRecord(CubeColor face) {
+    public CubeFaceRotationRecord(int face) {
         _face = face;
         _direction = RotationDirection.Clockwise;
         _countOfLayers = 1;
@@ -29,9 +29,9 @@ public class CubeFaceRotationRecord {
      *
      * The default direction is clockwise.
      *
-     * @param face The CubeColor specifying the face to rotate.
+     * @param face The index of the face to rotate.
      */
-    public CubeFaceRotationRecord(CubeColor face, int countOfLayers) {
+    public CubeFaceRotationRecord(int face, int countOfLayers) {
         _face = face;
         _direction = RotationDirection.Clockwise;
         _countOfLayers = countOfLayers;
@@ -41,31 +41,31 @@ public class CubeFaceRotationRecord {
      * Initializes a new instance of the CubeFaceRotationRecord class
      * with the specified values.
      *
-     * @param face The CubeColor specifying the face to rotate.
+     * @param face The index of the face to rotate.
      * @param direction The CubeRotationDirection value specifying the rotation direction.
      * @param countOfLayers The count of layers to rotate.
      */
-    public CubeFaceRotationRecord(CubeColor face, RotationDirection direction, int countOfLayers) {
+    public CubeFaceRotationRecord(int face, RotationDirection direction, int countOfLayers) {
         _face = face;
         _direction = direction;
         _countOfLayers = countOfLayers;
     }
 
     /**
-     * Sets the CubeColor specifying the face to rotate.
+     * Sets the index of the face to rotate.
      *
-     * @param face The CubeColor of the face to rotate.
+     * @param face The index of the face to rotate.
      */
-    public void setFace(CubeColor face) {
+    public void setFace(int face) {
         _face = face;
     }
 
     /**
-     * Gets the CubeColor specifying the face to rotate.
+     * Gets the index of the face to rotate.
      *
-     * @return The CubeColor specifying the face to rotate.
+     * @return The index of the face to rotate.
      */
-    public CubeColor getFace() {
+    public int getFace() {
         return _face;
     }
 
