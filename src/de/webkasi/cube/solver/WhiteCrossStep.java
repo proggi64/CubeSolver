@@ -6,7 +6,7 @@ import de.webkasi.cube.*;
  * Provides the solution steps for creating a white cross on a
  * scrambled 3x3 Magic Cube.
  */
-public class WhiteCrossStep {
+class WhiteCrossStep {
 
     private final Cube _cube;
     private final CubeFaceRotationRecords _records;

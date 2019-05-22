@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import de.webkasi.cube.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class CubeTextDescriptorTest {
 
     @Test

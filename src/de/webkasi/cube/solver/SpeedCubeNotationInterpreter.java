@@ -10,7 +10,7 @@ import de.webkasi.cube.*;
  */
 public class SpeedCubeNotationInterpreter {
 
-    private CubeFaceRotationRecords records;
+    private final CubeFaceRotationRecords records;
 
     /**
      * Initializes a new instance of the SpeedCubeNotationInterpreter class.

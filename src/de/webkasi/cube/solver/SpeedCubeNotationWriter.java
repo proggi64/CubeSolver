@@ -11,8 +11,8 @@ import de.webkasi.cube.*;
  * orientation with the white face up and the orange face left.
  */
 public class SpeedCubeNotationWriter {
-    private StringBuilder _builder;
-    private CubeFaceRotationRecords _records;
+    private final StringBuilder _builder;
+    private final CubeFaceRotationRecords _records;
     private int _recordIndex;
 
     private SpeedCubeNotationWriter(CubeFaceRotationRecords records) {

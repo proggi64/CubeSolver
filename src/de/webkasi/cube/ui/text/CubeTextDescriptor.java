@@ -7,7 +7,7 @@ import de.webkasi.cube.*;
  * a sequence of characters that represent the colors of its fields.
  */
 public class CubeTextDescriptor {
-    private int _dimension;
+    private final int _dimension;
 
     /**
      * Initializes a new instance of the CubeTextDescriptor class

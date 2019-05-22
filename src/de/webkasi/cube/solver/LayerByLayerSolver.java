@@ -7,8 +7,8 @@ import de.webkasi.cube.*;
  */
 public class LayerByLayerSolver {
 
-    private Cube _cube;
-    private CubeFaceRotationRecords _records;
+    private final Cube _cube;
+    private final CubeFaceRotationRecords _records;
 
     /**
      * @param cube The cube that should be solved.

@@ -5,7 +5,7 @@ package de.webkasi.cube;
  * object.
  */
 public class CubeFaceRotationPlayer {
-    private CubeFaceRotator _rotator;
+    private final CubeFaceRotator _rotator;
 
     /**
      * Initializes a new instance of the CubeFaceRotationPlayer class.

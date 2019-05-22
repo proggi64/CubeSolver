@@ -22,7 +22,6 @@ public class CubeAssertion {
      *               cube's face.
      */
     public static void assertCubeFace(Cube cube, CubeColor face, String colors) {
-        int dimension = cube.getDimension();
         CubeFace cubeFace = cube.getFace(face);
         assertFace(cubeFace, colors);
     }
@@ -34,17 +33,14 @@ public class CubeAssertion {
      * @param colors The String with the expected color field descritions.
      */
     public static void assertFace(CubeFace cubeFace, String colors) {
-        int row = 0;
-        int column = 0;
         int dimension = cubeFace.getDimension();
         CubeTextDescriptor descriptor = new CubeTextDescriptor(dimension);
         CubeFace expectedColors = descriptor.describeFace(colors);
-        for (row = 0; row < dimension; row++)
-            for (column = 0; column < dimension; column++)
+        for (int row = 0; row < dimension; row++)
+            for (int column = 0; column < dimension; column++)
                 assertEquals(expectedColors.getField(row, column), cubeFace.getField(row, column),
                         String.format("Mismatch Row %d Column %d, Expected: %s, found: %s", row, column,
                                 expectedColors.getField(row, column).toString(), cubeFace.getField(row, column).toString()));
-
     }
 
 }

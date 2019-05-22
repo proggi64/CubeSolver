@@ -6,7 +6,7 @@ import de.webkasi.cube.*;
  * Provides the solution steps for completing a white cross on a
  * scrambled 3x3 Magic Cube.
  */
-public class WhiteCrossCornersStep {
+class WhiteCrossCornersStep {
     /**
      * Rotates the corners of the white cross of the cube so that they have
      * the right orientation.
@@ -21,7 +21,7 @@ public class WhiteCrossCornersStep {
      *             orientation of the corners may be wrong.
      * @param records The CubeFaceRotationRecords object receiving the solution steps.
      */
-    public static void solve(Cube cube, CubeFaceRotationRecords records) {
+    static void solve(Cube cube, CubeFaceRotationRecords records) {
         Cube currentCube = CubeFactory.create(cube, records);
 
 
