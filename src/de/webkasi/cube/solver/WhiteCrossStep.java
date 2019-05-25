@@ -101,7 +101,8 @@ class WhiteCrossStep {
      * @param cube The Cube to solve. The cube may be completely scrambled.
      *             There is is no need of any previous step to pass a Cube
      *             to this method.
-     * @param records The CubeFaceRotationRecords object receiving the solution steps.
+     * @param records The CubeFaceRotationRecords object receiving the solution steps. This
+     *                must be empty.
      */
     private WhiteCrossStep(Cube cube, CubeFaceRotationRecords records) {
         _cube = cube;
@@ -131,6 +132,21 @@ class WhiteCrossStep {
         // TODO Falls nicht: turnEdge für betroffenen Randstein
 
         // 1. WG 2. Y WR 3. Y WB 4. Y WO
+
+        SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(records);
+
+        EdgePosition whiteGreenPosition = PositionFinder.FindEdge(cube, CubeColor.White, CubeColor.Green);
+        EdgePosition whiteGreenDestination = new EdgePosition(CubeColor.White.ordinal(), 2, 1);
+
+        // TODO Züge ermitteln und auf dem temporären Cube ausführen
+
+        Cube temporaryCube = new Cube(cube);
+        CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(new CubeFaceRotator(cube));
+        player.play(records);
+
+        EdgePosition whiteRedPosition = PositionFinder.FindEdge(temporaryCube, CubeColor.White, CubeColor.Red);
+        EdgePosition whiteRedDestination = new EdgePosition(CubeColor.White.ordinal(), 1, 2);
+
     }
 
 
