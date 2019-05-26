@@ -109,6 +109,30 @@ class WhiteCrossStep {
         _records = records;
     }
 
+    static class Solution {
+        EdgePosition position;
+        String moves;
+
+        Solution(EdgePosition position, String moves) {
+            this.position = position;
+            this.moves = moves;
+        }
+    }
+
+    static final String space = " ";
+    static final int up = CubeColor.White.ordinal();
+
+    private static final Solution[] solutions = {
+            new Solution(new EdgePosition(up, 2, 1), ""),
+            new Solution(new EdgePosition(up, 1, 2), upRightToFrontRight + space +
+                    frontRightToFrontUp + space + turnEdge),
+            new Solution(new EdgePosition(up, 0, 1), upBackToBackLeft + space +
+                    backEquatorLeftToFrontLeft + space +
+                    frontLeftToFrontUp + space + turnEdge),
+            new Solution(new EdgePosition(up, 1, 0), upLeftToFrontLeft + space +
+                    frontLeftToFrontUp + space + turnEdge),
+    };
+
     /**
      * Creates a white cross as described for the Layer-by-Layer algorithm.
      *
@@ -134,19 +158,25 @@ class WhiteCrossStep {
         // 1. WG 2. Y WR 3. Y WB 4. Y WO
 
         SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(records);
+        CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(new CubeFaceRotator(cube));
 
         EdgePosition whiteGreenPosition = PositionFinder.FindEdge(cube, CubeColor.White, CubeColor.Green);
-        EdgePosition whiteGreenDestination = new EdgePosition(CubeColor.White.ordinal(), 2, 1);
+        String whiteGreenSolutionMoves = step.findSolution(whiteGreenPosition);
 
         // TODO Züge ermitteln und auf dem temporären Cube ausführen
+        interpreter.addMoves(whiteGreenSolutionMoves);
 
-        Cube temporaryCube = new Cube(cube);
-        CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(new CubeFaceRotator(cube));
-        player.play(records);
+        //player.play(records);
 
-        EdgePosition whiteRedPosition = PositionFinder.FindEdge(temporaryCube, CubeColor.White, CubeColor.Red);
-        EdgePosition whiteRedDestination = new EdgePosition(CubeColor.White.ordinal(), 1, 2);
+    }
 
+    private String findSolution(EdgePosition position) {
+        int i = 0;
+        while (true) {
+            if (solutions[i].position.isEqual(position))
+                return solutions[i].moves;
+            i++;
+        }
     }
 
 

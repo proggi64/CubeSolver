@@ -59,6 +59,17 @@ class PositionFinderTest {
     }
 
     @Test
+    void findEdge_GreenWhiteAfterCounterclockwiseRotation() {
+        Cube cube = new Cube();
+        CubeFaceRotator rotator = new CubeFaceRotator(cube);
+        rotator.rotateFace(RotationDirection.Counterclockwise, CubeColor.White.ordinal(), 1);
+        EdgePosition position = PositionFinder.FindEdge(cube, CubeColor.White, CubeColor.Green);
+        assertEquals(Up, position.getFace());
+        assertEquals(1, position.getRow());
+        assertEquals(0, position.getColumn());
+    }
+
+    @Test
     void findCorner() {
     }
 }
