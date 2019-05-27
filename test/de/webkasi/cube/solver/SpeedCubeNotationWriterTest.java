@@ -26,14 +26,12 @@ class SpeedCubeNotationWriterTest {
         SpeedCubeNotationInterpreter interpreterSource = new SpeedCubeNotationInterpreter(recordsSource);
         CubeFaceRotationRecords records = new CubeFaceRotationRecords();
         SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(records);
-
-        // This syntax is not supported by the Writer, but the result must be the same
         interpreterSource.addMoves("M2 S2 E2");
 
-        interpreter.addMoves(SpeedCubeNotationWriter.Write(recordsSource));
+        String result = SpeedCubeNotationWriter.Write(recordsSource);
 
+        interpreter.addMoves(result);
         CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(rotator);
-
         player.play(records);
 
         CubeAssertion.assertCubeFace(cube, CubeColor.White, "WYW YWY WYW");

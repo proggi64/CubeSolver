@@ -4,17 +4,26 @@ import de.webkasi.cube.*;
 
 /**
  * Provides the translation of CubeFaceRotationRecords into
- * a SpeedCube notation syntax string.
+ * a SpeedCube notation string.
  *
- * This implementat‚ion does not use complete cube rotations.
+ * This implementation does not use complete cube rotations.
  * Instead, the cube's orientation must always be the default
- * orientation with the white face up and the orange face left.
+ * orientation with the initial white face up and the orange face left.
  */
 public class SpeedCubeNotationWriter {
     private final StringBuilder _builder;
     private final CubeFaceRotationRecords _records;
     private int _recordIndex;
+    private final static char[] notationFaceCommands = { 'U', 'L', 'F', 'R', 'B', 'D' };
+    private final static char[] notationMiddleCommands = { ' ', 'M', ' ', ' ', 'S', 'E' };
 
+    /**
+     * Initializes a new instance of the SpeedCubeNotationWriter class
+     * with the specified rotation records.
+     *
+     * @param records The SpeedCubeNotationRecords collection of moves that
+     *                is translated into a SpeedCube notation string.
+     */
     private SpeedCubeNotationWriter(CubeFaceRotationRecords records) {
         _builder = new StringBuilder(1024);
         _records = records;
@@ -61,11 +70,23 @@ public class SpeedCubeNotationWriter {
      * @param record The CubeFaceRotationRecord to write into the result.
      */
     private void writeSingleRotation(final CubeFaceRotationRecord record) {
-        final char[] notationCommands = { 'U', 'L', 'F', 'R', 'B', 'D' };
-        final char face = notationCommands[record.getFace()];
+        final char face = getCommand(record);
         _builder.append(record.getCountOfLayers() == 2 ? Character.toLowerCase(face) : face);
         writeDirection(record.getDirection());
      }
+
+    /**
+     * Gets the command character for the record.
+     *
+     * @param record The CubeFaceRotationRecord to write into the result.
+     * @return The command character that corresponds to the record.
+     */
+    private char getCommand(CubeFaceRotationRecord record) {
+        int faceIndex = record.getFace();
+        if (record.getStartRow() == 0)
+            return notationFaceCommands[faceIndex];
+        return notationMiddleCommands[faceIndex];
+    }
 
     /**
      * Writes the character '2' into the string result if the

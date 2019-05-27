@@ -4,8 +4,9 @@ package de.webkasi.cube;
  * Represents a cube rotation for playing rotations.
  */
 public class CubeFaceRotationRecord {
-    private int _face;
+    private final int _face;
     private RotationDirection _direction;
+    private int _startRow;
     private int _countOfLayers;
 
     /**
@@ -20,6 +21,7 @@ public class CubeFaceRotationRecord {
     public CubeFaceRotationRecord(int face) {
         _face = face;
         _direction = RotationDirection.Clockwise;
+        _startRow = 0;
         _countOfLayers = 1;
     }
 
@@ -34,6 +36,7 @@ public class CubeFaceRotationRecord {
     public CubeFaceRotationRecord(int face, int countOfLayers) {
         _face = face;
         _direction = RotationDirection.Clockwise;
+        _startRow = 0;
         _countOfLayers = countOfLayers;
     }
 
@@ -48,16 +51,24 @@ public class CubeFaceRotationRecord {
     public CubeFaceRotationRecord(int face, RotationDirection direction, int countOfLayers) {
         _face = face;
         _direction = direction;
+        _startRow = 0;
         _countOfLayers = countOfLayers;
     }
 
     /**
-     * Sets the index of the face to rotate.
+     * Initializes a new instance of the CubeFaceRotationRecord class
+     * with the specified values.
      *
      * @param face The index of the face to rotate.
+     * @param direction The CubeRotationDirection value specifying the rotation direction.
+     * @param startRow The first layer index which is rotated
+     * @param countOfLayers The count of layers to rotate.
      */
-    public void setFace(int face) {
+    public CubeFaceRotationRecord(int face, RotationDirection direction, int startRow, int countOfLayers) {
         _face = face;
+        _direction = direction;
+        _startRow = startRow;
+        _countOfLayers = countOfLayers;
     }
 
     /**
@@ -87,6 +98,23 @@ public class CubeFaceRotationRecord {
     public RotationDirection getDirection() {
         return _direction;
     }
+
+
+    /**
+     * Gets the index of the first row to rotate.
+     *
+     * @return Index of the first row to rotate.
+     * When greater zero then the to face is not rotated.
+     */
+    public int getStartRow() { return _startRow; }
+
+    /**
+     * Sets the index of the first row to rotate.
+     * When greater zero then the to face is not rotated.
+     *
+     * @param startRow Index of the first row to rotate.
+     */
+    public void setStartRow(int startRow) { this._startRow = startRow; }
 
     /**
      * Sets the count of layers to rotate.

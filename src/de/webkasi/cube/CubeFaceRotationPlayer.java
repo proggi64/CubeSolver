@@ -24,7 +24,12 @@ public class CubeFaceRotationPlayer {
      */
     public void play(CubeFaceRotationRecords records) {
         records.forEach(
-                (v) -> _rotator.rotateFace(v.getDirection(), v.getFace(), v.getCountOfLayers())
+                (v) -> {
+                    if (v.getStartRow() == 0)
+                        _rotator.rotateFace(v.getDirection(), v.getFace(), v.getCountOfLayers());
+                    else
+                        _rotator.rotateMiddleLayer(v.getDirection(), v.getFace(), v.getStartRow(), v.getCountOfLayers());
+                }
         );
     }
 }

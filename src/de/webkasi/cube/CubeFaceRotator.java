@@ -93,18 +93,39 @@ public class CubeFaceRotator {
      *
      * For cubes with more than 3x3 fields it is needed to be able to rotate more than the
      * upper-most layer with the rotating face. In this cases countOfLayers is greater than
-     * one. It is not supported to rotate a specific layer. Instead, you have to rotate
-     * two faces to achieve the same effect.
+     * one.
      *
      * @param direction The RotationDirection that specifies the direction of the rotation
-     * @param faceIndex The index of the middle field of the face that is rotated.
+     * @param faceIndex The index of the face that is rotated.
      * @param countOfLayers The count of layers of the side faces to rotate with the face
      */
     public void rotateFace(final RotationDirection direction, final int faceIndex, final int countOfLayers) {
+        rotateMiddleLayer(direction, faceIndex, 0, countOfLayers);
+    }
+
+    /**
+     * Rotates the specified layers of the face of the cube in the specified direction.
+     *
+     * For cubes with more than 3x3 fields it is needed to be able to rotate more than the
+     * upper-most layer with the rotating face. In this cases countOfLayers is greater than
+     * one.
+     *
+     * If startRow is greater zero then the top face layer is not rotated. This is used
+     * to rotate middle layers only.
+     *
+     * @param direction The RotationDirection that specifies the direction of the rotation
+     * @param faceIndex The index of the face that is rotated.
+     * @param countOfLayers The count of layers of the side faces to rotate with the face
+     */
+    public void rotateMiddleLayer(
+            final RotationDirection direction,
+            final int faceIndex,
+            final int startRow,
+            final int countOfLayers) {
         if (direction == RotationDirection.Clockwise)
-            rotateClockwise(faceIndex, countOfLayers);
+            rotateClockwise(faceIndex, startRow, countOfLayers);
         else
-            rotateCounterclockwise(faceIndex, countOfLayers);
+            rotateCounterclockwise(faceIndex, startRow, countOfLayers);
     }
 
     /**
@@ -112,12 +133,15 @@ public class CubeFaceRotator {
      * of the connected side faces.
      *
      * @param faceIndex The index of the middle field of the face that is rotated.
+     * @param startRow The index of the first layer that is rotated. If greater 0 then
+     *                   the face itself is not rotated.
      * @param rows The count of layers of the side faces to rotate with the face
      */
-    private void rotateClockwise(final int faceIndex, final int rows) {
-        rotateTopClockwise(_cube.getFaces()[faceIndex]);
+    private void rotateClockwise(final int faceIndex, final int startRow, final int rows) {
+        if (startRow == 0)
+            rotateTopClockwise(_cube.getFaces()[faceIndex]);
 
-        for (int row = 0; row < rows; row++) {
+        for (int row = startRow; row < startRow + rows; row++) {
             shiftSideLayerClockwise(faceIndex, row);
         }
     }
@@ -150,13 +174,16 @@ public class CubeFaceRotator {
      * Rotates the specified face counterclockwise with the specified count of layers
      * of the connected side faces.
      *
-     * @param faceIndex The index of the middle field of the face that is rotated.
-     * @param rows The count of layers of the side faces to rotate with the face
+     * @param faceIndex The index of the face that is rotated.
+     * @param startRow The index of the first layer that is rotated. If greater 0 then
+     *                   the face itself is not rotated.
+     * @param rows The count of layers of the side faces to rotate with the face.
      */
-    private void rotateCounterclockwise(final int faceIndex, final int rows) {
-        rotateTopCounterclockwise(_cube.getFaces()[faceIndex]);
+    private void rotateCounterclockwise(final int faceIndex, final int startRow, final int rows) {
+        if (startRow == 0)
+            rotateTopCounterclockwise(_cube.getFaces()[faceIndex]);
 
-        for (int row = 0; row < rows; row++) {
+        for (int row = startRow; row < startRow + rows; row++) {
             shiftSideLayerCounterclockwise(faceIndex, row);
         }
     }
@@ -263,7 +290,7 @@ public class CubeFaceRotator {
      * Normalizes the four side faces of the rotating cube face to use
      * a standard indexing for the color fields for shift operations.
      *
-     * The normalization rotates alle four side faces so that the row 0 and column 0
+     * The normalization rotates all four side faces so that the row 0 and column 0
      * is always to the upper left corner toward the rotating face. The shift algorithms
      * can always use the same field indexes for the operations when the faces are normalized.
      * After the operations, the faces are de-normalized (rotated back to their original
@@ -274,9 +301,8 @@ public class CubeFaceRotator {
      *              the indexes for the shift operations.
      */
     private void normalizeSides(int side, CubeFace[] sides) {
-        int sideIndex = side;
-        int[] countOfRotations = _sideRotations[sideIndex];
-        RotationDirection[] directions = _sideRotationDirections[sideIndex];
+        int[] countOfRotations = _sideRotations[side];
+        RotationDirection[] directions = _sideRotationDirections[side];
 
         for (int shiftSideIndex = 0; shiftSideIndex < 4; shiftSideIndex++) {
             for (int count = 0; count < countOfRotations[shiftSideIndex]; count++) {
@@ -303,9 +329,8 @@ public class CubeFaceRotator {
      *              positions
      */
     private void denormalizeSides(int side, CubeFace[] sides) {
-        int sideIndex = side;
-        int[] countOfRotations = _sideRotations[sideIndex];
-        RotationDirection[] directions = _sideRotationDirections[sideIndex];
+        int[] countOfRotations = _sideRotations[side];
+        RotationDirection[] directions = _sideRotationDirections[side];
 
         for (int shiftSideIndex = 0; shiftSideIndex < 4; shiftSideIndex++) {
             for (int count = 0; count < countOfRotations[shiftSideIndex]; count++) {

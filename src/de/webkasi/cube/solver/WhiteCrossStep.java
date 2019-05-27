@@ -19,7 +19,7 @@ class WhiteCrossStep {
      * is valid when the edge is at the front face. When using for other edges, the cube
      * must be rotated into the right position first.
      */
-    static final String turnEdge = "F' U L' U";
+    private static final String turnEdge = "F' U L' U'";
 
     /**
      * Sequence that positions the edge from the front left to the top.
@@ -27,7 +27,7 @@ class WhiteCrossStep {
      * This sequence positions the edge from the left side of the front
      * to the top.
      */
-    static final String frontLeftToFrontUp = "F";
+    private static final String frontLeftToFrontUp = "F";
 
     /**
      * Sequence that positions the edge from the front right to the top.
@@ -35,7 +35,7 @@ class WhiteCrossStep {
      * This sequence positions the edge from the right side of the front
      * to the top.
      */
-    static final String frontRightToFrontUp = "F'";
+    private static final String frontRightToFrontUp = "F'";
 
     /**
      * Sequence that positions the edge from the front bottom to the top.
@@ -43,32 +43,32 @@ class WhiteCrossStep {
      * This sequence positions the edge from th bottom of the front
      * to the top.
      */
-    static final String frontDownToFrontUp = "F2";
+    private static final String frontDownToFrontUp = "F2";
 
     /**
      * Sequence that positions the edge from the back middle left to the left front.
      */
-    static final String backEquatorLeftToFrontLeft = "M";
+    private static final String backEquatorLeftToFrontLeft = "E";
 
     /**
      * Sequence that positions the edge from the back middle right to the right front.
      */
-    static final String backEquatorRightToFrontRight = "M'";
+    private static final String backEquatorRightToFrontRight = "E'";
 
     /**
      * Sequence that positions the edge from the down left to the down front.
      */
-    static final String downLeftToDownFront = "D";
+    private static final String downLeftToDownFront = "D";
 
     /**
      * Sequence that positions the edge from the down right to the down front.
      */
-    static final String downRightToDownFront = "D'";
+    private static final String downRightToDownFront = "D'";
 
     /**
      * Sequence that positions the edge from the down back to the down front.
      */
-    static final String downBackToDownFront = "D2";
+    private static final String downBackToDownFront = "D2";
 
     /**
      * Sequence that positions the edge from the back up to the back left position.
@@ -77,7 +77,7 @@ class WhiteCrossStep {
      * Then the edge must be moved to the front up position. This is the first step for
      * this sequence.
      */
-    static final String upBackToBackLeft = "B";
+    private static final String upBackToBackLeft = "B";
 
     /**
      * Sequence that positions the edge from the up left to the front left position.
@@ -86,7 +86,7 @@ class WhiteCrossStep {
      * Then the edge must be moved to the front up position. This is the first step for
      * this sequence.
      */
-    static final String upLeftToFrontLeft = "L";
+    private static final String upLeftToFrontLeft = "L";
 
     /**
      * Sequence that positions the edge from the up right to the front right position.
@@ -95,7 +95,7 @@ class WhiteCrossStep {
      * The the edge must be moved to the front up position. This is the first step for
      * this sequence.
      */
-    static final String upRightToFrontRight = "R'";
+    private static final String upRightToFrontRight = "R'";
 
     /**
      * @param cube The Cube to solve. The cube may be completely scrambled.
@@ -109,27 +109,42 @@ class WhiteCrossStep {
         _records = records;
     }
 
+    /**
+     * Encapsulates the EdgePosition and the solution for this position
+     * as a String of SpeedCube notations steps.
+     *
+     * Solution is used for a state-solution pairs for the WhiteCrossStep
+     * class. Each position of an edge has a specific solution. When the
+     * position is known, the solution can be found.
+     */
     static class Solution {
-        EdgePosition position;
-        String moves;
+        final EdgePosition position;
+        final String moves;
 
+        /**
+         * @param position the position of an edge.
+         * @param moves The moves in SpeedCube syntax.
+         */
         Solution(EdgePosition position, String moves) {
             this.position = position;
             this.moves = moves;
         }
     }
 
-    static final String space = " ";
-    static final int up = CubeColor.White.ordinal();
+    private static final String space = " ";
+    private static final int up = CubeColor.White.ordinal();
 
     private static final Solution[] solutions = {
             new Solution(new EdgePosition(up, 2, 1), ""),
-            new Solution(new EdgePosition(up, 1, 2), upRightToFrontRight + space +
+            new Solution(new EdgePosition(up, 1, 2),
+                    upRightToFrontRight + space +
                     frontRightToFrontUp + space + turnEdge),
-            new Solution(new EdgePosition(up, 0, 1), upBackToBackLeft + space +
+            new Solution(new EdgePosition(up, 0, 1),
+                    upBackToBackLeft + space +
                     backEquatorLeftToFrontLeft + space +
                     frontLeftToFrontUp + space + turnEdge),
-            new Solution(new EdgePosition(up, 1, 0), upLeftToFrontLeft + space +
+            new Solution(new EdgePosition(up, 1, 0),
+                    upLeftToFrontLeft + space +
                     frontLeftToFrontUp + space + turnEdge),
     };
 
@@ -145,7 +160,7 @@ class WhiteCrossStep {
      *             to this method.
      * @param records The CubeFaceRotationRecords object receiving the solution steps.
      */
-    static public void solve(Cube cube, CubeFaceRotationRecords records) {
+    public static void solve(Cube cube, CubeFaceRotationRecords records) {
         WhiteCrossStep step = new WhiteCrossStep(cube, records);
         // TODO für alle weißen Randsteine:
         // TODO Situationsanalyse: Wo ist der weiße Randstein?
@@ -158,18 +173,29 @@ class WhiteCrossStep {
         // 1. WG 2. Y WR 3. Y WB 4. Y WO
 
         SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(records);
-        CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(new CubeFaceRotator(cube));
 
         EdgePosition whiteGreenPosition = PositionFinder.FindEdge(cube, CubeColor.White, CubeColor.Green);
         String whiteGreenSolutionMoves = step.findSolution(whiteGreenPosition);
 
-        // TODO Züge ermitteln und auf dem temporären Cube ausführen
         interpreter.addMoves(whiteGreenSolutionMoves);
 
-        //player.play(records);
+        // TODO Züge ermitteln und auf dem temporären Cube ausführen
+        Cube temporaryCube = CubeFactory.create(cube, records);
+        // TODO Front auf Rot drehen und nächsten Rand lösen
 
     }
 
+    /**
+     * Finds the solution for a specific edge position.
+     *
+     * For each possible edge position exists a sequence of moves.
+     * These moves are stored in an internal array of Solution
+     * objects. The array is searches for the position and the
+     * corresponding solution ist returned.
+     *
+     * @param position The EdgePosition to find the solution for.
+     * @return A String with the solution steps in SpeedCube syntax.
+     */
     private String findSolution(EdgePosition position) {
         int i = 0;
         while (true) {

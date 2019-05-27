@@ -6,11 +6,9 @@ import de.webkasi.cube.*;
 class Main {
 
     public static void main(String[] args) {
-        testScramble(3, 25);
     }
 
-    private static void testScramble(int dimension, int depth)
-    {
+    private static void testScramble(int dimension, int depth) {
         Cube cube = new Cube(dimension);
         CubeScrambler.scrambleCube(cube, depth);
 
