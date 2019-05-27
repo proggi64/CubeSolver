@@ -58,17 +58,17 @@ class WhiteCrossStep {
     /**
      * Sequence that positions the edge from the down left to the down front.
      */
-    private static final String downLeftToDownFront = "D";
+    private static final String downLeftToFrontDown = "D";
 
     /**
      * Sequence that positions the edge from the down right to the down front.
      */
-    private static final String downRightToDownFront = "D'";
+    private static final String downRightToFrontDown = "D'";
 
     /**
      * Sequence that positions the edge from the down back to the down front.
      */
-    private static final String downBackToDownFront = "D2";
+    private static final String downBackToFrontDown = "D2";
 
     /**
      * Sequence that positions the edge from the back up to the back left position.
@@ -133,8 +133,10 @@ class WhiteCrossStep {
 
     private static final String space = " ";
     private static final int up = CubeColor.White.ordinal();
+    private static final int left = CubeColor.Orange.ordinal();
 
     private static final Solution[] solutions = {
+            // found at the top face
             new Solution(new EdgePosition(up, 2, 1), ""),
             new Solution(new EdgePosition(up, 1, 2),
                     upRightToFrontRight + space +
@@ -146,6 +148,19 @@ class WhiteCrossStep {
             new Solution(new EdgePosition(up, 1, 0),
                     upLeftToFrontLeft + space +
                     frontLeftToFrontUp + space + turnEdge),
+
+            // found at the left face
+            new Solution(new EdgePosition(left, 0, 1),
+                    upLeftToFrontLeft + space +
+                    frontLeftToFrontUp),
+            new Solution(new EdgePosition(left, 1, 0),
+                    backEquatorLeftToFrontLeft + space +
+                    frontLeftToFrontUp + space + turnEdge),
+            new Solution(new EdgePosition(left, 1, 2),
+                    frontLeftToFrontUp),
+            new Solution(new EdgePosition(left, 2, 1),
+                    downLeftToFrontDown + space +
+                    frontDownToFrontUp + space + turnEdge),
     };
 
     /**

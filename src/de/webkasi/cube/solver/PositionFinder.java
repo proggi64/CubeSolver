@@ -31,7 +31,7 @@ public class PositionFinder {
             { 0, 2, 1,  2, 0, 1 },  // top front
 
             { 1, 0, 1,  0, 1, 0 },  // left top - initial orange
-            { 1, 1, 0,  4, 0, 1 },  // left back
+            { 1, 1, 0,  4, 1, 2 },  // left back
             { 1, 1, 2,  2, 1, 0 },  // left front
             { 1, 2, 1,  5, 1, 0 },  // left down
 
