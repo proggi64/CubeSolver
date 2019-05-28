@@ -131,36 +131,99 @@ class WhiteCrossStep {
         }
     }
 
-    private static final String space = " ";
+    private static final String _ = " ";
     private static final int up = CubeColor.White.ordinal();
     private static final int left = CubeColor.Orange.ordinal();
+    private static final int front = CubeColor.Green.ordinal();
+    private static final int right = CubeColor.Red.ordinal();
+    private static final int back = CubeColor.Blue.ordinal();
+    private static final int down = CubeColor.Yellow.ordinal();
 
+    /**
+     * Algorithms for moving an edge to the front upper position.
+     *
+     * Each possible position and orientation of the edge is specified
+     * as an EdgePosition object. The PositionFinder.FindEdge() method
+     * finds the actual position of an edge and the corresponding
+     * algorithm can be found in this array.
+     *
+     * To use the algorithms with each white edge the orientation
+     * of the cube must be rotated  so that the target position is at the
+     * upper front.
+     */
     private static final Solution[] solutions = {
-            // found at the top face
+            // main found at the top face
             new Solution(new EdgePosition(up, 2, 1), ""),
             new Solution(new EdgePosition(up, 1, 2),
-                    upRightToFrontRight + space +
-                    frontRightToFrontUp + space + turnEdge),
+                    upRightToFrontRight + _ +
+                    frontRightToFrontUp + _ + turnEdge),
             new Solution(new EdgePosition(up, 0, 1),
-                    upBackToBackLeft + space +
-                    backEquatorLeftToFrontLeft + space +
-                    frontLeftToFrontUp + space + turnEdge),
+                    upBackToBackLeft + _ +
+                    backEquatorLeftToFrontLeft + _ +
+                    frontLeftToFrontUp + _ + turnEdge),
             new Solution(new EdgePosition(up, 1, 0),
-                    upLeftToFrontLeft + space +
-                    frontLeftToFrontUp + space + turnEdge),
+                    upLeftToFrontLeft + _ +
+                    frontLeftToFrontUp + _ + turnEdge),
 
-            // found at the left face
+            // main color found at the left face
             new Solution(new EdgePosition(left, 0, 1),
-                    upLeftToFrontLeft + space +
+                    upLeftToFrontLeft + _ +
                     frontLeftToFrontUp),
             new Solution(new EdgePosition(left, 1, 0),
-                    backEquatorLeftToFrontLeft + space +
-                    frontLeftToFrontUp + space + turnEdge),
+                    backEquatorLeftToFrontLeft + _ +
+                    frontLeftToFrontUp + _ + turnEdge),
             new Solution(new EdgePosition(left, 1, 2),
                     frontLeftToFrontUp),
             new Solution(new EdgePosition(left, 2, 1),
-                    downLeftToFrontDown + space +
-                    frontDownToFrontUp + space + turnEdge),
+                    downLeftToFrontDown + _ +
+                    frontDownToFrontUp + _ + turnEdge),
+
+            // main color found at the front face
+            new Solution(new EdgePosition(front, 0, 1),
+                    turnEdge),
+            new Solution(new EdgePosition(front, 1, 0),
+                    frontLeftToFrontUp + _ + turnEdge),
+            new Solution(new EdgePosition(front, 1, 2),
+                    frontRightToFrontUp + _ + turnEdge),
+            new Solution(new EdgePosition(front, 2, 1),
+                    frontDownToFrontUp + _ + turnEdge),
+
+            // main color found at the right face
+            new Solution(new EdgePosition(right, 0, 1),
+                    upRightToFrontRight + _ +
+                    frontRightToFrontUp),
+            new Solution(new EdgePosition(right, 1, 0),
+                    frontRightToFrontUp),
+            new Solution(new EdgePosition(right, 1, 2),
+                    backEquatorRightToFrontRight +
+                    frontRightToFrontUp + _ + turnEdge),
+            new Solution(new EdgePosition(right, 2, 1),
+                    downRightToFrontDown +
+                    frontDownToFrontUp + _ + turnEdge),
+
+            // main color found at the back face
+            new Solution(new EdgePosition(back, 0, 1),
+                    upBackToBackLeft + _ +
+                     backEquatorLeftToFrontLeft + _ + frontLeftToFrontUp),
+            new Solution(new EdgePosition(back, 1, 0),
+                    backEquatorRightToFrontRight + _ + frontRightToFrontUp),
+            new Solution(new EdgePosition(back, 1, 2),
+                    backEquatorLeftToFrontLeft + _ +
+                     frontLeftToFrontUp),
+            new Solution(new EdgePosition(back, 2, 1),
+                    downBackToFrontDown  + _ +
+                     frontDownToFrontUp + _ + turnEdge),
+
+            // main color found at the down face
+            new Solution(new EdgePosition(down, 0, 1),
+                    frontDownToFrontUp),
+            new Solution(new EdgePosition(down, 1, 0),
+                    downLeftToFrontDown + _ + frontDownToFrontUp),
+            new Solution(new EdgePosition(down, 1, 2),
+                    downRightToFrontDown + _ + frontDownToFrontUp),
+            new Solution(new EdgePosition(down, 2, 1),
+                    downBackToFrontDown  + _ +
+                            frontDownToFrontUp),
     };
 
     /**

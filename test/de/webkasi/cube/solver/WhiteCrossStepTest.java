@@ -11,100 +11,148 @@ class WhiteCrossStepTest {
     @Test
     void solve_WhiteGreenTopFront() {
         Cube cube = new Cube();
-        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
-
-        WhiteCrossStep.solve(cube, records);
-
-        Cube solvedCube = CubeFactory.create(cube, records);
-        assertEquals(CubeColor.White, solvedCube.getFace(CubeColor.White).getField(2, 1));
-        assertEquals(CubeColor.Green, solvedCube.getFace(CubeColor.Green).getField(0, 1));
+        solveAndAssertEdge(cube, CubeColor.Green);
     }
 
     @Test
     void solve_WhiteGreenTopRight() {
         Cube cube = prepareCube("U'");
-        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
-
-        WhiteCrossStep.solve(cube, records);
-
-        Cube solvedCube = CubeFactory.create(cube, records);
-        assertEquals(CubeColor.White, solvedCube.getFace(CubeColor.White).getField(2, 1));
-        assertEquals(CubeColor.Green, solvedCube.getFace(CubeColor.Green).getField(0, 1));
+        solveAndAssertEdge(cube, CubeColor.Green);
     }
 
     @Test
     void solve_WhiteGreenTopBack() {
         Cube cube = prepareCube("U2");
-        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
-
-        WhiteCrossStep.solve(cube, records);
-
-        Cube solvedCube = CubeFactory.create(cube, records);
-        assertEquals(CubeColor.White, solvedCube.getFace(CubeColor.White).getField(2, 1));
-        assertEquals(CubeColor.Green, solvedCube.getFace(CubeColor.Green).getField(0, 1));
+        solveAndAssertEdge(cube, CubeColor.Green);
     }
 
     @Test
     void solve_WhiteGreenTopLeft() {
         Cube cube = prepareCube("U");
-        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
-
-        WhiteCrossStep.solve(cube, records);
-
-        Cube solvedCube = CubeFactory.create(cube, records);
-        assertEquals(CubeColor.White, solvedCube.getFace(CubeColor.White).getField(2, 1));
-        assertEquals(CubeColor.Green, solvedCube.getFace(CubeColor.Green).getField(0, 1));
+        solveAndAssertEdge(cube, CubeColor.Green);
     }
 
     @Test
     void solve_WhiteGreenLeftTop() {
         Cube cube = prepareCube("F' L'");
-        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
-
-        WhiteCrossStep.solve(cube, records);
-
-        Cube solvedCube = CubeFactory.create(cube, records);
-        assertEquals(CubeColor.White, solvedCube.getFace(CubeColor.White).getField(2, 1));
-        assertEquals(CubeColor.Green, solvedCube.getFace(CubeColor.Green).getField(0, 1));
+        solveAndAssertEdge(cube, CubeColor.Green);
     }
 
     @Test
     void solve_WhiteGreenLeftFront() {
         Cube cube = prepareCube("F'");
-        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
-
-        WhiteCrossStep.solve(cube, records);
-
-        Cube solvedCube = CubeFactory.create(cube, records);
-        assertEquals(CubeColor.White, solvedCube.getFace(CubeColor.White).getField(2, 1));
-        assertEquals(CubeColor.Green, solvedCube.getFace(CubeColor.Green).getField(0, 1));
+        solveAndAssertEdge(cube, CubeColor.Green);
     }
 
     @Test
     void solve_WhiteGreenLeftDown() {
         Cube cube = prepareCube("F' L");
-        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
-
-        WhiteCrossStep.solve(cube, records);
-
-        Cube solvedCube = CubeFactory.create(cube, records);
-        assertEquals(CubeColor.White, solvedCube.getFace(CubeColor.White).getField(2, 1));
-        assertEquals(CubeColor.Green, solvedCube.getFace(CubeColor.Green).getField(0, 1));
+        solveAndAssertEdge(cube, CubeColor.Green);
     }
 
     @Test
     void solve_WhiteGreenLeftBack() {
         Cube cube = prepareCube("F' L2");
-        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
-
-        WhiteCrossStep.solve(cube, records);
-
-        Cube solvedCube = CubeFactory.create(cube, records);
-        assertEquals(CubeColor.White, solvedCube.getFace(CubeColor.White).getField(2, 1));
-        assertEquals(CubeColor.Green, solvedCube.getFace(CubeColor.Green).getField(0, 1));
+        solveAndAssertEdge(cube, CubeColor.Green);
     }
 
-    Cube prepareCube(String moves) {
+    @Test
+    void solve_WhiteGreenFrontTop() {
+        Cube cube = prepareCube("F' U L' U'");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    @Test
+    void solve_WhiteGreenFrontLeft() {
+        Cube cube = prepareCube("F' U L' U' F'");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    @Test
+    void solve_WhiteGreenFrontRight() {
+        Cube cube = prepareCube("F' U L' U' F");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    @Test
+    void solve_WhiteGreenFrontDown() {
+        Cube cube = prepareCube("F' U L' U' F2");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    @Test
+    void solve_WhiteGreenRightTop() {
+        Cube cube = prepareCube("F' U L' U'2");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    @Test
+    void solve_WhiteGreenRightFront() {
+        Cube cube = prepareCube("F' U L' U' F'");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    @Test
+    void solve_WhiteGreenRightBack() {
+        Cube cube = prepareCube("F' U L' U' F");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    @Test
+    void solve_WhiteGreenRightDown() {
+        Cube cube = prepareCube("F' U L' U' F2");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    @Test
+    void solve_WhiteGreenBackTop() {
+        Cube cube = prepareCube("F R U'");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    @Test
+    void solve_WhiteGreenBackLeft() {
+        Cube cube = prepareCube("F' E'");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    @Test
+    void solve_WhiteGreenBackRight() {
+        Cube cube = prepareCube("F E");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    @Test
+    void solve_WhiteGreenBackDown() {
+        Cube cube = prepareCube("F R' D");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    @Test
+    void solve_WhiteGreenDownFront() {
+        Cube cube = prepareCube("F2");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    @Test
+    void solve_WhiteGreenDownRight() {
+        Cube cube = prepareCube("F2 D");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    @Test
+    void solve_WhiteGreenDownBack() {
+        Cube cube = prepareCube("F2 D2");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    @Test
+    void solve_WhiteGreenDownLeft() {
+        Cube cube = prepareCube("F2 D'");
+        solveAndAssertEdge(cube, CubeColor.Green);
+    }
+
+    private static Cube prepareCube(String moves) {
         Cube cube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(cube);
         CubeFaceRotationRecords records = new CubeFaceRotationRecords();
@@ -113,5 +161,22 @@ class WhiteCrossStepTest {
         CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(rotator);
         player.play(records);
         return cube;
+    }
+
+    // Row at the white face corresponding to the side face that is tested
+    private static final int rows[] = { 0, 1, 2, 1, 0, 0 };
+
+    // Column at the white face corresponding to the side face that is tested
+    private static final int columns[] = { 0, 0, 1, 2, 1, 0 };
+
+    private static void solveAndAssertEdge(Cube cube, CubeColor front) {
+        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
+
+        WhiteCrossStep.solve(cube, records);
+
+        Cube solvedCube = CubeFactory.create(cube, records);
+        assertEquals(CubeColor.White, solvedCube.getFace(CubeColor.White).getField(
+                rows[front.ordinal()], columns[front.ordinal()]));
+        assertEquals(front, solvedCube.getFace(front).getField(0, 1));
     }
 }
