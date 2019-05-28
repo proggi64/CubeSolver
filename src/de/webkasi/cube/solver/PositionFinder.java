@@ -65,10 +65,10 @@ public class PositionFinder {
      *                  with. For example, when the White Cross step is executed then the
      *                  white color is the main color.
      * @param sideColor The CubeColor that should be the front color of the part to search.
-     * @return An EdgePosition object containing the exact position of the mainColor with
+     * @return An PartPosition object containing the exact position of the mainColor with
      * the corresponding topColor on the cube.
      */
-    public static EdgePosition FindEdge(Cube cube, CubeColor mainColor, CubeColor sideColor) {
+    public static PartPosition FindEdge(Cube cube, CubeColor mainColor, CubeColor sideColor) {
         boolean found = false;
         int face = 0;
         int row = 0;
@@ -84,7 +84,7 @@ public class PositionFinder {
             found = (cubeFace.getField(row, column) == mainColor &&
                 sideFace.getField(edgeIndexes[i][sideRowIndex], edgeIndexes[i][sideColumnIndex]) == sideColor);
         }
-        EdgePosition position =  new EdgePosition();
+        PartPosition position =  new PartPosition();
         position.setFace(face);
         position.setColumn(column);
         position.setRow(row);
@@ -92,7 +92,7 @@ public class PositionFinder {
         return position;
     }
 
-    public static CornerPosition FindCorner(Cube cube, CubeColor upColor, CubeColor leftColor, CubeColor frontColor) {
+    public static PartPosition FindCorner(Cube cube, CubeColor upColor, CubeColor leftColor, CubeColor frontColor) {
         return null;
     }
 }

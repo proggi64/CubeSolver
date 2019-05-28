@@ -150,7 +150,7 @@ public class CubeFaceRotator {
      * Rotates the specified face of the cube clockwise without shifting the
      * connected side faces.
      * rotateTopClockwise() is also used for the normalization of the index
-     * positions of the side faces before shifting them with the roting face.
+     * positions of the side faces before shifting them with the rotating face.
      *
      * @param face The CubeFace object that represents the face to rotate
      */
@@ -192,7 +192,7 @@ public class CubeFaceRotator {
      * Rotates the specified face of the cube counterclockwise without shifting the
      * connected side faces.
      * rotateTopCounterclockwise() is also used for the normalization of the index
-     * positions of the side faces before shifting them with the roting face.
+     * positions of the side faces before shifting them with the rotating face.
      *
      * @param face The CubeFace object that represents the face to rotate
      */

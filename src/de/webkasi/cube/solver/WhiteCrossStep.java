@@ -10,6 +10,7 @@ class WhiteCrossStep {
 
     private final Cube _cube;
     private final CubeFaceRotationRecords _records;
+    private final CubeOrientation _orientation;
 
     /**
      * Sequence that turns the edge of the cross.
@@ -107,10 +108,11 @@ class WhiteCrossStep {
     private WhiteCrossStep(Cube cube, CubeFaceRotationRecords records) {
         _cube = cube;
         _records = records;
+        _orientation = new CubeOrientation();
     }
 
     /**
-     * Encapsulates the EdgePosition and the solution for this position
+     * Encapsulates the PartPosition and the solution for this position
      * as a String of SpeedCube notations steps.
      *
      * Solution is used for a state-solution pairs for the WhiteCrossStep
@@ -118,14 +120,14 @@ class WhiteCrossStep {
      * position is known, the solution can be found.
      */
     static class Solution {
-        final EdgePosition position;
+        final PartPosition position;
         final String moves;
 
         /**
          * @param position the position of an edge.
          * @param moves The moves in SpeedCube syntax.
          */
-        Solution(EdgePosition position, String moves) {
+        Solution(PartPosition position, String moves) {
             this.position = position;
             this.moves = moves;
         }
@@ -143,7 +145,7 @@ class WhiteCrossStep {
      * Algorithms for moving an edge to the front upper position.
      *
      * Each possible position and orientation of the edge is specified
-     * as an EdgePosition object. The PositionFinder.FindEdge() method
+     * as an PartPosition object. The PositionFinder.FindEdge() method
      * finds the actual position of an edge and the corresponding
      * algorithm can be found in this array.
      *
@@ -153,75 +155,75 @@ class WhiteCrossStep {
      */
     private static final Solution[] solutions = {
             // main found at the top face
-            new Solution(new EdgePosition(up, 2, 1), ""),
-            new Solution(new EdgePosition(up, 1, 2),
+            new Solution(new PartPosition(up, 2, 1), ""),
+            new Solution(new PartPosition(up, 1, 2),
                     upRightToFrontRight + _ +
                     frontRightToFrontUp + _ + turnEdge),
-            new Solution(new EdgePosition(up, 0, 1),
+            new Solution(new PartPosition(up, 0, 1),
                     upBackToBackLeft + _ +
                     backEquatorLeftToFrontLeft + _ +
                     frontLeftToFrontUp + _ + turnEdge),
-            new Solution(new EdgePosition(up, 1, 0),
+            new Solution(new PartPosition(up, 1, 0),
                     upLeftToFrontLeft + _ +
                     frontLeftToFrontUp + _ + turnEdge),
 
             // main color found at the left face
-            new Solution(new EdgePosition(left, 0, 1),
+            new Solution(new PartPosition(left, 0, 1),
                     upLeftToFrontLeft + _ +
                     frontLeftToFrontUp),
-            new Solution(new EdgePosition(left, 1, 0),
+            new Solution(new PartPosition(left, 1, 0),
                     backEquatorLeftToFrontLeft + _ +
                     frontLeftToFrontUp + _ + turnEdge),
-            new Solution(new EdgePosition(left, 1, 2),
+            new Solution(new PartPosition(left, 1, 2),
                     frontLeftToFrontUp),
-            new Solution(new EdgePosition(left, 2, 1),
+            new Solution(new PartPosition(left, 2, 1),
                     downLeftToFrontDown + _ +
                     frontDownToFrontUp + _ + turnEdge),
 
             // main color found at the front face
-            new Solution(new EdgePosition(front, 0, 1),
+            new Solution(new PartPosition(front, 0, 1),
                     turnEdge),
-            new Solution(new EdgePosition(front, 1, 0),
+            new Solution(new PartPosition(front, 1, 0),
                     frontLeftToFrontUp + _ + turnEdge),
-            new Solution(new EdgePosition(front, 1, 2),
+            new Solution(new PartPosition(front, 1, 2),
                     frontRightToFrontUp + _ + turnEdge),
-            new Solution(new EdgePosition(front, 2, 1),
+            new Solution(new PartPosition(front, 2, 1),
                     frontDownToFrontUp + _ + turnEdge),
 
             // main color found at the right face
-            new Solution(new EdgePosition(right, 0, 1),
+            new Solution(new PartPosition(right, 0, 1),
                     upRightToFrontRight + _ +
                     frontRightToFrontUp),
-            new Solution(new EdgePosition(right, 1, 0),
+            new Solution(new PartPosition(right, 1, 0),
                     frontRightToFrontUp),
-            new Solution(new EdgePosition(right, 1, 2),
+            new Solution(new PartPosition(right, 1, 2),
                     backEquatorRightToFrontRight +
                     frontRightToFrontUp + _ + turnEdge),
-            new Solution(new EdgePosition(right, 2, 1),
+            new Solution(new PartPosition(right, 2, 1),
                     downRightToFrontDown +
                     frontDownToFrontUp + _ + turnEdge),
 
             // main color found at the back face
-            new Solution(new EdgePosition(back, 0, 1),
+            new Solution(new PartPosition(back, 0, 1),
                     upBackToBackLeft + _ +
                      backEquatorLeftToFrontLeft + _ + frontLeftToFrontUp),
-            new Solution(new EdgePosition(back, 1, 0),
+            new Solution(new PartPosition(back, 1, 0),
                     backEquatorRightToFrontRight + _ + frontRightToFrontUp),
-            new Solution(new EdgePosition(back, 1, 2),
+            new Solution(new PartPosition(back, 1, 2),
                     backEquatorLeftToFrontLeft + _ +
                      frontLeftToFrontUp),
-            new Solution(new EdgePosition(back, 2, 1),
+            new Solution(new PartPosition(back, 2, 1),
                     downBackToFrontDown  + _ +
                      frontDownToFrontUp + _ + turnEdge),
 
             // main color found at the down face
-            new Solution(new EdgePosition(down, 0, 1),
+            new Solution(new PartPosition(down, 0, 1),
                     frontDownToFrontUp),
-            new Solution(new EdgePosition(down, 1, 0),
+            new Solution(new PartPosition(down, 1, 0),
                     downLeftToFrontDown + _ + frontDownToFrontUp),
-            new Solution(new EdgePosition(down, 1, 2),
+            new Solution(new PartPosition(down, 1, 2),
                     downRightToFrontDown + _ + frontDownToFrontUp),
-            new Solution(new EdgePosition(down, 2, 1),
+            new Solution(new PartPosition(down, 2, 1),
                     downBackToFrontDown  + _ +
                             frontDownToFrontUp),
     };
@@ -252,13 +254,19 @@ class WhiteCrossStep {
 
         SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(records);
 
-        EdgePosition whiteGreenPosition = PositionFinder.FindEdge(cube, CubeColor.White, CubeColor.Green);
+        PartPosition whiteGreenPosition = PositionFinder.FindEdge(cube, CubeColor.White, CubeColor.Green);
         String whiteGreenSolutionMoves = step.findSolution(whiteGreenPosition);
 
         interpreter.addMoves(whiteGreenSolutionMoves);
 
-        // TODO Züge ermitteln und auf dem temporären Cube ausführen
-        Cube temporaryCube = CubeFactory.create(cube, records);
+        step._orientation.rotate('y', RotationDirection.Clockwise, 1);
+
+        Cube steppedCube = CubeFactory.create(cube, records);
+
+        PartPosition whiteRedPosition = PositionFinder.FindEdge(steppedCube, CubeColor.White, CubeColor.Red);
+        String whiteRedSolutionMoves = "Y " + step.findSolution(whiteRedPosition);
+
+        //interpreter.addMoves(whiteRedSolutionMoves);
         // TODO Front auf Rot drehen und nächsten Rand lösen
 
     }
@@ -271,13 +279,13 @@ class WhiteCrossStep {
      * objects. The array is searches for the position and the
      * corresponding solution ist returned.
      *
-     * @param position The EdgePosition to find the solution for.
+     * @param position The PartPosition to find the solution for.
      * @return A String with the solution steps in SpeedCube syntax.
      */
-    private String findSolution(EdgePosition position) {
+    private String findSolution(PartPosition position) {
         int i = 0;
         while (true) {
-            if (solutions[i].position.isEqual(position))
+            if (PositionTranslator.translate(solutions[i].position, _orientation).isEqual(position))
                 return solutions[i].moves;
             i++;
         }
