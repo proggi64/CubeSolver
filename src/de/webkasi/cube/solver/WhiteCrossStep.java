@@ -261,17 +261,18 @@ class WhiteCrossStep {
      */
     private void solve() {
         SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(_records);
+        String cubeRotations = "";
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 4; i++) {
             Cube steppedCube = CubeFactory.create(_cube, _records);
 
             PartPosition edgePosition = PositionFinder.FindEdge(steppedCube, CubeColor.White, faces[i]);
-            String solutionMoves = findSolutionFor(edgePosition);
+            String solutionMoves = cubeRotations + findSolutionFor(edgePosition);
             interpreter.addMoves(solutionMoves);
 
             // Go to the next front face
             _orientation.rotate('y', RotationDirection.Clockwise, 1);
-            interpreter.addMoves("y ");
+            cubeRotations += "y ";
         }
     }
 
@@ -280,16 +281,27 @@ class WhiteCrossStep {
      *
      * For each possible edge position exists a sequence of moves.
      * These moves are stored in an internal array of Solution
-     * objects. The array is searches for the position and the
+     * objects. The array is searched for the position and the
      * corresponding solution ist returned.
+     *
+     * The position refers to absolute coordinates of the cube.
+     * The top (white) face has index 0 and its row 0 and column 0 is in the
+     * upper left of the face. Each solution has a position as its key.
+     * Each solution describes how to bring the part at the position
+     * to the front up position with the white face up.
+     *
+     * If the cube is rotated to a new front face, the actual part position
+     * must be translated to the position orientation of the keys to find
+     * the correct solution.
      *
      * @param position The PartPosition to find the solution for.
      * @return A String with the solution steps in SpeedCube syntax.
      */
     private String findSolutionFor(PartPosition position) {
         int i = 0;
+        PartPosition translatedPosition = PositionTranslator.translate(position, _orientation);
         while (true) {
-            if (PositionTranslator.translate(position, _orientation).isEqual(solutions[i].position))
+            if (translatedPosition.isEqual(solutions[i].position))
                 return solutions[i].moves;
             i++;
         }

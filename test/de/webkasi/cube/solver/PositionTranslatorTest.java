@@ -45,6 +45,16 @@ class PositionTranslatorTest {
     }
 
     @Test
+    void translate_FrontRed_TopRightMid() {
+        CubeOrientation orientation = new CubeOrientation();
+        orientation.rotate('y', RotationDirection.Clockwise, 1);
+        PartPosition position = new PartPosition(CubeColor.Red.ordinal(), 1, 2);
+        PartPosition translatedPosition = PositionTranslator.translate(position, orientation);
+        PartPosition expected = new PartPosition(CubeColor.Blue.ordinal(), 1, 2);
+        assertTrue(expected.isEqual(translatedPosition));
+    }
+
+    @Test
     void translate_FrontRed_UpMidRight() {
         CubeOrientation orientation = new CubeOrientation();
         orientation.rotate('y', RotationDirection.Clockwise, 1);
@@ -61,6 +71,16 @@ class PositionTranslatorTest {
         PartPosition position = new PartPosition(CubeColor.Yellow.ordinal(), 1, 0);
         PartPosition translatedPosition = PositionTranslator.translate(position, orientation);
         PartPosition expected = new PartPosition(CubeColor.Yellow.ordinal(), 2, 1);
+        assertTrue(expected.isEqual(translatedPosition));
+    }
+
+    @Test
+    void translate_FrontRed_UpMidBack() {
+        CubeOrientation orientation = new CubeOrientation();
+        orientation.rotate('y', RotationDirection.Clockwise, 1);
+        PartPosition position = new PartPosition(CubeColor.White.ordinal(), 0, 1);
+        PartPosition translatedPosition = PositionTranslator.translate(position, orientation);
+        PartPosition expected = new PartPosition(CubeColor.White.ordinal(), 1, 2);
         assertTrue(expected.isEqual(translatedPosition));
     }
 
