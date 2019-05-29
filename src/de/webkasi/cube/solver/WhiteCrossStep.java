@@ -20,7 +20,7 @@ class WhiteCrossStep {
      * is valid when the edge is at the front face. When using for other edges, the cube
      * must be rotated into the right position first.
      */
-    private static final String turnEdge = "F' U L' U'";
+    private static final String turnEdge = "F' U L' U' ";
 
     /**
      * Sequence that positions the edge from the front left to the top.
@@ -28,7 +28,7 @@ class WhiteCrossStep {
      * This sequence positions the edge from the left side of the front
      * to the top.
      */
-    private static final String frontLeftToFrontUp = "F";
+    private static final String frontLeftToFrontUp = "F ";
 
     /**
      * Sequence that positions the edge from the front right to the top.
@@ -36,7 +36,7 @@ class WhiteCrossStep {
      * This sequence positions the edge from the right side of the front
      * to the top.
      */
-    private static final String frontRightToFrontUp = "F'";
+    private static final String frontRightToFrontUp = "F' ";
 
     /**
      * Sequence that positions the edge from the front bottom to the top.
@@ -44,32 +44,32 @@ class WhiteCrossStep {
      * This sequence positions the edge from th bottom of the front
      * to the top.
      */
-    private static final String frontDownToFrontUp = "F2";
+    private static final String frontDownToFrontUp = "F2 ";
 
     /**
      * Sequence that positions the edge from the back middle left to the left front.
      */
-    private static final String backEquatorLeftToFrontLeft = "E";
+    private static final String backEquatorLeftToFrontLeft = "E ";
 
     /**
      * Sequence that positions the edge from the back middle right to the right front.
      */
-    private static final String backEquatorRightToFrontRight = "E'";
+    private static final String backEquatorRightToFrontRight = "E' ";
 
     /**
      * Sequence that positions the edge from the down left to the down front.
      */
-    private static final String downLeftToFrontDown = "D";
+    private static final String downLeftToFrontDown = "D ";
 
     /**
      * Sequence that positions the edge from the down right to the down front.
      */
-    private static final String downRightToFrontDown = "D'";
+    private static final String downRightToFrontDown = "D' ";
 
     /**
      * Sequence that positions the edge from the down back to the down front.
      */
-    private static final String downBackToFrontDown = "D2";
+    private static final String downBackToFrontDown = "D2 ";
 
     /**
      * Sequence that positions the edge from the back up to the back left position.
@@ -78,7 +78,7 @@ class WhiteCrossStep {
      * Then the edge must be moved to the front up position. This is the first step for
      * this sequence.
      */
-    private static final String upBackToBackLeft = "B";
+    private static final String upBackToBackLeft = "B ";
 
     /**
      * Sequence that positions the edge from the up left to the front left position.
@@ -87,7 +87,7 @@ class WhiteCrossStep {
      * Then the edge must be moved to the front up position. This is the first step for
      * this sequence.
      */
-    private static final String upLeftToFrontLeft = "L";
+    private static final String upLeftToFrontLeft = "L ";
 
     /**
      * Sequence that positions the edge from the up right to the front right position.
@@ -96,7 +96,7 @@ class WhiteCrossStep {
      * The the edge must be moved to the front up position. This is the first step for
      * this sequence.
      */
-    private static final String upRightToFrontRight = "R'";
+    private static final String upRightToFrontRight = "R' ";
 
     /**
      * @param cube The Cube to solve. The cube may be completely scrambled.
@@ -133,7 +133,6 @@ class WhiteCrossStep {
         }
     }
 
-    private static final String _ = " ";
     private static final int up = CubeColor.White.ordinal();
     private static final int left = CubeColor.Orange.ordinal();
     private static final int front = CubeColor.Green.ordinal();
@@ -154,77 +153,77 @@ class WhiteCrossStep {
      * upper front.
      */
     private static final Solution[] solutions = {
-            // main found at the top face
+            // main color found at the top face
             new Solution(new PartPosition(up, 2, 1), ""),
             new Solution(new PartPosition(up, 1, 2),
-                    upRightToFrontRight + _ +
-                    frontRightToFrontUp + _ + turnEdge),
+                    upRightToFrontRight +
+                    frontRightToFrontUp + turnEdge),
             new Solution(new PartPosition(up, 0, 1),
-                    upBackToBackLeft + _ +
-                    backEquatorLeftToFrontLeft + _ +
-                    frontLeftToFrontUp + _ + turnEdge),
+                    upBackToBackLeft +
+                    backEquatorLeftToFrontLeft +
+                    frontLeftToFrontUp + turnEdge),
             new Solution(new PartPosition(up, 1, 0),
-                    upLeftToFrontLeft + _ +
-                    frontLeftToFrontUp + _ + turnEdge),
+                    upLeftToFrontLeft +
+                    frontLeftToFrontUp + turnEdge),
 
             // main color found at the left face
             new Solution(new PartPosition(left, 0, 1),
-                    upLeftToFrontLeft + _ +
+                    upLeftToFrontLeft +
                     frontLeftToFrontUp),
             new Solution(new PartPosition(left, 1, 0),
-                    backEquatorLeftToFrontLeft + _ +
-                    frontLeftToFrontUp + _ + turnEdge),
+                    backEquatorLeftToFrontLeft +
+                    frontLeftToFrontUp + turnEdge),
             new Solution(new PartPosition(left, 1, 2),
                     frontLeftToFrontUp),
             new Solution(new PartPosition(left, 2, 1),
-                    downLeftToFrontDown + _ +
-                    frontDownToFrontUp + _ + turnEdge),
+                    downLeftToFrontDown +
+                    frontDownToFrontUp + turnEdge),
 
             // main color found at the front face
             new Solution(new PartPosition(front, 0, 1),
                     turnEdge),
             new Solution(new PartPosition(front, 1, 0),
-                    frontLeftToFrontUp + _ + turnEdge),
+                    frontLeftToFrontUp + turnEdge),
             new Solution(new PartPosition(front, 1, 2),
-                    frontRightToFrontUp + _ + turnEdge),
+                    frontRightToFrontUp + turnEdge),
             new Solution(new PartPosition(front, 2, 1),
-                    frontDownToFrontUp + _ + turnEdge),
+                    frontDownToFrontUp + turnEdge),
 
             // main color found at the right face
             new Solution(new PartPosition(right, 0, 1),
-                    upRightToFrontRight + _ +
+                    upRightToFrontRight +
                     frontRightToFrontUp),
             new Solution(new PartPosition(right, 1, 0),
                     frontRightToFrontUp),
             new Solution(new PartPosition(right, 1, 2),
                     backEquatorRightToFrontRight +
-                    frontRightToFrontUp + _ + turnEdge),
+                    frontRightToFrontUp + turnEdge),
             new Solution(new PartPosition(right, 2, 1),
                     downRightToFrontDown +
-                    frontDownToFrontUp + _ + turnEdge),
+                    frontDownToFrontUp + turnEdge),
 
             // main color found at the back face
             new Solution(new PartPosition(back, 0, 1),
-                    upBackToBackLeft + _ +
-                     backEquatorLeftToFrontLeft + _ + frontLeftToFrontUp),
+                    upBackToBackLeft +
+                     backEquatorLeftToFrontLeft + frontLeftToFrontUp),
             new Solution(new PartPosition(back, 1, 0),
-                    backEquatorRightToFrontRight + _ + frontRightToFrontUp),
+                    backEquatorRightToFrontRight + frontRightToFrontUp),
             new Solution(new PartPosition(back, 1, 2),
-                    backEquatorLeftToFrontLeft + _ +
+                    backEquatorLeftToFrontLeft +
                      frontLeftToFrontUp),
             new Solution(new PartPosition(back, 2, 1),
-                    downBackToFrontDown  + _ +
-                     frontDownToFrontUp + _ + turnEdge),
+                    downBackToFrontDown  +
+                     frontDownToFrontUp + turnEdge),
 
             // main color found at the down face
             new Solution(new PartPosition(down, 0, 1),
                     frontDownToFrontUp),
             new Solution(new PartPosition(down, 1, 0),
-                    downLeftToFrontDown + _ + frontDownToFrontUp),
+                    downLeftToFrontDown + frontDownToFrontUp),
             new Solution(new PartPosition(down, 1, 2),
-                    downRightToFrontDown + _ + frontDownToFrontUp),
+                    downRightToFrontDown + frontDownToFrontUp),
             new Solution(new PartPosition(down, 2, 1),
-                    downBackToFrontDown  + _ +
+                    downBackToFrontDown +
                             frontDownToFrontUp),
     };
 
@@ -242,33 +241,38 @@ class WhiteCrossStep {
      */
     public static void solve(Cube cube, CubeFaceRotationRecords records) {
         WhiteCrossStep step = new WhiteCrossStep(cube, records);
-        // TODO für alle weißen Randsteine:
-        // TODO Situationsanalyse: Wo ist der weiße Randstein?
-        // TODO Drehe den Würfel so, dass der jeweilige Ziel-Randstein vorne oben sein soll (CubeOrientation)
-        // TODO Weißen Randstein ohne Orientierung zwischen Weiß und passende Farbe
-        // TODO Bewegungsalgorithmus für jede Situation anwenden: Stringsequenzen für die jeweilige Position zusammenstellen
-        // TODO Prüfen, ob Orientierung passt
-        // TODO Falls nicht: turnEdge für betroffenen Randstein
+        step.solve();
+    }
 
-        // 1. WG 2. Y WR 3. Y WB 4. Y WO
+    private static final CubeColor[] faces = { CubeColor.Green, CubeColor.Red, CubeColor.Blue, CubeColor.Orange };
 
-        SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(records);
+    /**
+     * Solves the White Cross Step for the given cube.
+     *
+     * solve() rotates the cube with the white face up from the green front
+     * counterclockwise to the orange front in four steps. At each step the
+     * white edge with the front color is loacted and moved to the correct
+     * position. At the end of the method the CubeFaceRotationRecords collection
+     * contain all moves to create a white cross at the top of the cube with
+     * its correct side edges.
+     *
+     * The last move is the return to the default orientation of the cube: Green
+     * front and white up.
+     */
+    private void solve() {
+        SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(_records);
 
-        PartPosition whiteGreenPosition = PositionFinder.FindEdge(cube, CubeColor.White, CubeColor.Green);
-        String whiteGreenSolutionMoves = step.findSolution(whiteGreenPosition);
+        for (int i = 0; i < 2; i++) {
+            Cube steppedCube = CubeFactory.create(_cube, _records);
 
-        interpreter.addMoves(whiteGreenSolutionMoves);
+            PartPosition edgePosition = PositionFinder.FindEdge(steppedCube, CubeColor.White, faces[i]);
+            String solutionMoves = findSolutionFor(edgePosition);
+            interpreter.addMoves(solutionMoves);
 
-        step._orientation.rotate('y', RotationDirection.Clockwise, 1);
-
-        Cube steppedCube = CubeFactory.create(cube, records);
-
-        PartPosition whiteRedPosition = PositionFinder.FindEdge(steppedCube, CubeColor.White, CubeColor.Red);
-        String whiteRedSolutionMoves = "Y " + step.findSolution(whiteRedPosition);
-
-        //interpreter.addMoves(whiteRedSolutionMoves);
-        // TODO Front auf Rot drehen und nächsten Rand lösen
-
+            // Go to the next front face
+            _orientation.rotate('y', RotationDirection.Clockwise, 1);
+            interpreter.addMoves("y ");
+        }
     }
 
     /**
@@ -282,10 +286,10 @@ class WhiteCrossStep {
      * @param position The PartPosition to find the solution for.
      * @return A String with the solution steps in SpeedCube syntax.
      */
-    private String findSolution(PartPosition position) {
+    private String findSolutionFor(PartPosition position) {
         int i = 0;
         while (true) {
-            if (PositionTranslator.translate(solutions[i].position, _orientation).isEqual(position))
+            if (PositionTranslator.translate(position, _orientation).isEqual(solutions[i].position))
                 return solutions[i].moves;
             i++;
         }

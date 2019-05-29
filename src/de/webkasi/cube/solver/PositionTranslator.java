@@ -123,11 +123,12 @@ class PositionTranslator {
             { turn,             none,           none,           none,           none,           turn             },
             { counterClockwise, none,           none,           none,           none,           clockwise        },
     };
+    // up left front right back down
     private final static int[][] faceTransformations = {
-            { 0, 1, 2, 3, 4, 5 },
-            { 0, 4, 1, 2, 3, 5 },
-            { 0, 3, 4, 1, 2, 5 },
-            { 0, 2, 3, 4, 1, 5 },
+            { 0, 1, 2, 3, 4, 5 },       // default: front is green (2)
+            { 0, 2, 3, 4, 1, 5 },       // front is red (3)
+            { 0, 3, 4, 1, 2, 5 },       // front is blue (4)
+            { 0, 4, 1, 2, 3, 5 },       // front is orange (1)
     };
 
     /**
