@@ -7,8 +7,8 @@ import de.webkasi.cube.CubeColor;
  * another orientation.
  */
 class PositionTranslator {
-    PartPosition _originalPosition;
-    CubeOrientation _orientation;
+    private final PartPosition _originalPosition;
+    private final CubeOrientation _orientation;
 
     /**
      * Initializes a new instance of the PositionTranslator class with the
@@ -43,20 +43,22 @@ class PositionTranslator {
         PartPosition translated = new PartPosition(position);
         PositionTranslator translator = new PositionTranslator(position, orientation);
 
-        translated.setFace(translator.translateFace());
-        translated.setRow(translator.translateRow());
-        translated.setColumn(translator.translateColumn());
+        int translatedFace = translator.translateFace();
+        translated.setFace(translatedFace);
+        translated.setRow(translator.translateRow(translatedFace));
+        translated.setColumn(translator.translateColumn(translatedFace));
 
         return translated;
     }
 
-    static final int white = CubeColor.White.ordinal();
-    static final int orange = CubeColor.Orange.ordinal();
-    static final int green = CubeColor.Green.ordinal();
-    static final int red = CubeColor.Red.ordinal();
-    static final int blue = CubeColor.Blue.ordinal();
-    static final int yellow = CubeColor.Yellow.ordinal();
+    private static final int white = CubeColor.White.ordinal();
+    private static final int orange = CubeColor.Orange.ordinal();
+    private static final int green = CubeColor.Green.ordinal();
+    private static final int red = CubeColor.Red.ordinal();
+    private static final int blue = CubeColor.Blue.ordinal();
+    private static final int yellow = CubeColor.Yellow.ordinal();
 
+    // up, front
     /**
      * Array of all possible up/front orientations.
      *
@@ -72,13 +74,15 @@ class PositionTranslator {
      */
     private final static int[][] faceOrientations = {
             { white,    green   },
-            { white,    red     },
-            { white,    blue    },
             { white,    orange  },
+            { white,    blue    },
+            { white,    red     },
+
             { orange,   white   },
-            { orange,   blue    },
-            { orange,   yellow  },
             { orange,   green   },
+            { orange,   yellow  },
+            { orange,   blue    },
+
             { green,    white   },
             { green,    orange  },
             { green,    yellow  },
@@ -114,30 +118,56 @@ class PositionTranslator {
     // TODO Legt 3x3 Cube fest!
     private final static int maxDimensionIndex = 3 - 1;
 
+    // white, orange, green, red, blue, yellow
     /**
      * Lookup table of the necessary rotations of the faces for each orientation.
+     *
+     * These rotations are necessary to translate the row/column coordinates
+     * of the six faces to the new orientation.
      */
     private final static int[][] faceRotations = {
-            { none,             none,           none,           none,           none,           none             },
-            { clockwise,        none,           none,           none,           none,           counterClockwise },
-            { turn,             none,           none,           none,           none,           turn             },
-            { counterClockwise, none,           none,           none,           none,           clockwise        },
+            { none,             none,             none,              none,             none,             none },
+            { counterClockwise, none,             none,              none,             none,             clockwise },
+            { turn,             none,             none,              none,             none,             turn },
+            { clockwise,        none,             none,              none,             none,             counterClockwise },
+
+            { clockwise,        turn,             clockwise,         none,             counterClockwise, clockwise },
+            { clockwise,        clockwise,        clockwise,         clockwise,        counterClockwise, clockwise },
+            { clockwise,        none,             clockwise,         turn,             counterClockwise, clockwise },
+            { clockwise,        counterClockwise, clockwise,         counterClockwise, counterClockwise, clockwise },
     };
+    // 0  1    2     3     4    5
+    // W  O    G     R     B    Y
     // up left front right back down
+    /**
+     * Table of face index transformations for each orientation.
+     *
+     * Contains the transformed face indexes for each orientation.
+     * Used by the translateFace() method to translate the actual front face
+     * to the green reference face and all other faces in relation to this
+     * reference face.
+     */
     private final static int[][] faceTransformations = {
-            { 0, 1, 2, 3, 4, 5 },       // default: front is green (2)
+            { 0, 1, 2, 3, 4, 5 },       // default: front is green (2), up is white
             { 0, 2, 3, 4, 1, 5 },       // front is red (3)
             { 0, 3, 4, 1, 2, 5 },       // front is blue (4)
             { 0, 4, 1, 2, 3, 5 },       // front is orange (1)
+
+            { 2, 0, 1, 5, 3, 4 },       // front is white (0), up is orange
+            { 3, 0, 2, 5, 4, 1 },       // front is green (2), up is orange
+            { 4, 0, 3, 5, 1, 2 },       // front is yellow (5), up is orange
+            { 1, 0, 4, 5, 2, 3 },       // front is blue (4), up is orange
     };
 
     /**
      * Translates the column of the position based on the cube's orientation.
      *
+     * @param translatedFace The translated face index used to find the rotation rule
+     *                       for this face and the orientation.
      * @return The translated column of the position.
      */
-    private int translateColumn() {
-        switch (faceRotations[_orientationIndex][_originalPosition.getFace()]) {
+    private int translateColumn(int translatedFace) {
+        switch (faceRotations[_orientationIndex][translatedFace]) {
             case none:
                 return _originalPosition.getColumn();
             case clockwise:
@@ -153,10 +183,12 @@ class PositionTranslator {
     /**
      * Translates the row of the position based on the cube's orientation.
      *
+     * @param translatedFace The translated face index used to find the rotation rule
+     *                       for this face and the orientation.
      * @return The translated row of the position.
      */
-    private int translateRow() {
-        switch (faceRotations[_orientationIndex][_originalPosition.getFace()]) {
+    private int translateRow(int translatedFace) {
+        switch (faceRotations[_orientationIndex][translatedFace]) {
             case none:
                 return _originalPosition.getRow();
             case clockwise:

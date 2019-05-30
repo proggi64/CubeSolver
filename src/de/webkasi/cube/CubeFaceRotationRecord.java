@@ -3,6 +3,7 @@ package de.webkasi.cube;
 /**
  * Represents a cube rotation for playing rotations.
  */
+@SuppressWarnings("unused")
 public class CubeFaceRotationRecord {
     private final int _face;
     private RotationDirection _direction;
@@ -110,7 +111,7 @@ public class CubeFaceRotationRecord {
 
     /**
      * Sets the index of the first row to rotate.
-     * When greater zero then the to face is not rotated.
+     * When greater zero then the face will not be rotated.
      *
      * @param startRow Index of the first row to rotate.
      */

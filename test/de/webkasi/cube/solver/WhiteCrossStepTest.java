@@ -152,6 +152,15 @@ class WhiteCrossStepTest {
         solveAndAssertEdges(cube);
     }
 
+    @Test
+    void solve_RandomCubes() {
+        for (int i = 0; i < 100; i++) {
+            Cube cube = new Cube();
+            CubeScrambler.scrambleCube(cube, 20);
+            solveAndAssertEdges(cube);
+        }
+    }
+
     private static Cube prepareCube(String moves) {
         Cube cube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(cube);
@@ -164,10 +173,10 @@ class WhiteCrossStepTest {
     }
 
     // Row at the white face corresponding to the side face that is tested
-    private static final int rows[] = { 0, 1, 2, 1, 0, 0 };
+    private static final int[] rows = {0, 1, 2, 1, 0, 0};
 
     // Column at the white face corresponding to the side face that is tested
-    private static final int columns[] = { 0, 0, 1, 2, 1, 0 };
+    private static final int[] columns = {0, 0, 1, 2, 1, 0};
 
     private static void solveAndAssertEdges(Cube cube) {
         CubeFaceRotationRecords records = new CubeFaceRotationRecords();
@@ -175,10 +184,10 @@ class WhiteCrossStepTest {
         WhiteCrossStep.solve(cube, records);
 
         Cube solvedCube = CubeFactory.create(cube, records);
-        for (int front = 1; front < 5; front++) {
+        for (int face = 1; face < 5; face++) {
             assertEquals(CubeColor.White, solvedCube.getFace(CubeColor.White).getField(
-                    rows[front], columns[front]));
-            assertEquals(front, solvedCube.getFaceByIndex(front).getField(0, 1).ordinal());
+                    rows[face], columns[face]), String.format("Face %d", face));
+            assertEquals(face, solvedCube.getFaceByIndex(face).getField(0, 1).ordinal());
         }
     }
 }

@@ -44,8 +44,12 @@ class CubeOrientation {
      * @param axis Axis character: 'x', 'y', or 'z'. Determines the rotation axis
      *             of the cube.
      * @param direction The RotationDirection that determines whether to rotate clockwise
-     *                  or counterclockwise.
-     * @param count The count of 90 degree rotations.
+     *                  or counterclockwise. The direction of the axis is always in
+     *                  positive direction, i.e. the x axis starts at the orange face from
+     *                  the left side and goes to the red face at the right side. Clockwise
+     *                  means in this case that the blue face is rotated to the upper side.
+     * @param count The count of 90 degree rotations. A value of 2 means that the cube is
+     *              rotated by 180 degrees.
      */
     void rotate(char axis, RotationDirection direction, int count)
     {
@@ -91,11 +95,11 @@ class CubeOrientation {
      * Turns the orientation of the cube 90 degrees around the y-axis.
      */
     private void y() {
-        int oldLeft = left;
-        left = front;
-        front = right;
-        right = back;
-        back = oldLeft;
+        int oldRight = right;
+        right = front;
+        front = left;
+        left = back;
+        back = oldRight;
     }
 
     /**

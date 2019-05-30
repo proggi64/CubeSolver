@@ -244,14 +244,17 @@ class WhiteCrossStep {
         step.solve();
     }
 
-    private static final CubeColor[] faces = { CubeColor.Green, CubeColor.Red, CubeColor.Blue, CubeColor.Orange };
+    /**
+     * Faces in the order that are processed by the solve() method.
+     */
+    private static final CubeColor[] faceSteps = { CubeColor.Green, CubeColor.Orange, CubeColor.Blue, CubeColor.Red };
 
     /**
      * Solves the White Cross Step for the given cube.
      *
-     * solve() rotates the cube with the white face up from the green front
-     * counterclockwise to the orange front in four steps. At each step the
-     * white edge with the front color is loacted and moved to the correct
+     * solve() rotates the cube by the y axis with the white face up from the green front
+     * clockwise to the red front in four steps. At each step the
+     * corresponding white edge with the front color is located and moved to the correct
      * position. At the end of the method the CubeFaceRotationRecords collection
      * contain all moves to create a white cross at the top of the cube with
      * its correct side edges.
@@ -261,18 +264,19 @@ class WhiteCrossStep {
      */
     private void solve() {
         SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(_records);
-        String cubeRotations = "";
+        StringBuilder cubeRotations = new StringBuilder();
 
         for (int i = 0; i < 4; i++) {
             Cube steppedCube = CubeFactory.create(_cube, _records);
 
-            PartPosition edgePosition = PositionFinder.FindEdge(steppedCube, CubeColor.White, faces[i]);
+            PartPosition edgePosition = PositionFinder.FindEdge(steppedCube, CubeColor.White, faceSteps[i]);
             String solutionMoves = cubeRotations + findSolutionFor(edgePosition);
             interpreter.addMoves(solutionMoves);
 
-            // Go to the next front face
+            // Go to the next front face: The y-rotations are only interpreted by each
+            // addMoves call, so we have to append one "y" per rotation.
             _orientation.rotate('y', RotationDirection.Clockwise, 1);
-            cubeRotations += "y ";
+            cubeRotations.append("y ");
         }
     }
 
