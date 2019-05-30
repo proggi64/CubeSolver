@@ -47,16 +47,6 @@ class WhiteCrossStep {
     private static final String frontDownToFrontUp = "F2 ";
 
     /**
-     * Sequence that positions the edge from the back middle left to the left front.
-     */
-    private static final String backEquatorLeftToFrontLeft = "E ";
-
-    /**
-     * Sequence that positions the edge from the back middle right to the right front.
-     */
-    private static final String backEquatorRightToFrontRight = "E' ";
-
-    /**
      * Sequence that positions the edge from the down left to the down front.
      */
     private static final String downLeftToFrontDown = "D ";
@@ -71,14 +61,21 @@ class WhiteCrossStep {
      */
     private static final String downBackToFrontDown = "D2 ";
 
-    /**
-     * Sequence that positions the edge from the back up to the back left position.
-     *
-     * This is needed when the edge is already at the up face, but at the wrong position.
-     * Then the edge must be moved to the front up position. This is the first step for
-     * this sequence.
-     */
-    private static final String upBackToBackLeft = "B ";
+    private static final String upBackToDownBack = "B2 ";
+
+    private static final String downBackToDownFront = "D2 ";
+
+    private static final String downFrontToUpFront = "F2 ";
+
+    private static final String leftBackToFrontDown = "L' D L ";
+
+    private static final String rightBackToFrontDown = "R D' R' ";
+
+    private static final String backUpToFrontDown = "B2 D2 B'2 ";
+
+    private static final String backRightToFrontDown = "B' D2 B ";
+
+    private static final String backLeftToFrontDown = "B D2 B' ";
 
     /**
      * Sequence that positions the edge from the up left to the front left position.
@@ -159,9 +156,9 @@ class WhiteCrossStep {
                     upRightToFrontRight +
                     frontRightToFrontUp + turnEdge),
             new Solution(new PartPosition(up, 0, 1),
-                    upBackToBackLeft +
-                    backEquatorLeftToFrontLeft +
-                    frontLeftToFrontUp + turnEdge),
+                    upBackToDownBack +
+                    downBackToDownFront +
+                    downFrontToUpFront),
             new Solution(new PartPosition(up, 1, 0),
                     upLeftToFrontLeft +
                     frontLeftToFrontUp + turnEdge),
@@ -171,8 +168,8 @@ class WhiteCrossStep {
                     upLeftToFrontLeft +
                     frontLeftToFrontUp),
             new Solution(new PartPosition(left, 1, 0),
-                    backEquatorLeftToFrontLeft +
-                    frontLeftToFrontUp + turnEdge),
+                    leftBackToFrontDown +
+                    frontDownToFrontUp + turnEdge),
             new Solution(new PartPosition(left, 1, 2),
                     frontLeftToFrontUp),
             new Solution(new PartPosition(left, 2, 1),
@@ -196,21 +193,22 @@ class WhiteCrossStep {
             new Solution(new PartPosition(right, 1, 0),
                     frontRightToFrontUp),
             new Solution(new PartPosition(right, 1, 2),
-                    backEquatorRightToFrontRight +
-                    frontRightToFrontUp + turnEdge),
+                    rightBackToFrontDown +
+                    frontDownToFrontUp + turnEdge),
             new Solution(new PartPosition(right, 2, 1),
                     downRightToFrontDown +
                     frontDownToFrontUp + turnEdge),
 
             // main color found at the back face
             new Solution(new PartPosition(back, 0, 1),
-                    upBackToBackLeft +
-                     backEquatorLeftToFrontLeft + frontLeftToFrontUp),
+                    backUpToFrontDown +
+                     frontDownToFrontUp + turnEdge),
             new Solution(new PartPosition(back, 1, 0),
-                    backEquatorRightToFrontRight + frontRightToFrontUp),
+                    backRightToFrontDown +
+                     frontDownToFrontUp + turnEdge),
             new Solution(new PartPosition(back, 1, 2),
-                    backEquatorLeftToFrontLeft +
-                     frontLeftToFrontUp),
+                    backLeftToFrontDown +
+                     frontLeftToFrontUp + turnEdge),
             new Solution(new PartPosition(back, 2, 1),
                     downBackToFrontDown  +
                      frontDownToFrontUp + turnEdge),

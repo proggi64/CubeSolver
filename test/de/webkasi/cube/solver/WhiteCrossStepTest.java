@@ -9,25 +9,25 @@ import static org.junit.jupiter.api.Assertions.*;
 class WhiteCrossStepTest {
 
     @Test
-    void solve_WhiteGreenTopFront() {
+    void solve_WhiteGreenUpFront() {
         Cube cube = new Cube();
         solveAndAssertEdges(cube);
     }
 
     @Test
-    void solve_WhiteGreenTopRight() {
+    void solve_WhiteGreenUpRight() {
         Cube cube = prepareCube("U'");
         solveAndAssertEdges(cube);
     }
 
     @Test
-    void solve_WhiteGreenTopBack() {
+    void solve_WhiteGreenUpBack() {
         Cube cube = prepareCube("U2");
         solveAndAssertEdges(cube);
     }
 
     @Test
-    void solve_WhiteGreenTopLeft() {
+    void solve_WhiteGreenUpLeft() {
         Cube cube = prepareCube("U");
         solveAndAssertEdges(cube);
     }
@@ -112,13 +112,15 @@ class WhiteCrossStepTest {
 
     @Test
     void solve_WhiteGreenBackLeft() {
-        Cube cube = prepareCube("F' E'");
+        Cube cube = prepareCube("F'2 D' L' B L B'");
         solveAndAssertEdges(cube);
     }
 
     @Test
     void solve_WhiteGreenBackRight() {
-        Cube cube = prepareCube("F E");
+        // Do not use E, M or S for preparation, because it rotates the default
+        // positions of the middle layer's middle parts
+        Cube cube = prepareCube("F2 D R' B R B'");
         solveAndAssertEdges(cube);
     }
 
@@ -186,8 +188,10 @@ class WhiteCrossStepTest {
         Cube solvedCube = CubeFactory.create(cube, records);
         for (int face = 1; face < 5; face++) {
             assertEquals(CubeColor.White, solvedCube.getFace(CubeColor.White).getField(
-                    rows[face], columns[face]), String.format("Face %d", face));
-            assertEquals(face, solvedCube.getFaceByIndex(face).getField(0, 1).ordinal());
+                    rows[face], columns[face]), String.format("Face %d Row %d Column %d", face, rows[face], columns[face]));
+            CubeFace cubeFace = solvedCube.getFaceByIndex(face);
+            assertEquals(face, cubeFace.getField(0, 1).ordinal(), String.format("Face: %d, 0,1", face));
+            assertEquals(face, cubeFace.getField(1, 1).ordinal(), String.format("Face: %d, 1,1", face));
         }
     }
 }
