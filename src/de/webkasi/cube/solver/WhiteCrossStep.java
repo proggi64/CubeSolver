@@ -5,20 +5,27 @@ import de.webkasi.cube.*;
 /**
  * Provides the solution steps for creating a white cross on a
  * scrambled 3x3 Magic Cube.
+ *
+ * The White Cross Step is used by the LayerByLayerSolver class.
+ * The Layer-By-Layer algorithm is the simplest algorithm for
+ * a 3x3 cube and intended to be used by beginners.
+ *
+ * The white cross includes the mid-parts of each side face. The
+ * sequences that position the parts from their current position
+ * to the right position are non-destructive for any already existing
+ * parts of the white cross.
  */
 class WhiteCrossStep {
-
     private final Cube _cube;
     private final CubeFaceRotationRecords _records;
     private final CubeOrientation _orientation;
 
     /**
-     * Sequence that turns the edge of the cross.
+     * Sequence that turns the upper front edge of the cross.
      *
      * This sequence turns the edge if it is in the right position, but has the wrong
      * orientation. No other edge of the white cross will be effected. The sequence
-     * is valid when the edge is at the front face. When using for other edges, the cube
-     * must be rotated into the right position first.
+     * is valid when the edge is at the front face.
      */
     private static final String turnEdge = "F' U L' U' ";
 
@@ -56,20 +63,59 @@ class WhiteCrossStep {
      */
     private static final String downRightToFrontDown = "D' ";
 
+    /**
+     * Sequence that positions the edge from the upper back to the down back.
+     */
     private static final String upBackToDownBack = "B2 ";
 
+    /**
+     * Sequence that positions the edge from the down back to the down front.
+     */
     private static final String downBackToDownFront = "D2 ";
 
+    /**
+     * Sequence that positions the edge from the down front to the up front.
+     */
     private static final String downFrontToUpFront = "F2 ";
 
+    /**
+     * Sequence that positions the edge from the left back to the down front.
+     *
+     * The sequence is non-destructive for parts of the white cross that already
+     * exist.
+     */
     private static final String leftBackToDownFront = "L' D L ";
 
+    /**
+     * Sequence that positions the edge from the right back to the down front.
+     *
+     * The sequence is non-destructive for parts of the white cross that already
+     * exist.
+     */
     private static final String rightBackToDownFront = "R D' R' ";
 
+    /**
+     * Sequence that positions the edge from the upper back to the front down.
+     *
+     * The sequence is non-destructive for parts of the white cross that already
+     * exist.
+     */
     private static final String backUpToFrontDown = "B2 D2 ";
 
+    /**
+     * Sequence that positions the edge from the back right to the front down.
+     *
+     * The sequence is non-destructive for parts of the white cross that already
+     * exist.
+     */
     private static final String backRightToFrontDown = "B' D2 B ";
 
+    /**
+     * Sequence that positions the edge from the back left to the front down.
+     *
+     * The sequence is non-destructive for parts of the white cross that already
+     * exist.
+     */
     private static final String backLeftToFrontDown = "B D2 B' ";
 
     /**
@@ -138,11 +184,17 @@ class WhiteCrossStep {
      * Each possible position and orientation of the edge is specified
      * as an PartPosition object. The PositionFinder.FindEdge() method
      * finds the actual position of an edge and the corresponding
-     * algorithm can be found in this array.
+     * algorithm can be found in this array. All positions in the array
+     * are valid for the default orientation of the cube with the green
+     * face as the front and the white face as the top.
      *
-     * To use the algorithms with each white edge the orientation
-     * of the cube must be rotated  so that the target position is at the
-     * upper front.
+     * To use the algorithms with each white edge, the orientation
+     * of the cube must be rotated so that the target face is at the
+     * front. The PositionTranslator class translates the current position
+     * that contains absolute coordinates based on the default orientation
+     * to the coordinates when the target face is the front face. So
+     * the positions that are used as the key of the solution can be used
+     * for all four orientations.
      */
     private static final Solution[] solutions = {
             // main color found at the top face
@@ -238,7 +290,7 @@ class WhiteCrossStep {
     }
 
     /**
-     * Faces in the order that are processed by the solve() method.
+     * Faces in the order how they are processed by the solve() method.
      */
     private static final CubeColor[] faceSteps = { CubeColor.Green, CubeColor.Orange, CubeColor.Blue, CubeColor.Red };
 
@@ -303,6 +355,4 @@ class WhiteCrossStep {
             i++;
         }
     }
-
-
 }
