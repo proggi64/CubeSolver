@@ -15,11 +15,7 @@ import de.webkasi.cube.*;
  * to the right position are non-destructive for any already existing
  * parts of the white cross.
  */
-class WhiteCrossStep {
-    private final Cube _cube;
-    private final CubeFaceRotationRecords _records;
-    private final CubeOrientation _orientation;
-
+class WhiteCrossStep extends AbstractSolutionStep {
     /**
      * Sequence that turns the upper front edge of the cross.
      *
@@ -137,6 +133,9 @@ class WhiteCrossStep {
     private static final String upRightToFrontRight = "R' ";
 
     /**
+     * Initializes a new instance of the WhiteCrossStep class with the
+     * specified Cube and CubeFaceRotationsRecords objects.
+     *
      * @param cube The Cube to solve. The cube may be completely scrambled.
      *             There is is no need of any previous step to pass a Cube
      *             to this method.
@@ -144,9 +143,7 @@ class WhiteCrossStep {
      *                must be empty.
      */
     private WhiteCrossStep(Cube cube, CubeFaceRotationRecords records) {
-        _cube = cube;
-        _records = records;
-        _orientation = new CubeOrientation();
+        super(cube, records);
     }
 
     /**
@@ -279,24 +276,6 @@ class WhiteCrossStep {
      * get the white cross. The orientation of the corners may be still wrong
      * after the call. This orientation should be corrected by another step class.
      *
-     * @param cube The Cube to solve. The cube may be completely scrambled.
-     *             There is is no need of any previous step to pass a Cube
-     *             to this method.
-     * @param records The CubeFaceRotationRecords object receiving the solution steps.
-     */
-    public static void solve(Cube cube, CubeFaceRotationRecords records) {
-        WhiteCrossStep step = new WhiteCrossStep(cube, records);
-        step.solve();
-    }
-
-    /**
-     * Faces in the order how they are processed by the solve() method.
-     */
-    private static final CubeColor[] faceSteps = { CubeColor.Green, CubeColor.Orange, CubeColor.Blue, CubeColor.Red };
-
-    /**
-     * Solves the White Cross Step for the given cube.
-     *
      * solve() rotates the cube by the y axis with the white face up from the green front
      * clockwise to the red front in four steps. At each step the
      * corresponding white edge with the front color is located and moved to the correct
@@ -306,23 +285,15 @@ class WhiteCrossStep {
      *
      * The last move is the return to the default orientation of the cube: Green
      * front and white up.
+     *
+     * @param cube The Cube to solve. The cube may be completely scrambled.
+     *             There is is no need of any previous step to pass a Cube
+     *             to this method.
+     * @param records The CubeFaceRotationRecords object receiving the solution steps.
      */
-    private void solve() {
-        SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(_records);
-        StringBuilder cubeRotations = new StringBuilder();
-
-        for (int i = 0; i < 4; i++) {
-            Cube steppedCube = CubeFactory.create(_cube, _records);
-
-            PartPosition edgePosition = PositionFinder.FindEdge(steppedCube, CubeColor.White, faceSteps[i]);
-            String solutionMoves = cubeRotations + findSolutionFor(edgePosition);
-            interpreter.addMoves(solutionMoves);
-
-            // Go to the next front face: The y-rotations are only interpreted by each
-            // addMoves call, so we have to append one "y" per rotation.
-            _orientation.rotate('y', RotationDirection.Clockwise, 1);
-            cubeRotations.append("y ");
-        }
+    public static void solve(Cube cube, CubeFaceRotationRecords records) {
+        WhiteCrossStep step = new WhiteCrossStep(cube, records);
+        step.solve();
     }
 
     /**
@@ -346,7 +317,7 @@ class WhiteCrossStep {
      * @param position The PartPosition to find the solution for.
      * @return A String with the solution steps in SpeedCube syntax.
      */
-    private String findSolutionFor(PartPosition position) {
+    protected String findSolutionFor(PartPosition position) {
         int i = 0;
         PartPosition translatedPosition = PositionTranslator.translate(position, _orientation);
         while (true) {
@@ -354,5 +325,17 @@ class WhiteCrossStep {
                 return solutions[i].moves;
             i++;
         }
+    }
+
+    /**
+     * Finds the position of the specified edge.
+     *
+     * @param steppedCube The Cube with the applied current found solutions steps.
+     * @param face The cube's face that is currently the front face. The second color
+     *             is always white.
+     * @return A PartPosition object with the absolute coordinates of the searched part.
+     */
+    protected PartPosition findPosition(Cube steppedCube, CubeColor face) {
+        return PositionFinder.FindEdge(steppedCube, CubeColor.White, face);
     }
 }

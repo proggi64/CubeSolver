@@ -92,7 +92,7 @@ public class PositionFinder {
         return position;
     }
 
-    public static PartPosition FindCorner(Cube cube, CubeColor upColor, CubeColor leftColor, CubeColor frontColor) {
+    public static PartPosition FindCorner(Cube cube, CubeColor upColor, CubeColor frontColor) {
         return null;
     }
 }
