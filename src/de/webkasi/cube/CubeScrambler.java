@@ -15,8 +15,8 @@ public class CubeScrambler {
      * of layers are rotated with each rotation. The higher the depth the
      * more complex will the solution be.
      *
-     * @param cube The Cube to scramble
-     * @param depth Count of random rotations
+     * @param cube The Cube to scramble.
+     * @param depth Count of random rotations.
      */
     public static void scrambleCube(Cube cube, int depth) {
         Random generator = new Random(System.nanoTime());
@@ -31,5 +31,28 @@ public class CubeScrambler {
 
             rotater.rotateFace(direction, face, countOfLayers);
         }
+    }
+
+    /**
+     * Generates a CubeFaceRotationRecords object with random rotations.
+     *
+     * @param depth Count of random rotations.
+     * @param dimension Count of dimensions of the cube to scramble,
+     * @return
+     */
+    public static CubeFaceRotationRecords scrambleCube(int depth, int dimension) {
+        Random generator = new Random(System.nanoTime());
+        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
+
+        for (int i = 0; i < depth; i++) {
+            RotationDirection direction = generator.nextInt(2) == 0 ?
+                    RotationDirection.Clockwise : RotationDirection.Counterclockwise;
+            int face = generator.nextInt(CubeColor.values().length);
+            int countOfLayers = dimension <= 3 ? 1 : generator.nextInt(dimension / 2) + 1;
+
+            CubeFaceRotationRecord record = new CubeFaceRotationRecord(face, direction, countOfLayers);
+            records.add(record);
+        }
+        return records;
     }
 }

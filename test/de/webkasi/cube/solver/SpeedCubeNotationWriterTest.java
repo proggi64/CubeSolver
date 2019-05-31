@@ -15,7 +15,7 @@ class SpeedCubeNotationWriterTest {
         final String moves = "R L2 U' d B2 R' D' f'2 ";
         interpreter.addMoves(moves);
 
-        assertEquals(moves, SpeedCubeNotationWriter.Write(records));
+        assertEquals(moves, SpeedCubeNotationWriter.write(records));
     }
 
     @Test
@@ -28,7 +28,7 @@ class SpeedCubeNotationWriterTest {
         SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(records);
         interpreterSource.addMoves("M2 S2 E2");
 
-        String result = SpeedCubeNotationWriter.Write(recordsSource);
+        String result = SpeedCubeNotationWriter.write(recordsSource);
 
         interpreter.addMoves(result);
         CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(rotator);

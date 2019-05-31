@@ -41,7 +41,7 @@ class WhiteCrossStep {
     /**
      * Sequence that positions the edge from the front bottom to the top.
      *
-     * This sequence positions the edge from th bottom of the front
+     * This sequence positions the edge from the bottom of the front
      * to the top.
      */
     private static final String frontDownToFrontUp = "F2 ";
@@ -56,22 +56,17 @@ class WhiteCrossStep {
      */
     private static final String downRightToFrontDown = "D' ";
 
-    /**
-     * Sequence that positions the edge from the down back to the down front.
-     */
-    private static final String downBackToFrontDown = "D2 ";
-
     private static final String upBackToDownBack = "B2 ";
 
     private static final String downBackToDownFront = "D2 ";
 
     private static final String downFrontToUpFront = "F2 ";
 
-    private static final String leftBackToFrontDown = "L' D L ";
+    private static final String leftBackToDownFront = "L' D L ";
 
-    private static final String rightBackToFrontDown = "R D' R' ";
+    private static final String rightBackToDownFront = "R D' R' ";
 
-    private static final String backUpToFrontDown = "B2 D2 B'2 ";
+    private static final String backUpToFrontDown = "B2 D2 ";
 
     private static final String backRightToFrontDown = "B' D2 B ";
 
@@ -168,7 +163,7 @@ class WhiteCrossStep {
                     upLeftToFrontLeft +
                     frontLeftToFrontUp),
             new Solution(new PartPosition(left, 1, 0),
-                    leftBackToFrontDown +
+                    leftBackToDownFront +
                     frontDownToFrontUp + turnEdge),
             new Solution(new PartPosition(left, 1, 2),
                     frontLeftToFrontUp),
@@ -193,7 +188,7 @@ class WhiteCrossStep {
             new Solution(new PartPosition(right, 1, 0),
                     frontRightToFrontUp),
             new Solution(new PartPosition(right, 1, 2),
-                    rightBackToFrontDown +
+                    rightBackToDownFront +
                     frontDownToFrontUp + turnEdge),
             new Solution(new PartPosition(right, 2, 1),
                     downRightToFrontDown +
@@ -208,9 +203,9 @@ class WhiteCrossStep {
                      frontDownToFrontUp + turnEdge),
             new Solution(new PartPosition(back, 1, 2),
                     backLeftToFrontDown +
-                     frontLeftToFrontUp + turnEdge),
+                     frontDownToFrontUp + turnEdge),
             new Solution(new PartPosition(back, 2, 1),
-                    downBackToFrontDown  +
+                    downBackToDownFront  +
                      frontDownToFrontUp + turnEdge),
 
             // main color found at the down face
@@ -221,7 +216,7 @@ class WhiteCrossStep {
             new Solution(new PartPosition(down, 1, 2),
                     downRightToFrontDown + frontDownToFrontUp),
             new Solution(new PartPosition(down, 2, 1),
-                    downBackToFrontDown +
+                    downBackToDownFront +
                             frontDownToFrontUp),
     };
 

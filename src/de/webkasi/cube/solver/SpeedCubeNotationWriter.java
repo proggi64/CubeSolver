@@ -39,7 +39,7 @@ public class SpeedCubeNotationWriter {
      * @return A String containing the records in SpeedCube notation
      * syntax.
      */
-    public static String Write(CubeFaceRotationRecords records) {
+    public static String write(CubeFaceRotationRecords records) {
         SpeedCubeNotationWriter writer = new SpeedCubeNotationWriter(records);
 
         for (writer._recordIndex = 0; writer._recordIndex < writer._records.size(); writer._recordIndex++) {

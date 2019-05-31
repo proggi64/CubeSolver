@@ -82,6 +82,10 @@ class CubeOrientation {
 
     /**
      * Turns the orientation of the cube 90 degrees around the x-axis.
+     *
+     * To determine the direction of the rotation one looks at the left
+     * face of the cube. Clockwise will make the previous front face the
+     * new down face.
      */
     private void x() {
         int oldUp = up;
@@ -93,6 +97,9 @@ class CubeOrientation {
 
     /**
      * Turns the orientation of the cube 90 degrees around the y-axis.
+     *
+     * To determine the direction of the rotation one looks at the bottom
+     * of the cube. Clockwise will make the previous left face the new front.
      */
     private void y() {
         int oldRight = right;
@@ -104,6 +111,10 @@ class CubeOrientation {
 
     /**
      * Turns the orientation of the cube 90 degrees around the z-axis.
+     *
+     * To determine the direction of the rotation one looks at the front
+     * of the cube. Clockwise means that the previous down face will become
+     * the new left face.
      */
     private void z() {
         int oldLeft = left;

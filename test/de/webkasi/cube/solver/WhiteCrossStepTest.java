@@ -33,7 +33,7 @@ class WhiteCrossStepTest {
     }
 
     @Test
-    void solve_WhiteGreenLeftTop() {
+    void solve_WhiteGreenLeftUp() {
         Cube cube = prepareCube("F' L'");
         solveAndAssertEdges(cube);
     }
@@ -57,7 +57,7 @@ class WhiteCrossStepTest {
     }
 
     @Test
-    void solve_WhiteGreenFrontTop() {
+    void solve_WhiteGreenFrontUp() {
         Cube cube = prepareCube("F' U L' U'");
         solveAndAssertEdges(cube);
     }
@@ -81,7 +81,7 @@ class WhiteCrossStepTest {
     }
 
     @Test
-    void solve_WhiteGreenRightTop() {
+    void solve_WhiteGreenRightUp() {
         Cube cube = prepareCube("F' U L' U'2");
         solveAndAssertEdges(cube);
     }
@@ -105,21 +105,21 @@ class WhiteCrossStepTest {
     }
 
     @Test
-    void solve_WhiteGreenBackTop() {
+    void solve_WhiteGreenBackUp() {
         Cube cube = prepareCube("F R U'");
         solveAndAssertEdges(cube);
     }
 
     @Test
     void solve_WhiteGreenBackLeft() {
+        // Do not use E, M or S for preparation, because it rotates the default
+        // positions of the center parts and the cube should has to be rotated back
         Cube cube = prepareCube("F'2 D' L' B L B'");
         solveAndAssertEdges(cube);
     }
 
     @Test
     void solve_WhiteGreenBackRight() {
-        // Do not use E, M or S for preparation, because it rotates the default
-        // positions of the middle layer's middle parts
         Cube cube = prepareCube("F2 D R' B R B'");
         solveAndAssertEdges(cube);
     }
@@ -155,11 +155,50 @@ class WhiteCrossStepTest {
     }
 
     @Test
+    void solve_RandomManual01() {
+        Cube cube = prepareCube("U B' L");
+        solveAndAssertEdges(cube);
+    }
+
+    @Test
+    void solve_RandomManual02() {
+        Cube cube = prepareCube("U R' D'");
+        solveAndAssertEdges(cube);
+    }
+
+    @Test
+    void solve_RandomManual03() {
+        Cube cube = prepareCube("U' L D'");
+        solveAndAssertEdges(cube);
+    }
+
+    @Test
+    void solve_RandomManual04() {
+        Cube cube = prepareCube("L' U R'");
+        solveAndAssertEdges(cube);
+    }
+
+    @Test
+    void solve_RandomManual05() {
+        Cube cube = prepareCube("U F L'");
+        solveAndAssertEdges(cube);
+    }
+
+    @Test
+    void solve_RandomManual06() {
+        Cube cube = prepareCube("U B U");
+        solveAndAssertEdges(cube);
+    }
+
+    @Test
     void solve_RandomCubes() {
         for (int i = 0; i < 100; i++) {
             Cube cube = new Cube();
-            CubeScrambler.scrambleCube(cube, 20);
-            solveAndAssertEdges(cube);
+            CubeFaceRotationRecords records = CubeScrambler.scrambleCube(5 + i % 10, cube.getDimension());
+            CubeFaceRotator rotator = new CubeFaceRotator(cube);
+            CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(rotator);
+            player.play(records);
+            solveAndAssertEdgesWithRecordsReport(cube, records);
         }
     }
 
@@ -188,10 +227,27 @@ class WhiteCrossStepTest {
         Cube solvedCube = CubeFactory.create(cube, records);
         for (int face = 1; face < 5; face++) {
             assertEquals(CubeColor.White, solvedCube.getFace(CubeColor.White).getField(
-                    rows[face], columns[face]), String.format("Face %d Row %d Column %d", face, rows[face], columns[face]));
+                    rows[face], columns[face]), String.format("White Side %d Row %d Column %d", face, rows[face], columns[face]));
             CubeFace cubeFace = solvedCube.getFaceByIndex(face);
             assertEquals(face, cubeFace.getField(0, 1).ordinal(), String.format("Face: %d, 0,1", face));
             assertEquals(face, cubeFace.getField(1, 1).ordinal(), String.format("Face: %d, 1,1", face));
+        }
+    }
+
+    private static void solveAndAssertEdgesWithRecordsReport(Cube cube, CubeFaceRotationRecords scrambleRecords) {
+        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
+
+        WhiteCrossStep.solve(cube, records);
+
+        String scrambleMoves = SpeedCubeNotationWriter.write(scrambleRecords);
+
+        Cube solvedCube = CubeFactory.create(cube, records);
+        for (int face = 1; face < 5; face++) {
+            assertEquals(CubeColor.White, solvedCube.getFace(CubeColor.White).getField(
+                    rows[face], columns[face]), String.format("White Side %d Row %d Column %d: %s", face, rows[face], columns[face], scrambleMoves));
+            CubeFace cubeFace = solvedCube.getFaceByIndex(face);
+            assertEquals(face, cubeFace.getField(0, 1).ordinal(), String.format("Face: %d, 0,1: %s", face, scrambleMoves));
+            assertEquals(face, cubeFace.getField(1, 1).ordinal(), String.format("Face: %d, 1,1: %s", face, scrambleMoves));
         }
     }
 }
