@@ -20,7 +20,7 @@ class CubeFactory {
      * @return A new Cube object based on the specified cube with all
      * rotations that are stored in the specified records.
      */
-    static Cube create(Cube cube, CubeFaceRotationRecords records) {
+    static Cube create(final Cube cube, final CubeFaceRotationRecords records) {
         Cube cubeCopy = new Cube(cube);
         CubeFaceRotator rotator = new CubeFaceRotator(cubeCopy);
         CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(rotator);

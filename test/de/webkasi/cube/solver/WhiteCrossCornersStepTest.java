@@ -153,6 +153,24 @@ class WhiteCrossCornersStepTest {
     }
 
     @Test
+    void solve_RandomManual01() {
+        Cube cube = prepareCube("U R' U' R F'");
+        solveAndAssertUpLayer(cube);
+    }
+
+    @Test
+    void solve_RandomManual02() {
+        Cube cube = prepareCube("F' L B");
+        solveAndAssertUpLayer(cube);
+    }
+
+    @Test
+    void solve_RandomManual03() {
+        Cube cube = prepareCube("L B2' F R' B' F L'");
+        solveAndAssertUpLayer(cube);
+    }
+
+    @Test
     void solve_RandomCubes() {
         for (int i = 0; i < 100; i++) {
             Cube cube = new Cube();
@@ -164,7 +182,7 @@ class WhiteCrossCornersStepTest {
         }
     }
 
-    private static Cube prepareCube(String moves) {
+    private static Cube prepareCube(final String moves) {
         Cube cube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(cube);
         CubeFaceRotationRecords records = new CubeFaceRotationRecords();
@@ -175,7 +193,7 @@ class WhiteCrossCornersStepTest {
         return cube;
     }
 
-    private static void solveAndAssertWhiteCorners(Cube cube) {
+    private static void solveAndAssertWhiteCorners(final Cube cube) {
         CubeFaceRotationRecords records = new CubeFaceRotationRecords();
 
         WhiteCrossCornersStep.solve(cube, records);
@@ -191,17 +209,19 @@ class WhiteCrossCornersStepTest {
         assertEquals(expectedColor, cubeFace.getField(1, 1).ordinal(), "1,1");
     }
 
-    private static void solveAndAssertWhiteLayerWithRecordsReport(Cube cube, CubeFaceRotationRecords scrambleRecords) {
+    private static void solveAndAssertWhiteLayerWithRecordsReport(
+            final Cube cube,
+            final CubeFaceRotationRecords scrambleRecords) {
         CubeFaceRotationRecords records = new CubeFaceRotationRecords();
         WhiteCrossStep.solve(cube, records);
-        cube = CubeFactory.create(cube, records);
+        Cube steppedCube = CubeFactory.create(cube, records);
         records.clear();
 
-        WhiteCrossCornersStep.solve(cube, records);
+        WhiteCrossCornersStep.solve(steppedCube, records);
 
         String scrambleMoves = SpeedCubeNotationWriter.write(scrambleRecords);
 
-        Cube solvedCube = CubeFactory.create(cube, records);
+        Cube solvedCube = CubeFactory.create(steppedCube, records);
         CubeFace upFace = solvedCube.getFace(CubeColor.White);
         for (int row = 0; row < cube.getDimension(); row++) {
             for (int column = 0; column < cube.getDimension(); column++) {
@@ -219,15 +239,15 @@ class WhiteCrossCornersStepTest {
         }
     }
 
-    private static void solveAndAssertUpLayer(Cube cube) {
+    private static void solveAndAssertUpLayer(final Cube cube) {
         CubeFaceRotationRecords records = new CubeFaceRotationRecords();
         WhiteCrossStep.solve(cube, records);
-        cube = CubeFactory.create(cube, records);
+        Cube steppedCube = CubeFactory.create(cube, records);
         records.clear();
 
-        WhiteCrossCornersStep.solve(cube, records);
+        WhiteCrossCornersStep.solve(steppedCube, records);
 
-        Cube solvedCube = CubeFactory.create(cube, records);
+        Cube solvedCube = CubeFactory.create(steppedCube, records);
         CubeFace upFace = solvedCube.getFace(CubeColor.White);
         for (int row = 0; row < cube.getDimension(); row++) {
             for (int column = 0; column < cube.getDimension(); column++) {

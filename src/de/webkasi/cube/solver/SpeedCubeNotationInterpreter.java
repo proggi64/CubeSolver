@@ -18,7 +18,7 @@ public class SpeedCubeNotationInterpreter {
      * @param records The CubeFaceRotationRecords object that receives
      *                the move _records of the addMoves() method.
      */
-    public SpeedCubeNotationInterpreter(CubeFaceRotationRecords records) {
+    public SpeedCubeNotationInterpreter(final CubeFaceRotationRecords records) {
         this._records = records;
     }
 
@@ -34,7 +34,7 @@ public class SpeedCubeNotationInterpreter {
      * @param moves A String containing a sequence of moves in
      *              Speedcube.de notation. See https://speedcube.de/notation.php.
      */
-    public void addMoves(String moves) {
+    public void addMoves(final String moves) {
         CubeFaceRotationRecord record = null;
         CubeOrientation orientation = new CubeOrientation();
 
@@ -142,7 +142,7 @@ public class SpeedCubeNotationInterpreter {
      * @param orientation The current CubeOrientation that may be changed.
      * @return The index of the last character that has been interpreted by this method.
      */
-    private int middle(String moves, int i, CubeOrientation orientation) {
+    private int middle(final String moves, final int i, final CubeOrientation orientation) {
         return rotateMiddleLayer(moves, i, orientation.left);
     }
 
@@ -157,7 +157,7 @@ public class SpeedCubeNotationInterpreter {
      * @param orientation The current CubeOrientation that may be changed.
      * @return The index of the last character that has been interpreted by this method.
      */
-    private int equator(String moves, int i, CubeOrientation orientation) {
+    private int equator(final String moves, final int i, final CubeOrientation orientation) {
         return rotateMiddleLayer(moves, i, orientation.down);
     }
 
@@ -172,7 +172,7 @@ public class SpeedCubeNotationInterpreter {
      * @param orientation The current CubeOrientation that may be changed.
      * @return The index of the last character that has been interpreted by this method.
      */
-    private int stand(String moves, int i, CubeOrientation orientation) {
+    private int stand(final String moves, final int i, final CubeOrientation orientation) {
         return rotateMiddleLayer(moves, i, orientation.back);
     }
 
@@ -191,7 +191,7 @@ public class SpeedCubeNotationInterpreter {
      *                  z is the front face.
      * @return The index of the last character that has been interpreted by this method.
      */
-    private int rotateMiddleLayer(String moves, int i, int faceIndex) {
+    private int rotateMiddleLayer(final String moves, int i, final int faceIndex) {
 
         boolean ready = false;
         boolean reverse = false;

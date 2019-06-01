@@ -24,7 +24,7 @@ public class SpeedCubeNotationWriter {
      * @param records The SpeedCubeNotationRecords collection of moves that
      *                is translated into a SpeedCube notation string.
      */
-    private SpeedCubeNotationWriter(CubeFaceRotationRecords records) {
+    private SpeedCubeNotationWriter(final CubeFaceRotationRecords records) {
         _builder = new StringBuilder(1024);
         _records = records;
         _recordIndex = 0;
@@ -39,7 +39,7 @@ public class SpeedCubeNotationWriter {
      * @return A String containing the records in SpeedCube notation
      * syntax.
      */
-    public static String write(CubeFaceRotationRecords records) {
+    public static String write(final CubeFaceRotationRecords records) {
         SpeedCubeNotationWriter writer = new SpeedCubeNotationWriter(records);
 
         for (writer._recordIndex = 0; writer._recordIndex < writer._records.size(); writer._recordIndex++) {
@@ -81,7 +81,7 @@ public class SpeedCubeNotationWriter {
      * @param record The CubeFaceRotationRecord to write into the result.
      * @return The command character that corresponds to the record.
      */
-    private char getCommand(CubeFaceRotationRecord record) {
+    private char getCommand(final CubeFaceRotationRecord record) {
         int faceIndex = record.getFace();
         if (record.getStartRow() == 0)
             return notationFaceCommands[faceIndex];
@@ -113,7 +113,7 @@ public class SpeedCubeNotationWriter {
      *
      * @param direction The RotationDirection that should be encoded into the result.
      */
-    private void writeDirection (RotationDirection direction) {
+    private void writeDirection (final RotationDirection direction) {
         if (direction == RotationDirection.Counterclockwise)
             _builder.append('\'');
     }

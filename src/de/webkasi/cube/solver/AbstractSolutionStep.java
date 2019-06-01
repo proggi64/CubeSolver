@@ -51,7 +51,10 @@ abstract class AbstractSolutionStep {
      *                This must contain the previous steps of the WhiteCrossStep.solve()
      *                method.
      */
-    protected AbstractSolutionStep(Cube cube, CubeFaceRotationRecords records, Solution[] solutions) {
+    protected AbstractSolutionStep(
+            final Cube cube,
+            final CubeFaceRotationRecords records,
+            final Solution[] solutions) {
         _cube = cube;
         _records = records;
         _orientation = new CubeOrientation();
@@ -113,7 +116,7 @@ abstract class AbstractSolutionStep {
      * @param position The PartPosition to find the solution for.
      * @return A String with the solution steps in SpeedCube syntax.
      */
-    private String findSolutionFor(PartPosition position) {
+    private String findSolutionFor(final PartPosition position) {
         int i = 0;
         PartPosition translatedPosition = PositionTranslator.translate(position, _orientation);
         while (true) {
@@ -133,5 +136,5 @@ abstract class AbstractSolutionStep {
      * @param face The cube's face that is currently the front face.
      * @return A PartPosition object with the absolute coordinates of the searched part.
      */
-    abstract protected PartPosition findPosition(Cube steppedCube, CubeColor face);
+    abstract protected PartPosition findPosition(final Cube steppedCube, final CubeColor face);
 }

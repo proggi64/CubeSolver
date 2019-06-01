@@ -142,7 +142,7 @@ class WhiteCrossStep extends AbstractSolutionStep {
      * @param records The CubeFaceRotationRecords object receiving the solution steps. This
      *                must be empty.
      */
-    private WhiteCrossStep(Cube cube, CubeFaceRotationRecords records) {
+    private WhiteCrossStep(final Cube cube, final CubeFaceRotationRecords records) {
         super(cube, records, solutions);
     }
 
@@ -150,7 +150,7 @@ class WhiteCrossStep extends AbstractSolutionStep {
      * Algorithms for moving an edge to the front upper position.
      *
      * Each possible position and orientation of the edge is specified
-     * as an PartPosition object. The PositionFinder.findEdge() method
+     * as a PartPosition object. The PositionFinder.findEdge() method
      * finds the actual position of an edge and the corresponding
      * algorithm can be found in this array. All positions in the array
      * are valid for the default orientation of the cube with the green
@@ -262,7 +262,7 @@ class WhiteCrossStep extends AbstractSolutionStep {
      *             to this method.
      * @param records The CubeFaceRotationRecords object receiving the solution steps.
      */
-    public static void solve(Cube cube, CubeFaceRotationRecords records) {
+    public static void solve(final Cube cube, final CubeFaceRotationRecords records) {
         WhiteCrossStep step = new WhiteCrossStep(cube, records);
         step.solve();
     }
@@ -275,7 +275,7 @@ class WhiteCrossStep extends AbstractSolutionStep {
      *             is always white.
      * @return A PartPosition object with the absolute coordinates of the searched part.
      */
-    protected PartPosition findPosition(Cube steppedCube, CubeColor face) {
+    protected PartPosition findPosition(final Cube steppedCube, final CubeColor face) {
         return PositionFinder.findEdge(steppedCube, CubeColor.White, face);
     }
 }

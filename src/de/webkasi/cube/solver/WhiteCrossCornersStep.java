@@ -23,7 +23,7 @@ class WhiteCrossCornersStep extends AbstractSolutionStep {
      *                This must contain the previous steps of the WhiteCrossStep.solve()
      *                method.
      */
-    private WhiteCrossCornersStep(Cube cube, CubeFaceRotationRecords records) {
+    private WhiteCrossCornersStep(final Cube cube, final CubeFaceRotationRecords records) {
         super(cube, records, solutions);
     }
 
@@ -41,11 +41,29 @@ class WhiteCrossCornersStep extends AbstractSolutionStep {
      *                and containing the steps necessary to get the white cross. See
      *                WhiteCrossStep.solve().
      */
-    public static void solve(Cube cube, CubeFaceRotationRecords records) {
+    public static void solve(final Cube cube, final CubeFaceRotationRecords records) {
         WhiteCrossCornersStep step = new WhiteCrossCornersStep(cube, records);
         step.solve();
     }
 
+    /**
+     * Algorithms for moving a corner to the upper right position.
+     *
+     * Each possible position and orientation of the corner is specified
+     * as a PartPosition object. The PositionFinder.findCorner() method
+     * finds the actual position of a corner and the corresponding
+     * algorithm can be found in this array. All positions in the array
+     * are valid for the default orientation of the cube with the green
+     * face as the front and the white face as the top.
+     *
+     * To use the algorithms with each white corner, the orientation
+     * of the cube must be rotated so that the target face is at the
+     * front. The PositionTranslator class translates the current position
+     * that contains absolute coordinates based on the default orientation
+     * to the coordinates when the target face is the front face. So
+     * the positions that are used as the key of the solution can be used
+     * for all four orientations.
+     */
     private static final Solution[] solutions = {
             // main color found at the up face
             new Solution(new PartPosition(up, 0, 0),
@@ -58,9 +76,9 @@ class WhiteCrossCornersStep extends AbstractSolutionStep {
 
             // main color found at the left face
             new Solution(new PartPosition(left, 0, 0),
-                    "L' D2 R' D' R D "),
+                    "L' D2 L R' D' R D "),
             new Solution(new PartPosition(left, 0, 2),
-                    "L R' D L' R' "),
+                    "L D L' D' R' D R "),
             new Solution(new PartPosition(left, 2, 2),
                     "R' D R "),
             new Solution(new PartPosition(left, 2, 0),
@@ -78,7 +96,7 @@ class WhiteCrossCornersStep extends AbstractSolutionStep {
 
             // main color found at the right face
             new Solution(new PartPosition(right, 0, 0),
-                    "L' D' L D R' D' R D "),
+                    "R' D' R D R' D' R D "),
             new Solution(new PartPosition(right, 0, 2),
                     "R D R' D2 R' D2 R D R' D' R "),
             new Solution(new PartPosition(right, 2, 2),
@@ -118,7 +136,7 @@ class WhiteCrossCornersStep extends AbstractSolutionStep {
      *             and the third color can only be red.
      * @return A PartPosition object with the absolute coordinates of the searched part.
      */
-    protected PartPosition findPosition(Cube steppedCube, CubeColor face) {
+    protected PartPosition findPosition(final Cube steppedCube, final CubeColor face) {
         return PositionFinder.findCorner(steppedCube, CubeColor.White, face);
     }
 }

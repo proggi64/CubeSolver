@@ -8,12 +8,12 @@ import de.webkasi.cube.*;
  */
 public class PositionFinder {
 
-    private static final int faceIndex = 0;
-    private static final int rowIndex = 1;
-    private static final int columnIndex = 2;
-    private static final int sideFaceIndex = 3;
-    private static final int sideRowIndex = 4;
-    private static final int sideColumnIndex = 5;
+    private static final int upFaceIndex = 0;
+    private static final int upRowIndex = 1;
+    private static final int upColumnIndex = 2;
+    private static final int frontFaceIndex = 3;
+    private static final int frontRowIndex = 4;
+    private static final int frontColumnIndex = 5;
 
     /**
      * Search positions for all edges as a two dimensional int array:
@@ -78,7 +78,7 @@ public class PositionFinder {
      * face has its row 0 towards the blue face on the back. All side faces have their
      * row 0 towards the white face. The yellow face has its row 0 towards the green face.
      */
-    public static PartPosition findEdge(Cube cube, CubeColor upColor, CubeColor frontColor) {
+    public static PartPosition findEdge(final Cube cube, final CubeColor upColor, final CubeColor frontColor) {
         return find(cube, upColor, frontColor, edgeCoordinates);
     }
 
@@ -114,7 +114,7 @@ public class PositionFinder {
 
             { 3, 0, 0,  0, 2, 2 },  // right up front
             { 3, 0, 2,  4, 0, 0 },  // right back up
-            { 3, 2, 2,  5, 0, 2 },  // right down back
+            { 3, 2, 2,  5, 2, 2 },  // right down back
             { 3, 2, 0,  2, 2, 2 },  // right front down
 
             { 4, 0, 0,  0, 0, 2 },  // back up right
@@ -125,7 +125,7 @@ public class PositionFinder {
             { 5, 0, 0,  2, 2, 0 },  // down front left
             { 5, 0, 2,  3, 2, 0 },  // down right front
             { 5, 2, 2,  4, 2, 0 },  // down back right
-            { 5, 2, 0,  1, 2, 0 },  // down left back
+            { 5, 2, 0,  1, 2, 0 }   // down left back
     };
 
     /**
@@ -148,7 +148,7 @@ public class PositionFinder {
      * face has its row 0 towards the blue face on the back. All side faces have their
      * row 0 towards the white face. The yellow face has its row 0 towards the green face.
      */
-    public static PartPosition findCorner(Cube cube, CubeColor upColor, CubeColor frontColor) {
+    public static PartPosition findCorner(final Cube cube, final CubeColor upColor, final CubeColor frontColor) {
         return find(cube, upColor, frontColor, cornerCoordinates);
     }
 
@@ -175,21 +175,27 @@ public class PositionFinder {
      * face has its row 0 towards the blue face on the back. All side faces have their
      * row 0 towards the white face. The yellow face has its row 0 towards the green face.
      */
-    private static PartPosition find(Cube cube, CubeColor upColor, CubeColor frontColor, int[][] indexes) {
+    private static PartPosition find(
+            final Cube cube,
+            final CubeColor upColor,
+            final CubeColor frontColor,
+            final int[][] indexes) {
         boolean found = false;
         int face = 0;
         int row = 0;
         int column = 0;
+        int i = 0;
 
-        for (int i = 0; !found && i < indexes.length; i++) {
-            face = indexes[i][faceIndex];
-            row = indexes[i][rowIndex];
-            column = indexes[i][columnIndex];
+        while (!found) {
+            face = indexes[i][upFaceIndex];
+            row = indexes[i][upRowIndex];
+            column = indexes[i][upColumnIndex];
 
             CubeFace cubeFace = cube.getFaceByIndex(face);
-            CubeFace sideFace = cube.getFaceByIndex(indexes[i][sideFaceIndex]);
+            CubeFace sideFace = cube.getFaceByIndex(indexes[i][frontFaceIndex]);
             found = (cubeFace.getField(row, column) == upColor &&
-                    sideFace.getField(indexes[i][sideRowIndex], indexes[i][sideColumnIndex]) == frontColor);
+                    sideFace.getField(indexes[i][frontRowIndex], indexes[i][frontColumnIndex]) == frontColor);
+            i++;
         }
         PartPosition position =  new PartPosition();
         position.setFace(face);
@@ -197,6 +203,5 @@ public class PositionFinder {
         position.setRow(row);
 
         return position;
-
     }
 }

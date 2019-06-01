@@ -17,7 +17,7 @@ class PositionTranslator {
      * @param position The original PartPosition that shoild be translated.
      * @param orientation The CubeOrientation that is the base for the translation.
      */
-    private PositionTranslator(PartPosition position, CubeOrientation orientation) {
+    private PositionTranslator(final PartPosition position, final CubeOrientation orientation) {
         _orientation = orientation;
         _originalPosition = position;
         findOrientationIndex();
@@ -39,7 +39,7 @@ class PositionTranslator {
      * @return A new PartPosition object that is translated into the given
      * CubeOrientation. The coordinates will be rotated with the given orientation.
      */
-    static PartPosition translate(PartPosition position, CubeOrientation orientation) {
+    static PartPosition translate(final PartPosition position, final CubeOrientation orientation) {
         PartPosition translated = new PartPosition(position);
         PositionTranslator translator = new PositionTranslator(position, orientation);
 
@@ -166,7 +166,7 @@ class PositionTranslator {
      *                       for this face and the orientation.
      * @return The translated column of the position.
      */
-    private int translateColumn(int translatedFace) {
+    private int translateColumn(final int translatedFace) {
         switch (faceRotations[_orientationIndex][translatedFace]) {
             case none:
                 return _originalPosition.getColumn();
@@ -187,7 +187,7 @@ class PositionTranslator {
      *                       for this face and the orientation.
      * @return The translated row of the position.
      */
-    private int translateRow(int translatedFace) {
+    private int translateRow(final int translatedFace) {
         switch (faceRotations[_orientationIndex][translatedFace]) {
             case none:
                 return _originalPosition.getRow();
