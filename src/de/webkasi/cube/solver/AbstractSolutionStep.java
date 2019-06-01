@@ -9,9 +9,35 @@ import de.webkasi.cube.*;
  * the cube solution step classes.
  */
 abstract class AbstractSolutionStep {
-    protected final Cube _cube;
-    protected final CubeFaceRotationRecords _records;
-    protected final CubeOrientation _orientation;
+    private final Cube _cube;
+    private final CubeFaceRotationRecords _records;
+    private final CubeOrientation _orientation;
+    private final Solution[] _solutions;
+
+    /**
+     * Index of the upper face.
+     */
+    protected static final int up = CubeColor.White.ordinal();
+    /**
+     * Index of the left face.
+     */
+    protected static final int left = CubeColor.Orange.ordinal();
+    /**
+     * Index of the front face.
+     */
+    protected static final int front = CubeColor.Green.ordinal();
+    /**
+     * Index of the right face.
+     */
+    protected static final int right = CubeColor.Red.ordinal();
+    /**
+     * Index of the back face.
+     */
+    protected static final int back = CubeColor.Blue.ordinal();
+    /**
+     * Index of the down face.
+     */
+    protected static final int down = CubeColor.Yellow.ordinal();
 
     /**
      * Initializes a new instance of the AbstractSolutionStep class with the
@@ -25,10 +51,11 @@ abstract class AbstractSolutionStep {
      *                This must contain the previous steps of the WhiteCrossStep.solve()
      *                method.
      */
-    protected AbstractSolutionStep(Cube cube, CubeFaceRotationRecords records) {
+    protected AbstractSolutionStep(Cube cube, CubeFaceRotationRecords records, Solution[] solutions) {
         _cube = cube;
         _records = records;
         _orientation = new CubeOrientation();
+        _solutions = solutions;
     }
 
     /**
@@ -66,12 +93,35 @@ abstract class AbstractSolutionStep {
     }
 
     /**
-     * Finds the solution for specified part positioon and orientation.
+     * Finds the solution for a specific position.
+     *
+     * For each possible part position exists a sequence of moves.
+     * These moves are stored in an internal array of Solution
+     * objects. The array is searched for the position and the
+     * corresponding solution ist returned.
+     *
+     * The position refers to absolute coordinates of the cube.
+     * The top (white) face has index 0 and its row 0 and column 0 is in the
+     * upper left of the face. Each solution has a position as its key.
+     * Each solution describes how to bring the part at the position
+     * to the front up position with the white face up.
+     *
+     * If the cube is rotated to a new front face, the actual part position
+     * must be translated to the position orientation of the keys to find
+     * the correct solution.
      *
      * @param position The PartPosition to find the solution for.
      * @return A String with the solution steps in SpeedCube syntax.
      */
-    abstract protected String findSolutionFor(PartPosition position);
+    private String findSolutionFor(PartPosition position) {
+        int i = 0;
+        PartPosition translatedPosition = PositionTranslator.translate(position, _orientation);
+        while (true) {
+            if (translatedPosition.isEqual(_solutions[i].position))
+                return _solutions[i].moves;
+            i++;
+        }
+    }
 
     /**
      * Finds the position of the specified part.

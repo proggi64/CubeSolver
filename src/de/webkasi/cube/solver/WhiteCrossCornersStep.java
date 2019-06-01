@@ -24,7 +24,7 @@ class WhiteCrossCornersStep extends AbstractSolutionStep {
      *                method.
      */
     private WhiteCrossCornersStep(Cube cube, CubeFaceRotationRecords records) {
-        super(cube, records);
+        super(cube, records, solutions);
     }
 
     /**
@@ -46,40 +46,66 @@ class WhiteCrossCornersStep extends AbstractSolutionStep {
         step.solve();
     }
 
-    /**
-     * Finds the solution for a specific corner position.
-     *
-     * For each possible corner position exists a sequence of moves.
-     * These moves are stored in an internal array of Solution
-     * objects. The array is searched for the position and the
-     * corresponding solution ist returned.
-     *
-     * The position refers to absolute coordinates of the cube.
-     * The top (white) face has index 0 and its row 0 and column 0 is in the
-     * upper left of the face. Each solution has a position as its key.
-     * Each solution describes how to bring the part at the position
-     * to the front up position with the white face up.
-     *
-     * If the cube is rotated to a new front face, the actual part position
-     * must be translated to the position orientation of the keys to find
-     * the correct solution.
-     *
-     * @param position The PartPosition to find the solution for.
-     * @return A String with the solution steps in SpeedCube syntax.
-     */
-    protected String findSolutionFor(PartPosition position) {
-        int i = 0;
-        PartPosition translatedPosition = PositionTranslator.translate(position, _orientation);
-        //while (true) {
-            //if (translatedPosition.isEqual(solutions[i].position))
-            //    return solutions[i].moves;
+    private static final Solution[] solutions = {
+            // main color found at the up face
+            new Solution(new PartPosition(up, 0, 0),
+                    "B' D2 B R' D' R D "),
+            new Solution(new PartPosition(up, 0, 2),
+                    "B' D B D' R' D R "),
+            new Solution(new PartPosition(up, 2, 2), ""),
+            new Solution(new PartPosition(up, 2, 0),
+                    "L D L' R' D' R D "),
 
-            // TODO Steht die Ecke im oberen Layer? Dann erst in unteren bringen
-            // TODO Jetzt abhängig von der Ausrichtung die Sequenz addieren
-            i++;
-        //}
-        return "";
-    }
+            // main color found at the left face
+            new Solution(new PartPosition(left, 0, 0),
+                    "L' D2 R' D' R D "),
+            new Solution(new PartPosition(left, 0, 2),
+                    "L R' D L' R' "),
+            new Solution(new PartPosition(left, 2, 2),
+                    "R' D R "),
+            new Solution(new PartPosition(left, 2, 0),
+                    "D2 R' D' R D "),
+
+            // main color found at the front face
+            new Solution(new PartPosition(front, 0, 0),
+                    "L D L' R' D2 R D R' D' R "),
+            new Solution(new PartPosition(front, 0, 2),
+                    "R' D' R D R' D2 R D R' D' R "),
+            new Solution(new PartPosition(front, 2, 2),
+                    "D' R' D R "),
+            new Solution(new PartPosition(front, 2, 0),
+                    "D R' D' R D "),
+
+            // main color found at the right face
+            new Solution(new PartPosition(right, 0, 0),
+                    "L' D' L D R' D' R D "),
+            new Solution(new PartPosition(right, 0, 2),
+                    "R D R' D2 R' D2 R D R' D' R "),
+            new Solution(new PartPosition(right, 2, 2),
+                    "D R' D2 R "),
+            new Solution(new PartPosition(right, 2, 0),
+                    "R' D' R D "),
+
+            // main color found at the back face
+            new Solution(new PartPosition(back, 0, 0),
+                    "B' D' B R' D' R D "),
+            new Solution(new PartPosition(back, 0, 2),
+                    "B D2 B' D' R' D R "),
+            new Solution(new PartPosition(back, 2, 2),
+                    "R' D2 R "),
+            new Solution(new PartPosition(back, 2, 0),
+                    "D' R' D' R D "),
+
+            // main color found at the down face
+            new Solution(new PartPosition(down, 0, 0),
+                    "D R' D2 R D R' D' R "),
+            new Solution(new PartPosition(down, 0, 2),
+                    "R' D2 R D R' D' R "),
+            new Solution(new PartPosition(down, 2, 2),
+                    "D' R' D2 R D R' D' R "),
+            new Solution(new PartPosition(down, 2, 0),
+                    "D2 R' D2 R D R' D' R "),
+    };
 
     /**
      * Finds the position of the specified corner.

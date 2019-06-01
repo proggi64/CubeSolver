@@ -143,37 +143,8 @@ class WhiteCrossStep extends AbstractSolutionStep {
      *                must be empty.
      */
     private WhiteCrossStep(Cube cube, CubeFaceRotationRecords records) {
-        super(cube, records);
+        super(cube, records, solutions);
     }
-
-    /**
-     * Encapsulates the PartPosition and the solution for this position
-     * as a String of SpeedCube notations steps.
-     *
-     * Solution is used for a state-solution pairs for the WhiteCrossStep
-     * class. Each position of an edge has a specific solution. When the
-     * position is known, the solution can be found.
-     */
-    static class Solution {
-        final PartPosition position;
-        final String moves;
-
-        /**
-         * @param position the position of an edge.
-         * @param moves The moves in SpeedCube syntax.
-         */
-        Solution(PartPosition position, String moves) {
-            this.position = position;
-            this.moves = moves;
-        }
-    }
-
-    private static final int up = CubeColor.White.ordinal();
-    private static final int left = CubeColor.Orange.ordinal();
-    private static final int front = CubeColor.Green.ordinal();
-    private static final int right = CubeColor.Red.ordinal();
-    private static final int back = CubeColor.Blue.ordinal();
-    private static final int down = CubeColor.Yellow.ordinal();
 
     /**
      * Algorithms for moving an edge to the front upper position.
@@ -194,7 +165,7 @@ class WhiteCrossStep extends AbstractSolutionStep {
      * for all four orientations.
      */
     private static final Solution[] solutions = {
-            // main color found at the top face
+            // main color found at the up face
             new Solution(new PartPosition(up, 2, 1), ""),
             new Solution(new PartPosition(up, 1, 2),
                     upRightToFrontRight +
@@ -294,37 +265,6 @@ class WhiteCrossStep extends AbstractSolutionStep {
     public static void solve(Cube cube, CubeFaceRotationRecords records) {
         WhiteCrossStep step = new WhiteCrossStep(cube, records);
         step.solve();
-    }
-
-    /**
-     * Finds the solution for a specific edge position.
-     *
-     * For each possible edge position exists a sequence of moves.
-     * These moves are stored in an internal array of Solution
-     * objects. The array is searched for the position and the
-     * corresponding solution ist returned.
-     *
-     * The position refers to absolute coordinates of the cube.
-     * The top (white) face has index 0 and its row 0 and column 0 is in the
-     * upper left of the face. Each solution has a position as its key.
-     * Each solution describes how to bring the part at the position
-     * to the front up position with the white face up.
-     *
-     * If the cube is rotated to a new front face, the actual part position
-     * must be translated to the position orientation of the keys to find
-     * the correct solution.
-     *
-     * @param position The PartPosition to find the solution for.
-     * @return A String with the solution steps in SpeedCube syntax.
-     */
-    protected String findSolutionFor(PartPosition position) {
-        int i = 0;
-        PartPosition translatedPosition = PositionTranslator.translate(position, _orientation);
-        while (true) {
-            if (translatedPosition.isEqual(solutions[i].position))
-                return solutions[i].moves;
-            i++;
-        }
     }
 
     /**
