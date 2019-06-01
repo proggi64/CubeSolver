@@ -16,7 +16,7 @@ class PositionFinderTest {
     @Test
     void findEdge_UpFront() {
         Cube cube = new Cube();
-        PartPosition position = PositionFinder.FindEdge(cube, CubeColor.White, CubeColor.Green);
+        PartPosition position = PositionFinder.findEdge(cube, CubeColor.White, CubeColor.Green);
         assertEquals(Up, position.getFace());
         assertEquals(2, position.getRow());
         assertEquals(1, position.getColumn());
@@ -25,7 +25,7 @@ class PositionFinderTest {
     @Test
     void findEdge_UpRight() {
         Cube cube = new Cube();
-        PartPosition position = PositionFinder.FindEdge(cube, CubeColor.White, CubeColor.Red);
+        PartPosition position = PositionFinder.findEdge(cube, CubeColor.White, CubeColor.Red);
         assertEquals(Up, position.getFace());
         assertEquals(1, position.getRow());
         assertEquals(2, position.getColumn());
@@ -34,7 +34,7 @@ class PositionFinderTest {
     @Test
     void findEdge_DownBack() {
         Cube cube = new Cube();
-        PartPosition position = PositionFinder.FindEdge(cube, CubeColor.Yellow, CubeColor.Blue);
+        PartPosition position = PositionFinder.findEdge(cube, CubeColor.Yellow, CubeColor.Blue);
         assertEquals(Down, position.getFace());
         assertEquals(2, position.getRow());
         assertEquals(1, position.getColumn());
@@ -43,7 +43,7 @@ class PositionFinderTest {
     @Test
     void findEdge_DownFront() {
         Cube cube = new Cube();
-        PartPosition position = PositionFinder.FindEdge(cube, CubeColor.Yellow, CubeColor.Green);
+        PartPosition position = PositionFinder.findEdge(cube, CubeColor.Yellow, CubeColor.Green);
         assertEquals(Down, position.getFace());
         assertEquals(0, position.getRow());
         assertEquals(1, position.getColumn());
@@ -52,7 +52,7 @@ class PositionFinderTest {
     @Test
     void findEdge_RightFront() {
         Cube cube = new Cube();
-        PartPosition position = PositionFinder.FindEdge(cube, CubeColor.Red, CubeColor.Green);
+        PartPosition position = PositionFinder.findEdge(cube, CubeColor.Red, CubeColor.Green);
         assertEquals(Right, position.getFace());
         assertEquals(1, position.getRow());
         assertEquals(0, position.getColumn());
@@ -61,7 +61,7 @@ class PositionFinderTest {
     @Test
     void findEdge_FrontRight() {
         Cube cube = new Cube();
-        PartPosition position = PositionFinder.FindEdge(cube, CubeColor.Green, CubeColor.Red);
+        PartPosition position = PositionFinder.findEdge(cube, CubeColor.Green, CubeColor.Red);
         assertEquals(Front, position.getFace());
         assertEquals(1, position.getRow());
         assertEquals(2, position.getColumn());
@@ -72,7 +72,7 @@ class PositionFinderTest {
         Cube cube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(cube);
         rotator.rotateFace(RotationDirection.Counterclockwise, CubeColor.White.ordinal(), 1);
-        PartPosition position = PositionFinder.FindEdge(cube, CubeColor.White, CubeColor.Green);
+        PartPosition position = PositionFinder.findEdge(cube, CubeColor.White, CubeColor.Green);
         assertEquals(Up, position.getFace());
         assertEquals(1, position.getRow());
         assertEquals(2, position.getColumn());
@@ -83,7 +83,7 @@ class PositionFinderTest {
         Cube cube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(cube);
         rotator.rotateFace(RotationDirection.Clockwise, CubeColor.White.ordinal(), 1);
-        PartPosition position = PositionFinder.FindEdge(cube, CubeColor.White, CubeColor.Green);
+        PartPosition position = PositionFinder.findEdge(cube, CubeColor.White, CubeColor.Green);
         assertEquals(Up, position.getFace());
         assertEquals(1, position.getRow());
         assertEquals(0, position.getColumn());
@@ -95,7 +95,7 @@ class PositionFinderTest {
         CubeFaceRotator rotator = new CubeFaceRotator(cube);
         rotator.rotateFace(RotationDirection.Clockwise, CubeColor.White.ordinal(), 1);
         rotator.rotateFace(RotationDirection.Clockwise, CubeColor.White.ordinal(), 1);
-        PartPosition position = PositionFinder.FindEdge(cube, CubeColor.White, CubeColor.Green);
+        PartPosition position = PositionFinder.findEdge(cube, CubeColor.White, CubeColor.Green);
         assertEquals(Up, position.getFace());
         assertEquals(0, position.getRow());
         assertEquals(1, position.getColumn());

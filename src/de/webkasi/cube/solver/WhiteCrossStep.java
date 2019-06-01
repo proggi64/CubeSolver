@@ -179,7 +179,7 @@ class WhiteCrossStep extends AbstractSolutionStep {
      * Algorithms for moving an edge to the front upper position.
      *
      * Each possible position and orientation of the edge is specified
-     * as an PartPosition object. The PositionFinder.FindEdge() method
+     * as an PartPosition object. The PositionFinder.findEdge() method
      * finds the actual position of an edge and the corresponding
      * algorithm can be found in this array. All positions in the array
      * are valid for the default orientation of the cube with the green
@@ -336,6 +336,6 @@ class WhiteCrossStep extends AbstractSolutionStep {
      * @return A PartPosition object with the absolute coordinates of the searched part.
      */
     protected PartPosition findPosition(Cube steppedCube, CubeColor face) {
-        return PositionFinder.FindEdge(steppedCube, CubeColor.White, face);
+        return PositionFinder.findEdge(steppedCube, CubeColor.White, face);
     }
 }

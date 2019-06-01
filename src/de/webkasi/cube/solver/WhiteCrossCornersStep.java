@@ -93,6 +93,6 @@ class WhiteCrossCornersStep extends AbstractSolutionStep {
      * @return A PartPosition object with the absolute coordinates of the searched part.
      */
     protected PartPosition findPosition(Cube steppedCube, CubeColor face) {
-        return PositionFinder.FindCorner(steppedCube, CubeColor.White, face);
+        return PositionFinder.findCorner(steppedCube, CubeColor.White, face);
     }
 }
