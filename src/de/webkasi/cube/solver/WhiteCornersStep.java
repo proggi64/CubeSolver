@@ -11,9 +11,9 @@ import de.webkasi.cube.*;
  * applied the first top layer (white) will be complete, as well as the middle
  * parts of the side faces.
  */
-class WhiteCrossCornersStep extends AbstractSolutionStep {
+class WhiteCornersStep extends AbstractSolutionStep {
     /**
-     * Initializes a new instance of the WhiteCrossCornersStep class with the
+     * Initializes a new instance of the WhiteCornersStep class with the
      * specified Cube and CubeFaceRotationsRecords objects.
      *
      * @param cube The Cube to solve. The cube may be completely scrambled.
@@ -23,7 +23,7 @@ class WhiteCrossCornersStep extends AbstractSolutionStep {
      *                This must contain the previous steps of the WhiteCrossStep.solve()
      *                method.
      */
-    private WhiteCrossCornersStep(final Cube cube, final CubeFaceRotationRecords records) {
+    private WhiteCornersStep(final Cube cube, final CubeFaceRotationRecords records) {
         super(cube, records, solutions);
     }
 
@@ -42,9 +42,15 @@ class WhiteCrossCornersStep extends AbstractSolutionStep {
      *                WhiteCrossStep.solve().
      */
     public static void solve(final Cube cube, final CubeFaceRotationRecords records) {
-        WhiteCrossCornersStep step = new WhiteCrossCornersStep(cube, records);
+        WhiteCornersStep step = new WhiteCornersStep(cube, records);
         step.solve();
     }
+
+    /**
+     * Sequence that moves the white front on the lower right to
+     * the front right at the upper face.
+     */
+    private static final String whiteFrontMoveUp = "D' R' D R ";
 
     /**
      * Algorithms for moving a corner to the upper right position.
@@ -56,20 +62,17 @@ class WhiteCrossCornersStep extends AbstractSolutionStep {
      * are valid for the default orientation of the cube with the green
      * face as the front and the white face as the top.
      *
-     * To use the algorithms with each white corner, the orientation
+     * To use the algorithms with the other three faces, the orientation
      * of the cube must be rotated so that the target face is at the
      * front. The PositionTranslator class translates the current position
-     * that contains absolute coordinates based on the default orientation
-     * to the coordinates when the target face is the front face. So
-     * the positions that are used as the key of the solution can be used
-     * for all four orientations.
+     * to match the key of the array for each face.
      */
     private static final Solution[] solutions = {
             // main color found at the up face
             new Solution(new PartPosition(up, 0, 0),
-                    "B' D2 B R' D' R D "),
+                    "B D2 B' R' D' R D "),
             new Solution(new PartPosition(up, 0, 2),
-                    "B' D B D' R' D R "),
+                    "B' D' B " + whiteFrontMoveUp),
             new Solution(new PartPosition(up, 2, 2), ""),
             new Solution(new PartPosition(up, 2, 0),
                     "L D L' R' D' R D "),
@@ -78,7 +81,7 @@ class WhiteCrossCornersStep extends AbstractSolutionStep {
             new Solution(new PartPosition(left, 0, 0),
                     "L' D2 L R' D' R D "),
             new Solution(new PartPosition(left, 0, 2),
-                    "L D L' D' R' D R "),
+                    "L D L' " + whiteFrontMoveUp),
             new Solution(new PartPosition(left, 2, 2),
                     "R' D R "),
             new Solution(new PartPosition(left, 2, 0),
@@ -90,7 +93,7 @@ class WhiteCrossCornersStep extends AbstractSolutionStep {
             new Solution(new PartPosition(front, 0, 2),
                     "R' D' R D R' D2 R D R' D' R "),
             new Solution(new PartPosition(front, 2, 2),
-                    "D' R' D R "),
+                    whiteFrontMoveUp),
             new Solution(new PartPosition(front, 2, 0),
                     "D R' D' R D "),
 
@@ -98,7 +101,7 @@ class WhiteCrossCornersStep extends AbstractSolutionStep {
             new Solution(new PartPosition(right, 0, 0),
                     "R' D' R D R' D' R D "),
             new Solution(new PartPosition(right, 0, 2),
-                    "R D R' D2 R' D2 R D R' D' R "),
+                    "R D R' D2' " + whiteFrontMoveUp),
             new Solution(new PartPosition(right, 2, 2),
                     "D R' D2 R "),
             new Solution(new PartPosition(right, 2, 0),
@@ -108,7 +111,7 @@ class WhiteCrossCornersStep extends AbstractSolutionStep {
             new Solution(new PartPosition(back, 0, 0),
                     "B' D' B R' D' R D "),
             new Solution(new PartPosition(back, 0, 2),
-                    "B D2 B' D' R' D R "),
+                    "B D2 B' " + whiteFrontMoveUp),
             new Solution(new PartPosition(back, 2, 2),
                     "R' D2 R "),
             new Solution(new PartPosition(back, 2, 0),

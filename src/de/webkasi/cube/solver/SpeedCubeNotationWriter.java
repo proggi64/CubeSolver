@@ -10,7 +10,7 @@ import de.webkasi.cube.*;
  * Instead, the cube's orientation must always be the default
  * orientation with the initial white face up and the orange face left.
  */
-public class SpeedCubeNotationWriter {
+class SpeedCubeNotationWriter {
     private final StringBuilder _builder;
     private final CubeFaceRotationRecords _records;
     private int _recordIndex;

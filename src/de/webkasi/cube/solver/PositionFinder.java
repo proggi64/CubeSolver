@@ -6,7 +6,7 @@ import de.webkasi.cube.*;
  * Provides serach methods to find the positions of edge and corner parts
  * on a Cube.
  */
-public class PositionFinder {
+class PositionFinder {
 
     private static final int upFaceIndex = 0;
     private static final int upRowIndex = 1;

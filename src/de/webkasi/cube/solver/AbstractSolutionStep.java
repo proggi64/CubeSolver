@@ -17,27 +17,27 @@ abstract class AbstractSolutionStep {
     /**
      * Index of the upper face.
      */
-    protected static final int up = CubeColor.White.ordinal();
+    static final int up = CubeColor.White.ordinal();
     /**
      * Index of the left face.
      */
-    protected static final int left = CubeColor.Orange.ordinal();
+    static final int left = CubeColor.Orange.ordinal();
     /**
      * Index of the front face.
      */
-    protected static final int front = CubeColor.Green.ordinal();
+    static final int front = CubeColor.Green.ordinal();
     /**
      * Index of the right face.
      */
-    protected static final int right = CubeColor.Red.ordinal();
+    static final int right = CubeColor.Red.ordinal();
     /**
      * Index of the back face.
      */
-    protected static final int back = CubeColor.Blue.ordinal();
+    static final int back = CubeColor.Blue.ordinal();
     /**
      * Index of the down face.
      */
-    protected static final int down = CubeColor.Yellow.ordinal();
+    static final int down = CubeColor.Yellow.ordinal();
 
     /**
      * Initializes a new instance of the AbstractSolutionStep class with the
@@ -51,7 +51,7 @@ abstract class AbstractSolutionStep {
      *                This must contain the previous steps of the WhiteCrossStep.solve()
      *                method.
      */
-    protected AbstractSolutionStep(
+    AbstractSolutionStep(
             final Cube cube,
             final CubeFaceRotationRecords records,
             final Solution[] solutions) {
@@ -77,7 +77,7 @@ abstract class AbstractSolutionStep {
      * The last move is the return to the default orientation of the cube: Green
      * front and white up.
      */
-    protected void solve() {
+    void solve() {
         SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(_records);
         StringBuilder cubeRotations = new StringBuilder();
 

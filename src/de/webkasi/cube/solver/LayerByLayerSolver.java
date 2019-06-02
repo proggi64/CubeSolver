@@ -15,7 +15,7 @@ public class LayerByLayerSolver {
      * @param records A CubeFaceRotationRecords object that receives the
      *                moves to solve the cube. This should initially be empty.
      */
-    private LayerByLayerSolver(Cube cube, CubeFaceRotationRecords records) {
+    private LayerByLayerSolver(final Cube cube, final CubeFaceRotationRecords records) {
         _cube = cube;
         _records = records;
         _records.clear();
@@ -31,7 +31,7 @@ public class LayerByLayerSolver {
      * @return A CubeFaceRotationRecords object containing the
      * moves for the solution.
      */
-    public static CubeFaceRotationRecords solve(Cube cube) {
+    public static CubeFaceRotationRecords solve(final Cube cube) {
         CubeFaceRotationRecords records = new CubeFaceRotationRecords();
         LayerByLayerSolver lbl = new LayerByLayerSolver(cube, records);
         lbl.solve();
@@ -44,7 +44,7 @@ public class LayerByLayerSolver {
      */
     private void solve() {
         createWhiteCross();
-        setWhiteCrossCorners();
+        setWhiteCorners();
 
         setSecondLayer();
 
@@ -70,8 +70,8 @@ public class LayerByLayerSolver {
      *
      * The white layer is completely ready after the call.
      */
-    private void setWhiteCrossCorners() {
-        WhiteCrossCornersStep.solve(_cube, _records);
+    private void setWhiteCorners() {
+        WhiteCornersStep.solve(_cube, _records);
     }
 
     /**

@@ -171,6 +171,18 @@ class WhiteCrossCornersStepTest {
     }
 
     @Test
+    void solve_RandomManual04() {
+        Cube cube = prepareCube("F U F' R' D' L' R' F' B");
+        solveAndAssertUpLayer(cube);
+    }
+
+    @Test
+    void solve_RandomManual05() {
+        Cube cube = prepareCube("F' L D' U R R R F' D' B' R F' F' R'");
+        solveAndAssertUpLayer(cube);
+    }
+
+    @Test
     void solve_RandomCubes() {
         for (int i = 0; i < 100; i++) {
             Cube cube = new Cube();
@@ -193,22 +205,6 @@ class WhiteCrossCornersStepTest {
         return cube;
     }
 
-    private static void solveAndAssertWhiteCorners(final Cube cube) {
-        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
-
-        WhiteCrossCornersStep.solve(cube, records);
-
-        Cube solvedCube = CubeFactory.create(cube, records);
-        CubeFace upFace = solvedCube.getFace(CubeColor.White);
-
-        int expectedColor = CubeColor.White.ordinal();
-        CubeFace cubeFace = solvedCube.getFaceByIndex(expectedColor);
-        assertEquals(expectedColor, cubeFace.getField(0, 0).ordinal(), "0,0");
-        assertEquals(expectedColor, cubeFace.getField(0, 1).ordinal(), "0,1");
-        assertEquals(expectedColor, cubeFace.getField(0, 2).ordinal(), "0,2");
-        assertEquals(expectedColor, cubeFace.getField(1, 1).ordinal(), "1,1");
-    }
-
     private static void solveAndAssertWhiteLayerWithRecordsReport(
             final Cube cube,
             final CubeFaceRotationRecords scrambleRecords) {
@@ -217,7 +213,7 @@ class WhiteCrossCornersStepTest {
         Cube steppedCube = CubeFactory.create(cube, records);
         records.clear();
 
-        WhiteCrossCornersStep.solve(steppedCube, records);
+        WhiteCornersStep.solve(steppedCube, records);
 
         String scrambleMoves = SpeedCubeNotationWriter.write(scrambleRecords);
 
@@ -245,7 +241,7 @@ class WhiteCrossCornersStepTest {
         Cube steppedCube = CubeFactory.create(cube, records);
         records.clear();
 
-        WhiteCrossCornersStep.solve(steppedCube, records);
+        WhiteCornersStep.solve(steppedCube, records);
 
         Cube solvedCube = CubeFactory.create(steppedCube, records);
         CubeFace upFace = solvedCube.getFace(CubeColor.White);

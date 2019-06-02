@@ -8,7 +8,7 @@ import de.webkasi.cube.*;
  *
  * This notation is valid only for 3x3 or 2x2 cubes.
  */
-public class SpeedCubeNotationInterpreter {
+class SpeedCubeNotationInterpreter {
 
     private final CubeFaceRotationRecords _records;
 

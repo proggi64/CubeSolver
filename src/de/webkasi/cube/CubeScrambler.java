@@ -38,7 +38,8 @@ public class CubeScrambler {
      *
      * @param depth Count of random rotations.
      * @param dimension Count of dimensions of the cube to scramble,
-     * @return
+     * @return A CubeFaceRotationRecords object containing the random moves
+     * that has been generated.
      */
     public static CubeFaceRotationRecords scrambleCube(int depth, int dimension) {
         Random generator = new Random(System.nanoTime());
