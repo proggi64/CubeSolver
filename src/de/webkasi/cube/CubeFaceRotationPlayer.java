@@ -28,7 +28,7 @@ public class CubeFaceRotationPlayer {
                     if (v.getStartRow() == 0)
                         _rotator.rotateFace(v.getDirection(), v.getFace(), v.getCountOfLayers());
                     else
-                        _rotator.rotateMiddleLayer(v.getDirection(), v.getFace(), v.getStartRow(), v.getCountOfLayers());
+                        _rotator.rotateLayers(v.getDirection(), v.getFace(), v.getStartRow(), v.getCountOfLayers());
                 }
         );
     }

@@ -10,7 +10,7 @@ package de.webkasi.cube;
  */
 public class Cube {
     private final int _dimension;
-    private final CubeFace[] _faces;
+    private final CubeFace[] _faces = new CubeFace[6];
 
     /**
      * Initializes a 3x3 magic cube.
@@ -29,7 +29,6 @@ public class Cube {
      */
     public Cube(int dimension) {
         _dimension = dimension;
-        _faces = new CubeFace[6];
         CubeColor[] colors = CubeColor.values();
         for (int faceIndex = 0; faceIndex < _faces.length; faceIndex++) {
             _faces[faceIndex] = new CubeFace(_dimension);
@@ -48,7 +47,6 @@ public class Cube {
      */
     public Cube(Cube copy) {
         _dimension = copy._dimension;
-        _faces = new CubeFace[6];
         for (int faceIndex = 0; faceIndex < _faces.length; faceIndex++) {
             _faces[faceIndex] = new CubeFace(copy._faces[faceIndex]);
         }
