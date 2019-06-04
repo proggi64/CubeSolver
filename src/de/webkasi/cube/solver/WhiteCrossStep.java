@@ -166,7 +166,8 @@ class WhiteCrossStep extends AbstractSolutionStep {
      */
     private static final Solution[] solutions = {
             // main color found at the up face
-            new Solution(new PartPosition(up, 2, 1), ""),
+            new Solution(new PartPosition(up, 2, 1),
+                    noMove),
             new Solution(new PartPosition(up, 1, 2),
                     upRightToFrontRight +
                     frontRightToFrontUp + turnEdge),

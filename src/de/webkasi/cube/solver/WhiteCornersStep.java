@@ -73,7 +73,8 @@ class WhiteCornersStep extends AbstractSolutionStep {
                     "B D2 B' R' D' R D "),
             new Solution(new PartPosition(up, 0, 2),
                     "B' D' B " + whiteFrontMoveUp),
-            new Solution(new PartPosition(up, 2, 2), ""),
+            new Solution(new PartPosition(up, 2, 2),
+                    noMove),
             new Solution(new PartPosition(up, 2, 0),
                     "L D L' R' D' R D "),
 

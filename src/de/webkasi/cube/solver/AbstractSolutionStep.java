@@ -69,10 +69,9 @@ abstract class AbstractSolutionStep {
     /**
      * Solves the White Cross Corners Step for the given cube.
      *
-     * solve() brings each side face to the front and solves its right top corner
-     * before it advances to the next face.
-     * It brings the corner to the down face exactly under its destination position
-     * without destroying anything of the already solved parts of the upper layer.
+     * solve() brings each side face to the front and solves the current moves
+     * before it advances to the next face. The actual solutions are provided by
+     * the inherited classes.
      *
      * The last move is the return to the default orientation of the cube: Green
      * front and white up.
@@ -84,8 +83,8 @@ abstract class AbstractSolutionStep {
         for (int i = 0; i < 4; i++) {
             Cube steppedCube = CubeFactory.create(_cube, _records);
 
-            PartPosition cornerPosition = findPosition(steppedCube, faceSteps[i]);
-            String solutionMoves = cubeRotations + findSolutionFor(cornerPosition);
+            PartPosition position = findPosition(steppedCube, faceSteps[i]);
+            String solutionMoves = cubeRotations + findSolutionFor(position);
             interpreter.addMoves(solutionMoves);
 
             // Go to the next front face: The y-rotations are only interpreted by each
@@ -125,6 +124,11 @@ abstract class AbstractSolutionStep {
             i++;
         }
     }
+
+    /**
+     * Represents the empty steps when the part is already in its correct position.
+     */
+    final static String noMove = "";
 
     /**
      * Finds the position of the specified part.

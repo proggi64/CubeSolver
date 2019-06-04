@@ -4,6 +4,11 @@ import de.webkasi.cube.*;
 
 /**
  * Provides an LbL-solution (Layer-by-Layer) for a given 3x3 Cube.
+ *
+ * This solution uses additional classes that encapsulate the different
+ * steps of the solution. The solution is not optimized to reduce the
+ * moves. Instead it uses the beginner's simplest and safest way to solve
+ * the cube.
  */
 public class LayerByLayerSolver {
 
@@ -43,11 +48,14 @@ public class LayerByLayerSolver {
      * necessary moves.
      */
     private void solve() {
+        // white cross
         createWhiteCross();
         setWhiteCorners();
 
+        // second layer's edges
         setSecondLayer();
 
+        // yellow cross and down layer
         createYellowCross();
         setYellowCrossEdges();
         setYellowCrossCorners();
@@ -79,8 +87,7 @@ public class LayerByLayerSolver {
      *
      * The complete white and middle layers are ready after the call.
      */
-    private void setSecondLayer() {
-    }
+    private void setSecondLayer() { SecondLayerStep.solve(_cube, _records); }
 
     /**
      * Creates a yellow cross.
