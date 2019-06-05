@@ -39,7 +39,7 @@ class SpeedCubeNotationWriter {
      * @return A String containing the records in SpeedCube notation
      * syntax.
      */
-    public static String write(final CubeFaceRotationRecords records) {
+    static String write(final CubeFaceRotationRecords records) {
         SpeedCubeNotationWriter writer = new SpeedCubeNotationWriter(records);
 
         for (writer._recordIndex = 0; writer._recordIndex < writer._records.size(); writer._recordIndex++) {
@@ -82,7 +82,7 @@ class SpeedCubeNotationWriter {
      * @return The command character that corresponds to the record.
      */
     private char getCommand(final CubeFaceRotationRecord record) {
-        int faceIndex = record.getFace();
+        int faceIndex = record.getFace().ordinal();
         if (record.getStartRow() == 0)
             return notationFaceCommands[faceIndex];
         return notationMiddleCommands[faceIndex];

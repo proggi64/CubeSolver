@@ -10,7 +10,7 @@ class CubeFactoryTest {
     void create_NonDefaultWithEmptyRecords() {
         Cube baseCube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(baseCube);
-        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.Orange.ordinal(), 1);
+        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.Orange, 1);
         CubeFaceRotationRecords records = new CubeFaceRotationRecords();
 
         Cube cube = CubeFactory.create(baseCube, records);

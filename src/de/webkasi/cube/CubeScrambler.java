@@ -29,7 +29,7 @@ public class CubeScrambler {
             int face = generator.nextInt(CubeColor.values().length);
             int countOfLayers = dimension <= 3 ? 1 : generator.nextInt(dimension / 2) + 1;
 
-            rotater.rotateFace(direction, face, countOfLayers);
+            rotater.rotateFace(direction, CubeColor.values()[face], countOfLayers);
         }
     }
 
@@ -51,7 +51,8 @@ public class CubeScrambler {
             int face = generator.nextInt(CubeColor.values().length);
             int countOfLayers = dimension <= 3 ? 1 : generator.nextInt(dimension / 2) + 1;
 
-            CubeFaceRotationRecord record = new CubeFaceRotationRecord(face, direction, countOfLayers);
+            CubeFaceRotationRecord record =
+                    new CubeFaceRotationRecord(CubeColor.values()[face], direction, countOfLayers);
             records.add(record);
         }
         return records;

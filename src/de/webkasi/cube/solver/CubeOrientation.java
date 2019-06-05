@@ -13,27 +13,27 @@ class CubeOrientation {
     /**
      * Current index of the upper face.
      */
-    int up = CubeColor.White.ordinal();
+    CubeColor up = CubeColor.White;
     /**
      * Current index of the left face.
      */
-    int left = CubeColor.Orange.ordinal();
+    CubeColor left = CubeColor.Orange;
     /**
      * Current index of the front face.
      */
-    int front = CubeColor.Green.ordinal();
+    CubeColor front = CubeColor.Green;
     /**
      * Current index of the right face.
      */
-    int right = CubeColor.Red.ordinal();
+    CubeColor right = CubeColor.Red;
     /**
      * Current index of the back face.
      */
-    int back = CubeColor.Blue.ordinal();
+    CubeColor back = CubeColor.Blue;
     /**
      * Current index of the down face.
      */
-    int down = CubeColor.Yellow.ordinal();
+    CubeColor down = CubeColor.Yellow;
 
     /**
      * Rotates the orientation of the cube as specified.
@@ -88,7 +88,7 @@ class CubeOrientation {
      * new down face.
      */
     private void x() {
-        int oldUp = up;
+        CubeColor oldUp = up;
         up = back;
         back = down;
         down = front;
@@ -102,7 +102,7 @@ class CubeOrientation {
      * of the cube. Clockwise will make the previous left face the new front.
      */
     private void y() {
-        int oldRight = right;
+        CubeColor oldRight = right;
         right = front;
         front = left;
         left = back;
@@ -117,7 +117,7 @@ class CubeOrientation {
      * the new left face.
      */
     private void z() {
-        int oldLeft = left;
+        CubeColor oldLeft = left;
         left = down;
         down = right;
         right = up;

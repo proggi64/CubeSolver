@@ -187,13 +187,13 @@ public class SpeedCubeNotationInterpreter {
      *              a reversed direction or the count of rotations.
      * @param i The index of the current character in the moves string. This should
      *          point to the next character after move command.
-     * @param faceIndex The face index of the face where the middle layer should be rotated.
-     *                  This is the face from which the direction of the rotation is
-     *                  determined. x is the left face, y is the top face, and
-     *                  z is the front face.
+     * @param face The CubeColor of the face where the middle layer should be rotated.
+     *             This is the face from which the direction of the rotation is
+     *             determined. x is the left face, y is the top face, and
+     *             z is the front face.
      * @return The index of the last character that has been interpreted by this method.
      */
-    private int rotateMiddleLayer(final String moves, int i, final int faceIndex) {
+    private int rotateMiddleLayer(final String moves, int i, final CubeColor face) {
 
         boolean ready = false;
         boolean reverse = false;
@@ -215,7 +215,7 @@ public class SpeedCubeNotationInterpreter {
         }
 
         CubeFaceRotationRecord record = new CubeFaceRotationRecord(
-                faceIndex,
+                face,
                 reverse ? RotationDirection.Counterclockwise : RotationDirection.Clockwise,
                 1,
                 1);

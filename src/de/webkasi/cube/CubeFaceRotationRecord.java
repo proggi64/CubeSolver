@@ -5,7 +5,7 @@ package de.webkasi.cube;
  */
 @SuppressWarnings("unused")
 public class CubeFaceRotationRecord {
-    private final int _face;
+    private final CubeColor _face;
     private RotationDirection _direction;
     private int _startRow;
     private int _countOfLayers;
@@ -17,9 +17,9 @@ public class CubeFaceRotationRecord {
      * The default direction is clockwise,
      * and the count of layers is one.
      *
-     * @param face The index of the face to rotate.
+     * @param face The CubeColor of the face to rotate.
      */
-    public CubeFaceRotationRecord(int face) {
+    public CubeFaceRotationRecord(CubeColor face) {
         _face = face;
         _direction = RotationDirection.Clockwise;
         _startRow = 0;
@@ -32,9 +32,9 @@ public class CubeFaceRotationRecord {
      *
      * The default direction is clockwise.
      *
-     * @param face The index of the face to rotate.
+     * @param face The CubeColor of the face to rotate.
      */
-    public CubeFaceRotationRecord(int face, int countOfLayers) {
+    public CubeFaceRotationRecord(CubeColor face, int countOfLayers) {
         _face = face;
         _direction = RotationDirection.Clockwise;
         _startRow = 0;
@@ -45,11 +45,11 @@ public class CubeFaceRotationRecord {
      * Initializes a new instance of the CubeFaceRotationRecord class
      * with the specified values.
      *
-     * @param face The index of the face to rotate.
+     * @param face The CubeColor of the face to rotate.
      * @param direction The CubeRotationDirection value specifying the rotation direction.
      * @param countOfLayers The count of layers to rotate.
      */
-    public CubeFaceRotationRecord(int face, RotationDirection direction, int countOfLayers) {
+    public CubeFaceRotationRecord(CubeColor face, RotationDirection direction, int countOfLayers) {
         _face = face;
         _direction = direction;
         _startRow = 0;
@@ -60,12 +60,16 @@ public class CubeFaceRotationRecord {
      * Initializes a new instance of the CubeFaceRotationRecord class
      * with the specified values.
      *
-     * @param face The index of the face to rotate.
+     * @param face The CubeColor of the face to rotate.
      * @param direction The CubeRotationDirection value specifying the rotation direction.
      * @param startRow The first layer index which is rotated
      * @param countOfLayers The count of layers to rotate.
      */
-    public CubeFaceRotationRecord(int face, RotationDirection direction, int startRow, int countOfLayers) {
+    public CubeFaceRotationRecord(
+            final CubeColor face,
+            final RotationDirection direction,
+            final int startRow,
+            final int countOfLayers) {
         _face = face;
         _direction = direction;
         _startRow = startRow;
@@ -77,7 +81,7 @@ public class CubeFaceRotationRecord {
      *
      * @return The index of the face to rotate.
      */
-    public int getFace() {
+    public CubeColor getFace() {
         return _face;
     }
 

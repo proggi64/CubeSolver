@@ -16,6 +16,8 @@ public class LayerByLayerSolver {
     private final CubeFaceRotationRecords _records;
 
     /**
+     * Initializes a new instance of the LayerByLayerSolver class.
+     *
      * @param cube The cube that should be solved.
      * @param records A CubeFaceRotationRecords object that receives the
      *                moves to solve the cube. This should initially be empty.
@@ -23,7 +25,6 @@ public class LayerByLayerSolver {
     private LayerByLayerSolver(final Cube cube, final CubeFaceRotationRecords records) {
         _cube = cube;
         _records = records;
-        _records.clear();
     }
 
     /**
@@ -55,11 +56,11 @@ public class LayerByLayerSolver {
         // second layer's edges
         setSecondLayer();
 
-        // yellow cross and down layer
+        // yellow cross and last layer
         createYellowCross();
         setYellowCrossEdges();
-        setYellowCrossCorners();
-        turnYellowCrossCorners();
+        setYellowCorners();
+        turnYellowCorners();
     }
 
     /**
@@ -95,8 +96,7 @@ public class LayerByLayerSolver {
      * The yellow cross' edges may still have a wrong orientation
      * after the call.
      */
-    private void createYellowCross() {
-    }
+    private void createYellowCross() { YellowCrossStep.solve(_cube, _records); }
 
     /**
      * Sets the orientation of the edges of the yellow cross.
@@ -104,8 +104,7 @@ public class LayerByLayerSolver {
      * The yellow cross and its edges are correctly set after
      * the call.
      */
-    private void setYellowCrossEdges() {
-    }
+    private void setYellowCrossEdges() { YellowCrossEdgesStep.solve(_cube, _records); }
 
     /**
      * Sets the position of the yellow corners.
@@ -113,15 +112,12 @@ public class LayerByLayerSolver {
      * The corners of the yellow layer are in the right position,
      * but may still have the wrong orientation after the call.
      */
-    private void setYellowCrossCorners() {
-    }
+    private void setYellowCorners() { YellowCornersPositionStep.solve(_cube, _records); }
 
     /**
      * Turns the corners of the yellow layer to the right orientation.
      *
      * The cube should be solved completely after the call.
      */
-    private void turnYellowCrossCorners() {
-
-    }
+    private void turnYellowCorners() { YellowCornersOrientationStep.solve(_cube, _records); }
 }

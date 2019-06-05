@@ -23,12 +23,12 @@ public class CubeFaceRotator {
      */
     private final CubeFace[][] _faceToSides;
 
-    final static int White     = CubeColor.White.ordinal();
-    final static int Orange    = CubeColor.Orange.ordinal();
-    final static int Green     = CubeColor.Green.ordinal();
-    final static int Red       = CubeColor.Red.ordinal();
-    final static int Blue      = CubeColor.Blue.ordinal();
-    final static int Yellow    = CubeColor.Yellow.ordinal();
+    private final static int White     = CubeColor.White.ordinal();
+    private final static int Orange    = CubeColor.Orange.ordinal();
+    private final static int Green     = CubeColor.Green.ordinal();
+    private final static int Red       = CubeColor.Red.ordinal();
+    private final static int Blue      = CubeColor.Blue.ordinal();
+    private final static int Yellow    = CubeColor.Yellow.ordinal();
 
     /**
      * Initializes a new CubeFaceRotator instance.
@@ -57,11 +57,11 @@ public class CubeFaceRotator {
      * one.
      *
      * @param direction The RotationDirection that specifies the direction of the rotation
-     * @param faceIndex The index of the face that is rotated.
+     * @param face The CubeColor of the face that is rotated.
      * @param countOfLayers The count of layers of the side faces to rotate with the face
      */
-    public void rotateFace(final RotationDirection direction, final int faceIndex, final int countOfLayers) {
-        rotateLayers(direction, faceIndex, 0, countOfLayers);
+    public void rotateFace(final RotationDirection direction, final CubeColor face, final int countOfLayers) {
+        rotateLayers(direction, face, 0, countOfLayers);
     }
 
     /**
@@ -75,35 +75,35 @@ public class CubeFaceRotator {
      * to rotate middle layers only.
      *
      * @param direction The RotationDirection that specifies the direction of the rotation
-     * @param faceIndex The index of the face that is rotated.
+     * @param face The index of the face that is rotated.
      * @param countOfLayers The count of layers of the side faces to rotate with the face
      */
     public void rotateLayers(
             final RotationDirection direction,
-            final int faceIndex,
+            final CubeColor face,
             final int startRow,
             final int countOfLayers) {
         if (direction == RotationDirection.Clockwise)
-            rotateClockwise(faceIndex, startRow, countOfLayers);
+            rotateClockwise(face, startRow, countOfLayers);
         else
-            rotateCounterclockwise(faceIndex, startRow, countOfLayers);
+            rotateCounterclockwise(face, startRow, countOfLayers);
     }
 
     /**
      * Rotates the specified face clockwise with the specified count of layers
      * of the connected side faces.
      *
-     * @param faceIndex The index of the middle field of the face that is rotated.
+     * @param face The CubeColor of the middle field of the face that is rotated.
      * @param startRow The index of the first layer that is rotated. If greater 0 then
      *                   the face itself is not rotated.
      * @param rows The count of layers of the side faces to rotate with the face
      */
-    private void rotateClockwise(final int faceIndex, final int startRow, final int rows) {
+    private void rotateClockwise(final CubeColor face, final int startRow, final int rows) {
         if (startRow == 0)
-            rotateTopClockwise(_cube.getFaces()[faceIndex]);
+            rotateTopClockwise(_cube.getFace(face));
 
         for (int row = startRow; row < startRow + rows; row++) {
-            shiftSideLayerClockwise(faceIndex, row);
+            shiftSideLayerClockwise(face, row);
         }
     }
 
@@ -135,17 +135,17 @@ public class CubeFaceRotator {
      * Rotates the specified face counterclockwise with the specified count of layers
      * of the connected side faces.
      *
-     * @param faceIndex The index of the face that is rotated.
+     * @param face The CubeColor of the face that is rotated.
      * @param startRow The index of the first layer that is rotated. If greater 0 then
      *                   the face itself is not rotated.
      * @param rows The count of layers of the side faces to rotate with the face.
      */
-    private void rotateCounterclockwise(final int faceIndex, final int startRow, final int rows) {
+    private void rotateCounterclockwise(final CubeColor face, final int startRow, final int rows) {
         if (startRow == 0)
-            rotateTopCounterclockwise(_cube.getFaces()[faceIndex]);
+            rotateTopCounterclockwise(_cube.getFace(face));
 
         for (int row = startRow; row < startRow + rows; row++) {
-            shiftSideLayerCounterclockwise(faceIndex, row);
+            shiftSideLayerCounterclockwise(face, row);
         }
     }
 
@@ -183,11 +183,12 @@ public class CubeFaceRotator {
      * For more than a three layer cube it is needed to be able to shift more
      * than one layer. The row argument determines which layer is shifted.
      *
-     * @param sideFaceIndex The index of the side face where the
-     *                      row is shifted
+     * @param sideFace The CubeColor of the side face where the
+     *                 row is shifted
      * @param row The row number to be shifted. 0 is the upper one.
      */
-    private void shiftSideLayerClockwise(final int sideFaceIndex, final int row) {
+    private void shiftSideLayerClockwise(final CubeColor sideFace, final int row) {
+        int sideFaceIndex = sideFace.ordinal();
         CubeFace[] sidesToShift = _faceToSides[sideFaceIndex];
         CubeFace[] sources = new CubeFace[] {
                 new CubeFace(sidesToShift[0]),
@@ -220,11 +221,12 @@ public class CubeFaceRotator {
      * For more than a three layer cube it is needed to be able to shift more
      * than one layer. The row argument determines which layer is shifted.
      *
-     * @param sideFaceIndex The index of the side face where the
-     *                      row is shifted
+     * @param sideFace The CubeColor of the side face where the
+     *                 row is shifted
      * @param row The row number to be shifted. 0 is the upper one.
      */
-    private void shiftSideLayerCounterclockwise(final int sideFaceIndex, final int row) {
+    private void shiftSideLayerCounterclockwise(final CubeColor sideFace, final int row) {
+        int sideFaceIndex = sideFace.ordinal();
         CubeFace[] sidesToShift = _faceToSides[sideFaceIndex];
         CubeFace[] sources = new CubeFace[] {
                 new CubeFace(sidesToShift[0]),

@@ -51,12 +51,12 @@ class PositionTranslator {
         return translated;
     }
 
-    private static final int white = CubeColor.White.ordinal();
-    private static final int orange = CubeColor.Orange.ordinal();
-    private static final int green = CubeColor.Green.ordinal();
-    private static final int red = CubeColor.Red.ordinal();
-    private static final int blue = CubeColor.Blue.ordinal();
-    private static final int yellow = CubeColor.Yellow.ordinal();
+    private static final CubeColor white = CubeColor.White;
+    private static final CubeColor orange = CubeColor.Orange;
+    private static final CubeColor green = CubeColor.Green;
+    private static final CubeColor red = CubeColor.Red;
+    private static final CubeColor blue = CubeColor.Blue;
+    private static final CubeColor yellow = CubeColor.Yellow;
 
     // up, front
     /**
@@ -72,7 +72,7 @@ class PositionTranslator {
      * up/front orientation is white/green. The actual values are int
      * values.
      */
-    private final static int[][] faceOrientations = {
+    private final static CubeColor[][] faceOrientations = {
             { white,    green   },
             { white,    orange  },
             { white,    blue    },

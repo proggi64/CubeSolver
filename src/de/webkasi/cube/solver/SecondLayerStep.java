@@ -37,12 +37,12 @@ class SecondLayerStep extends AbstractSolutionStep {
      * the correct position.
      *
      * @param cube The Cube to solve. The cube must have the same state
-     *             that it had the the previous steps have been called.
+     *             that it had when the previous steps have been called.
      * @param records The CubeFaceRotationRecords object receiving the solution steps.
      *                This must contain the previous steps created by the WhiteCrossStep.solve()
      *                and WhiteCornersStep.solve() methods previously.
      */
-    public static void solve(final Cube cube, final CubeFaceRotationRecords records) {
+    static void solve(final Cube cube, final CubeFaceRotationRecords records) {
         SecondLayerStep step = new SecondLayerStep(cube, records);
         step.solve();
     }
@@ -50,27 +50,27 @@ class SecondLayerStep extends AbstractSolutionStep {
     /**
      * Sequence that moves the front/up edge color to the front/left edge.
      */
-    final static String moveFrontUpToFrontLeft = "U' L' U L U F U' F' ";
+    private final static String moveFrontUpToFrontLeft = "U' L' U L U F U' F' ";
 
     /**
      * Sequence that moves the front/up edge color to the front/right edge.
      */
-    final static String moveFrontUpToFrontRight = "U R U' R' U' F' U F ";
+    private final static String moveFrontUpToFrontRight = "U R U' R' U' F' U F ";
 
     /**
      * Sequence that moves the front/right edge color to the up/back edge.
      */
-    final static String moveFrontRightToUpBack = moveFrontUpToFrontRight;
+    private final static String moveFrontRightToUpBack = moveFrontUpToFrontRight;
 
     /**
      * Sequence that moves the front/left edge color to the up/back edge.
      */
-    final static String moveFrontLeftToUpBack = moveFrontUpToFrontLeft;
+    private final static String moveFrontLeftToUpBack = moveFrontUpToFrontLeft;
 
     /**
      * Sequence that turns the cube upside down around the z axis.
      */
-    final static String turnZ = "z2 ";
+    private final static String turnZ = "z2 ";
 
     /**
      * Algorithms for moving an edge to the right middle position of the front.
@@ -140,7 +140,7 @@ class SecondLayerStep extends AbstractSolutionStep {
     };
 
     /**
-     * Defines the corresponding second edge colorsfor a given face color.
+     * Defines the corresponding second edge color for a given face color.
      *
      * The algorithm places always the right edge for each of the four faces
      * before it is rotated to the next face. This array defines the side color

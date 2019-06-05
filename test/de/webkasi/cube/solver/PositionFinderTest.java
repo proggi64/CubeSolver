@@ -61,7 +61,7 @@ class PositionFinderTest {
     void findEdge_WhiteGreenAfterCounterclockwiseRotation() {
         Cube cube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(cube);
-        rotator.rotateFace(RotationDirection.Counterclockwise, CubeColor.White.ordinal(), 1);
+        rotator.rotateFace(RotationDirection.Counterclockwise, CubeColor.White, 1);
         PartPosition position = PositionFinder.findEdge(cube, CubeColor.White, CubeColor.Green);
         assertPosition(position, Up, 1, 2);
     }
@@ -70,7 +70,7 @@ class PositionFinderTest {
     void findEdge_WhiteGreenAfterClockwiseRotation() {
         Cube cube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(cube);
-        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.White.ordinal(), 1);
+        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.White, 1);
         PartPosition position = PositionFinder.findEdge(cube, CubeColor.White, CubeColor.Green);
         assertPosition(position, Up, 1, 0);
     }
@@ -79,8 +79,8 @@ class PositionFinderTest {
     void findEdge_WhiteGreenAfterDoubleRotation() {
         Cube cube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(cube);
-        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.White.ordinal(), 1);
-        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.White.ordinal(), 1);
+        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.White, 1);
+        rotator.rotateFace(RotationDirection.Clockwise, CubeColor.White, 1);
         PartPosition position = PositionFinder.findEdge(cube, CubeColor.White, CubeColor.Green);
         assertPosition(position, Up, 0, 1);
     }

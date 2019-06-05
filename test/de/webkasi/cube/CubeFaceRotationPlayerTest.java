@@ -28,7 +28,7 @@ class CubeFaceRotationPlayerTest {
         CubeFaceRotator rotator = new CubeFaceRotator(cube);
         CubeFaceRotationRecords records = new CubeFaceRotationRecords();
         records.add(new CubeFaceRotationRecord(
-                CubeColor.White.ordinal(),
+                CubeColor.White,
                 RotationDirection.Clockwise,
                 1)
         );
