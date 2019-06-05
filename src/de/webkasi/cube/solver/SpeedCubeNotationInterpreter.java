@@ -124,6 +124,7 @@ public class SpeedCubeNotationInterpreter {
                         cubeRotationAxis = '\0';
                     }
                     countOfCubeRotations = 1;
+                    cubeRotationDirection = RotationDirection.Clockwise;
                     break;
             }
         }

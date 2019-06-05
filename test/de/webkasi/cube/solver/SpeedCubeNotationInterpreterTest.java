@@ -322,6 +322,28 @@ class SpeedCubeNotationInterpreterTest {
     }
 
     @Test
+    void addMoves_ReverseForwardCubeRotationsY() {
+        Cube cube = new Cube();
+        CubeFaceRotator rotator = new CubeFaceRotator(cube);
+        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
+        SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(records);
+
+        interpreter.addMoves("y' F y R'");
+
+        CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(rotator);
+
+        player.play(records);
+
+        CubeAssertion.assertCubeFace(cube, CubeColor.White, "WWW WWW WWW");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Orange, "OOO OOO OOO");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Green, "GGG GGG GGG");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Red, "RRR RRR RRR");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Blue, "BBB BBB BBB");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Yellow, "YYY YYY YYY");
+    }
+
+
+    @Test
     void addMoves_WithManyCubeRotations() {
         Cube cube = new Cube();
         CubeFaceRotator rotator = new CubeFaceRotator(cube);

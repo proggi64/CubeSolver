@@ -98,35 +98,35 @@ class SecondLayerStep extends AbstractSolutionStep {
     private static final Solution[] solutions = {
             // right side color found at the left face
             new Solution(new PartPosition(left, 1, 0),
-                    ""),
+                    turnZ + "y' " + moveFrontRightToUpBack + "y U' " + moveFrontUpToFrontLeft),
             new Solution(new PartPosition(left, 1, 2),
                     turnZ + moveFrontRightToUpBack + "y U' " + moveFrontUpToFrontRight),
             new Solution(new PartPosition(left, 2, 1),
-                    ""),
+                    turnZ + "y U2 " + moveFrontUpToFrontRight),
 
             // right side color found at the front face
             new Solution(new PartPosition(front, 1, 0),
-                    ""),
+                    turnZ + moveFrontRightToUpBack + "U2 " + moveFrontUpToFrontLeft),
             new Solution(new PartPosition(front, 1, 2),
-                    noMove),
+                    turnZ + moveFrontLeftToUpBack + "U2 " + moveFrontUpToFrontLeft),
             new Solution(new PartPosition(front, 2, 1),
-                    ""),
+                    turnZ + "y U " + moveFrontUpToFrontRight),
 
             // right side color found at the right face
             new Solution(new PartPosition(right, 1, 0),
-                    ""),
+                    noMove),
             new Solution(new PartPosition(right, 1, 2),
-                    ""),
+                    turnZ + "y " + moveFrontLeftToUpBack + "y' U " + moveFrontUpToFrontLeft),
             new Solution(new PartPosition(right, 2, 1),
-                    ""),
+                    turnZ + "y " + moveFrontUpToFrontRight),
 
             // right side color found at the back face
             new Solution(new PartPosition(back, 1, 0),
-                    ""),
+                    turnZ + "y " + moveFrontLeftToUpBack + "U2 " + moveFrontUpToFrontRight),
             new Solution(new PartPosition(back, 1, 2),
-                    ""),
+                    turnZ + "y' " + moveFrontRightToUpBack + "y2 " + moveFrontUpToFrontRight),
             new Solution(new PartPosition(back, 2, 1),
-                    ""),
+                    turnZ + "y U' " + moveFrontUpToFrontRight),
 
             // right side color found at the down face
             new Solution(new PartPosition(down, 0, 1),
