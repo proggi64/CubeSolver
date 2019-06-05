@@ -278,4 +278,67 @@ class SpeedCubeNotationInterpreterTest {
         CubeAssertion.assertCubeFace(cube, CubeColor.Blue, "BGB GBG BGB");
         CubeAssertion.assertCubeFace(cube, CubeColor.Yellow, "YWY WYW YWY");
     }
+
+    @Test
+    void addMoves_WithSingleCubeRotationsZ() {
+        Cube cube = new Cube();
+        CubeFaceRotator rotator = new CubeFaceRotator(cube);
+        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
+        SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(records);
+
+        interpreter.addMoves("z U");
+
+        CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(rotator);
+
+        player.play(records);
+
+        CubeAssertion.assertCubeFace(cube, CubeColor.White, "BWW BWW BWW");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Orange, "OOO OOO OOO");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Green, "WGG WGG WGG");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Red, "RRR RRR RRR");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Blue, "BBY BBY BBY");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Yellow, "GYY GYY GYY");
+    }
+
+    @Test
+    void addMoves_WithSingleAndDoubleCubeRotationsZ() {
+        Cube cube = new Cube();
+        CubeFaceRotator rotator = new CubeFaceRotator(cube);
+        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
+        SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(records);
+
+        interpreter.addMoves("z2 U z z D'");
+
+        CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(rotator);
+
+        player.play(records);
+
+        CubeAssertion.assertCubeFace(cube, CubeColor.White, "WWW WWW WWW");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Orange, "OOO OOO OOO");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Green, "GGG GGG GGG");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Red, "RRR RRR RRR");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Blue, "BBB BBB BBB");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Yellow, "YYY YYY YYY");
+    }
+
+    @Test
+    void addMoves_WithManyCubeRotations() {
+        Cube cube = new Cube();
+        CubeFaceRotator rotator = new CubeFaceRotator(cube);
+        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
+        SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(records);
+
+        interpreter.addMoves("z2 U x x D' R y2 L' y R y B' F y2 B'");
+
+        CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(rotator);
+
+        player.play(records);
+
+        CubeAssertion.assertCubeFace(cube, CubeColor.White, "WWW WWW WWW");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Orange, "OOO OOO OOO");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Green, "GGG GGG GGG");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Red, "RRR RRR RRR");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Blue, "BBB BBB BBB");
+        CubeAssertion.assertCubeFace(cube, CubeColor.Yellow, "YYY YYY YYY");
+    }
 }

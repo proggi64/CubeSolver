@@ -8,7 +8,7 @@ import de.webkasi.cube.*;
  *
  * This notation is valid only for 3x3 or 2x2 cubes.
  */
-class SpeedCubeNotationInterpreter {
+public class SpeedCubeNotationInterpreter {
 
     private final CubeFaceRotationRecords _records;
 
@@ -123,6 +123,7 @@ class SpeedCubeNotationInterpreter {
                         orientation.rotate(cubeRotationAxis, cubeRotationDirection, countOfCubeRotations);
                         cubeRotationAxis = '\0';
                     }
+                    countOfCubeRotations = 1;
                     break;
             }
         }

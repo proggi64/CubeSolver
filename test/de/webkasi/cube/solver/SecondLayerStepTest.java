@@ -24,13 +24,13 @@ class SecondLayerStepTest {
     void solve_FrontLeft() {
         Cube cube = new Cube();
         swapRightEdgeWith(cube, front, 1, 0);
-        solveAndAssertSecondLayer(cube);
+        solveRightFrontEdgeAndAssert(cube);
     }
 
     @Test
     void solve_FrontRight() {
         Cube cube = new Cube();
-        solveAndAssertSecondLayer(cube);
+        solveRightFrontEdgeAndAssert(cube);
     }
 
     @Test
@@ -170,6 +170,42 @@ class SecondLayerStepTest {
         solveAndAssertSecondLayerWithRecordsReport(cube, new CubeFaceRotationRecords());
     }
 
+    /**
+     * Tests whether the right edge of the green face is on its correct position.
+     *
+     * The complete white face and the green row 0 is also tested. This method
+     * is used to test a single sequence during development, when other sequences are
+     * not ready, yet.
+     *
+     * @param cube The cube to be tested.
+     */
+    private static void solveRightFrontEdgeAndAssert(
+            final Cube cube) {
+        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
+        SecondLayerStep.solve(cube, records);
+
+        Cube solvedCube = CubeFactory.create(cube, records);
+        int face = CubeColor.Green.ordinal();
+        CubeFace cubeFace = solvedCube.getFaceByIndex(face);
+
+        CubeFace upFace = solvedCube.getFace(CubeColor.White);
+        for (int row = 0; row < cube.getDimension(); row++) {
+            for (int column = 0; column < cube.getDimension(); column++) {
+                assertEquals(CubeColor.White, upFace.getField(
+                        row, column), String.format("White Row %d Column %d Moves", row, column));
+            }
+        }
+
+        assertEquals(face, cubeFace.getField(0, 0).ordinal(), "0,0");
+        assertEquals(face, cubeFace.getField(0, 1).ordinal(), "0,1");
+        assertEquals(face, cubeFace.getField(0, 2).ordinal(), "0,2");
+        assertEquals(face, cubeFace.getField(1, 1).ordinal(), "1,1");
+        assertEquals(face, cubeFace.getField(1, 2).ordinal(), "1,2");
+
+        assertEquals(CubeColor.Red, solvedCube.getFace(CubeColor.Red).getField(1, 0));
+    }
+
+
     private static void solveAndAssertSecondLayerWithRecordsReport(
             final Cube cube,
             final CubeFaceRotationRecords scrambleRecords) {
@@ -189,12 +225,13 @@ class SecondLayerStepTest {
 
         for (int face = 1; face < 5; face++) {
             CubeFace cubeFace = solvedCube.getFaceByIndex(face);
-            assertEquals(face, cubeFace.getField(0, 0).ordinal(), "0,0" + scrambleMoves);
-            assertEquals(face, cubeFace.getField(0, 1).ordinal(), "0,1" + scrambleMoves);
-            assertEquals(face, cubeFace.getField(0, 2).ordinal(), "0,2" + scrambleMoves);
-            assertEquals(face, cubeFace.getField(1, 0).ordinal(), "1,0" + scrambleMoves);
-            assertEquals(face, cubeFace.getField(1, 1).ordinal(), "1,1" + scrambleMoves);
-            assertEquals(face, cubeFace.getField(1, 2).ordinal(), "1,2" + scrambleMoves);
+            String faceOutput = String.format("Face %d ", face);
+            assertEquals(face, cubeFace.getField(0, 0).ordinal(), faceOutput + "0,0" + scrambleMoves);
+            assertEquals(face, cubeFace.getField(0, 1).ordinal(), faceOutput + "0,1" + scrambleMoves);
+            assertEquals(face, cubeFace.getField(0, 2).ordinal(), faceOutput + "0,2" + scrambleMoves);
+            assertEquals(face, cubeFace.getField(1, 0).ordinal(), faceOutput + "1,0" + scrambleMoves);
+            assertEquals(face, cubeFace.getField(1, 1).ordinal(), faceOutput + "1,1" + scrambleMoves);
+            assertEquals(face, cubeFace.getField(1, 2).ordinal(), faceOutput + "1,2" + scrambleMoves);
         }
     }
 

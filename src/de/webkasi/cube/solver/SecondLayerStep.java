@@ -49,16 +49,27 @@ class SecondLayerStep extends AbstractSolutionStep {
 
     /**
      * Sequence that moves the front/up edge color to the front/left edge.
-     *
-     * This has to be used after the cube has been turned by the z axis
-     * by 180 degrees ("z2", yellow side up). Otherwise, it will not work.
      */
-    final static String moveUpToLeft = "U' L' U L U F U' F' ";
+    final static String moveFrontUpToFrontLeft = "U' L' U L U F U' F' ";
 
-    final static String moveRightToUpBack = "U R U' R' U' F' U F ";
+    /**
+     * Sequence that moves the front/up edge color to the front/right edge.
+     */
+    final static String moveFrontUpToFrontRight = "U R U' R' U' F' U F ";
 
-    final static String moveUpToRight = moveRightToUpBack;
+    /**
+     * Sequence that moves the front/right edge color to the up/back edge.
+     */
+    final static String moveFrontRightToUpBack = moveFrontUpToFrontRight;
 
+    /**
+     * Sequence that moves the front/left edge color to the up/back edge.
+     */
+    final static String moveFrontLeftToUpBack = moveFrontUpToFrontLeft;
+
+    /**
+     * Sequence that turns the cube upside down around the z axis.
+     */
     final static String turnZ = "z2 ";
 
     /**
@@ -87,9 +98,9 @@ class SecondLayerStep extends AbstractSolutionStep {
     private static final Solution[] solutions = {
             // right side color found at the left face
             new Solution(new PartPosition(left, 1, 0),
-                    turnZ + "y " + moveRightToUpBack + "y' U' " + moveUpToLeft),
-            new Solution(new PartPosition(left, 1, 2),
                     ""),
+            new Solution(new PartPosition(left, 1, 2),
+                    turnZ + moveFrontRightToUpBack + "y U' " + moveFrontUpToFrontRight),
             new Solution(new PartPosition(left, 2, 1),
                     ""),
 
@@ -119,13 +130,13 @@ class SecondLayerStep extends AbstractSolutionStep {
 
             // right side color found at the down face
             new Solution(new PartPosition(down, 0, 1),
-                    turnZ + moveUpToLeft),
+                    turnZ + moveFrontUpToFrontLeft),
             new Solution(new PartPosition(down, 1, 0),
-                    turnZ + "U " + moveUpToLeft),
+                    turnZ + "U " + moveFrontUpToFrontLeft),
             new Solution(new PartPosition(down, 1, 2),
-                    turnZ + "U' " + moveUpToLeft),
+                    turnZ + "U' " + moveFrontUpToFrontLeft),
             new Solution(new PartPosition(down, 2, 1),
-                    turnZ + "U2 " + moveUpToLeft),
+                    turnZ + "U2 " + moveFrontUpToFrontLeft),
     };
 
     /**
