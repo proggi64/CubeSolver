@@ -6,6 +6,9 @@ import de.webkasi.cube.*;
  * Provides the solution steps for creating a yellow cross at the yellow face
  * of a 3x3 Magic Cube.
  *
+ * The yellow edges of the cross will not always be in their correct position after
+ * this step.
+ *
  * The previous steps must be already done and the passed CubeFaceRotationRecords
  * has to contains all the previous moves.
  */
@@ -79,11 +82,21 @@ class YellowCrossStep {
         /**
          * All yellow parts are already at the yellow face.
          */
-        All
+        All,
+        /**
+         * Undefined: This combination cannot occur unless the cube is inconsistent.
+         */
+        Undefined
     }
 
     private static final String noMove = "";
-    private static final String turn = "z2 ";
+    /**
+     * Turns the cube that the blue face is the front and the yellow is up.
+     *
+     * The coordinates of the yellow face are oriented correctly so that
+     * the sequences match the orientation.
+     */
+    private static final String turn = "x2 ";
     private static final String solutionStep = "F R U R' U' F' ";
 
     /**
@@ -100,7 +113,7 @@ class YellowCrossStep {
             turn + solutionStep + solutionStep,
             turn + "U' " + solutionStep + solutionStep,
             turn + "U2 " + solutionStep + solutionStep,
-            turn + "U " +solutionStep +solutionStep,
+            turn + "U " + solutionStep + solutionStep,
 
             noMove
     };
@@ -125,7 +138,31 @@ class YellowCrossStep {
      * at the yellow face.
      */
     private YellowCrossState getState() {
-        // TODO Analyse der gelben Felder
-        return YellowCrossState.All;
+        CubeFace yellowFace = _cube.getFace(CubeColor.Yellow);
+        byte bits = 0;
+        bits += yellowFace.getField(1, 0) == CubeColor.Yellow ? 1 : 0;
+        bits += yellowFace.getField(0, 1) == CubeColor.Yellow ? 2 : 0;
+        bits += yellowFace.getField(1, 2) == CubeColor.Yellow ? 4 : 0;
+        bits += yellowFace.getField(2, 1) == CubeColor.Yellow ? 8 : 0;
+
+        switch (bits) {
+            case 0:
+                return YellowCrossState.None;
+            case 3:
+                return YellowCrossState.AngleLeftBack;
+            case 5:
+                return YellowCrossState.LineHorizontal;
+            case 9:
+                return YellowCrossState.AngleFrontLeft;
+            case 6:
+                return YellowCrossState.AngleBackRight;
+            case 10:
+                return YellowCrossState.LineVertical;
+            case 12:
+                return YellowCrossState.AngleRightFront;
+            case 15:
+                return YellowCrossState.All;
+        }
+        return YellowCrossState.Undefined;
     }
 }

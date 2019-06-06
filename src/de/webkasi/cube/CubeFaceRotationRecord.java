@@ -3,7 +3,6 @@ package de.webkasi.cube;
 /**
  * Represents a cube rotation for playing rotations.
  */
-@SuppressWarnings("unused")
 public class CubeFaceRotationRecord {
     private final CubeColor _face;
     private RotationDirection _direction;
