@@ -97,6 +97,9 @@ class YellowCrossStep {
      * the sequences match the orientation.
      */
     private static final String turn = "x2 ";
+    /**
+     * Sequence that moves two yellow side to the yellow face.
+     */
     private static final String solutionStep = "F R U R' U' F' ";
 
     /**
@@ -105,7 +108,7 @@ class YellowCrossStep {
      * get the yellow cross.
      */
     private static final String solutions[] = new String[] {
-            turn + solutionStep + solutionStep + solutionStep,
+            turn + solutionStep + "U2 " + solutionStep + solutionStep,
 
             turn + solutionStep,
             turn + "U " + solutionStep,

@@ -10,7 +10,7 @@ class YellowCrossStepTest {
 
     @Test
     void solve_RandomCubes() {
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 100; i++) {
             Cube cube = new Cube();
             CubeFaceRotationRecords records = CubeScrambler.scrambleCube(5 + i % 10, cube.getDimension());
             CubeFaceRotator rotator = new CubeFaceRotator(cube);
