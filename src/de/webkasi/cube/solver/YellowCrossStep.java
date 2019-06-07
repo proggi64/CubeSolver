@@ -12,10 +12,7 @@ import de.webkasi.cube.*;
  * The previous steps must be already done and the passed CubeFaceRotationRecords
  * has to contains all the previous moves.
  */
-class YellowCrossStep {
-    private final Cube _cube;
-    private final CubeFaceRotationRecords _records;
-
+final class YellowCrossStep extends AbstractYellowCrossStep {
     /**
      * Initializes a new instance of the YellowCrossStep class.
      *
@@ -26,16 +23,13 @@ class YellowCrossStep {
      *                This must contain all previous steps before the yellow cross step.
      */
     YellowCrossStep(Cube cube, CubeFaceRotationRecords records) {
-        _cube = cube;
-        _records = records;
+        super(cube, records);
     }
 
     /**
      * Solves the yellow cross at the down side and last layer of the cube.
      *
      * @param cube The Cube to solve. The cube may be completely scrambled.
-     *             There is is no need of any previous step to pass a Cube
-     *             to this method.
      * @param records The CubeFaceRotationRecords object receiving the solution steps.
      *                If any steps are already in the records then they will be applied
      *                to an internal copy of the cube before this step is solved for
@@ -48,57 +42,10 @@ class YellowCrossStep {
     }
 
     /**
-     * Represents the state of the yellow fields at the yellow face.
-     */
-    private enum YellowCrossState {
-        /**
-         * No yellow side is up on the yellow face.
-         */
-        None,
-        /**
-         * Two yellow parts create a horizontal line at the row 1.
-         */
-        LineHorizontal,
-        /**
-         * Two yellow parts create a vertical line at the column 1.
-         */
-        LineVertical,
-        /**
-         * Yellow parts are at 1,0 and 0,1.
-         */
-        AngleLeftBack,
-        /**
-         * Yellow parts are at 1,2 and 0,1.
-         */
-        AngleBackRight,
-        /**
-         * Yellow parts are at 1,2 and 2,1.
-         */
-        AngleRightFront,
-        /**
-         * Yellow parts are at 1,0 and 2,1.
-         */
-        AngleFrontLeft,
-        /**
-         * All yellow parts are already at the yellow face.
-         */
-        All,
-        /**
-         * Undefined: This combination cannot occur unless the cube is inconsistent.
-         */
-        Undefined
-    }
-
-    private static final String noMove = "";
-    /**
-     * Turns the cube that the blue face is the front and the yellow is up.
+     * Sequence that moves two yellow sides in an angle at the back and the right
+     * to the yellow face.
      *
-     * The coordinates of the yellow face are oriented correctly so that
-     * the sequences match the orientation.
-     */
-    private static final String turn = "x2 ";
-    /**
-     * Sequence that moves two yellow side to the yellow face.
+     * This move can be repeated to solve a linear orientation of the parts to be moved.
      */
     private static final String solutionStep = "F R U R' U' F' ";
 
@@ -106,6 +53,9 @@ class YellowCrossStep {
      * Contains the matching solution steps in SpeedCube syntax for
      * each possible state of the yellow part at the yellow face to
      * get the yellow cross.
+     *
+     * Each array element has a numerical value of the YellowCrossState
+     * as its index that is the solution for this state.
      */
     private static final String solutions[] = new String[] {
             turn + solutionStep + "U2 " + solutionStep + solutionStep,
@@ -124,7 +74,7 @@ class YellowCrossStep {
     /**
      * Solves the yellow cross at the down side and last layer of the cube.
      */
-    private void solve() {
+    protected void solve() {
         String moves = solutions[getState().ordinal()];
         SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(_records);
         interpreter.addMoves(moves);

@@ -11,7 +11,7 @@ import de.webkasi.cube.*;
  * applied the first top layer (white) will be complete, as well as the middle
  * parts of the side faces.
  */
-class WhiteCornersStep extends AbstractSolutionStep {
+final class WhiteCornersStep extends AbstractSolutionStep {
     /**
      * Initializes a new instance of the WhiteCornersStep class with the
      * specified Cube and CubeFaceRotationsRecords objects.
