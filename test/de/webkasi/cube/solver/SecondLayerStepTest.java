@@ -143,10 +143,6 @@ class SecondLayerStepTest {
         }
     }
 
-    @Test
-    void findPosition() {
-    }
-
     private static void solveAndAssertUpperTwoLayers(final Cube cube) {
         CubeFaceRotationRecords empty = new CubeFaceRotationRecords();
         solveAndAssertUpperTwoLayerWithRecordsReport(cube, empty);
@@ -194,9 +190,9 @@ class SecondLayerStepTest {
         }
     }
 
-    static final int faceIndex = 3;
-    static final int rowIndex = 4;
-    static final int columnIndex = 5;
+    private static final int faceIndex = 3;
+    private static final int rowIndex = 4;
+    private static final int columnIndex = 5;
 
     /**
      * Places the green/red edge with its green field to the specified position

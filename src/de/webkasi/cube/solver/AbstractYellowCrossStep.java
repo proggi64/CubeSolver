@@ -6,14 +6,15 @@ import de.webkasi.cube.CubeFaceRotationRecords;
 /**
  * Base class for yellow cross solution steps of the Magic Cube.
  */
+@SuppressWarnings("WeakerAccess")
 public abstract class AbstractYellowCrossStep {
-    protected final Cube _cube;
-    protected final CubeFaceRotationRecords _records;
+    final Cube _cube;
+    final CubeFaceRotationRecords _records;
 
     /**
      * No move necessary.
      */
-    protected static final String noMove = "";
+    static final String noMove = "";
 
     /**
      * Turns the cube that the blue face is the front and the yellow is up.
@@ -21,7 +22,7 @@ public abstract class AbstractYellowCrossStep {
      * The coordinates of the yellow face are oriented correctly so that
      * the sequences match the orientation.
      */
-    protected static final String turn = "x2 ";
+    static final String turn = "x2 ";
 
     /**
      * Represents the state of the yellow edge fields at the yellow face.
@@ -74,7 +75,7 @@ public abstract class AbstractYellowCrossStep {
      * @param records The CubeFaceRotationRecords object receiving the solution steps.
      *                This must contain all previous steps before the yellow cross step.
      */
-    protected AbstractYellowCrossStep(Cube cube, CubeFaceRotationRecords records) {
+    AbstractYellowCrossStep(Cube cube, CubeFaceRotationRecords records) {
         _cube = cube;
         _records = records;
     }

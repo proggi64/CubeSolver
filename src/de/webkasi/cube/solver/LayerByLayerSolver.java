@@ -104,7 +104,10 @@ public class LayerByLayerSolver {
      * The yellow cross and its edges are correctly set after
      * the call.
      */
-    private void setYellowCrossEdges() { YellowCrossEdgesStep.solve(_cube, _records); }
+    private void setYellowCrossEdges() {
+        YellowCrossLinearEdgesStep.solve(_cube, _records);
+        YellowCrossAngleEdgesStep.solve(_cube, _records);
+    }
 
     /**
      * Sets the position of the yellow corners.

@@ -29,7 +29,8 @@ class YellowCrossEdgesStepTest {
         SecondLayerStep.solve(cube, records);
         YellowCrossStep.solve(cube, records);
 
-        YellowCrossEdgesStep.solve(cube, records);
+        YellowCrossLinearEdgesStep.solve(cube, records);
+        YellowCrossAngleEdgesStep.solve(cube, records);
 
         String scrambleMoves = scrambleRecords.size() > 0 ? " Moves " + SpeedCubeNotationWriter.write(scrambleRecords) : "";
 

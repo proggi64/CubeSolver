@@ -22,7 +22,7 @@ final class YellowCrossStep extends AbstractYellowCrossStep {
      * @param records The CubeFaceRotationRecords object receiving the solution steps.
      *                This must contain all previous steps before the yellow cross step.
      */
-    YellowCrossStep(Cube cube, CubeFaceRotationRecords records) {
+    private YellowCrossStep(Cube cube, CubeFaceRotationRecords records) {
         super(cube, records);
     }
 
@@ -57,7 +57,7 @@ final class YellowCrossStep extends AbstractYellowCrossStep {
      * Each array element has a numerical value of the YellowCrossState
      * as its index that is the solution for this state.
      */
-    private static final String solutions[] = new String[] {
+    private static final String[] solutions = new String[] {
             turn + solutionStep + "U2 " + solutionStep + solutionStep,
 
             turn + solutionStep,
@@ -74,7 +74,7 @@ final class YellowCrossStep extends AbstractYellowCrossStep {
     /**
      * Solves the yellow cross at the down side and last layer of the cube.
      */
-    protected void solve() {
+    void solve() {
         String moves = solutions[getState().ordinal()];
         SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(_records);
         interpreter.addMoves(moves);
