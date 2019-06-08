@@ -6,6 +6,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+class CornerTest extends AbstractYellowCornersPositionStep {
+    CornerTest(Cube cube, CubeFaceRotationRecords records) {
+        super(cube, records);
+    }
+
+    void solve() {}
+
+    byte getState() { return getCornerPositionStates(); }
+}
+
 class YellowCornersPositionFirstStepTest {
 
     @Test
@@ -71,10 +81,12 @@ class YellowCornersPositionFirstStepTest {
         assertEquals(CubeColor.Red, solvedCube.getFace(CubeColor.Red).getField(2, 1), "Red 2,1" + scrambleMoves);
         assertEquals(CubeColor.Blue, solvedCube.getFace(CubeColor.Blue).getField(2, 1), "Blue 2,1" + scrambleMoves);
 
-        assertAtLeastOneYelloCorner(solvedCube);
+        assertAtLeastOneYellowCorner(solvedCube);
     }
 
-    private static void assertAtLeastOneYelloCorner(Cube solvedCube) {
-        
+    private static void assertAtLeastOneYellowCorner(Cube solvedCube) {
+        CornerTest test = new CornerTest(solvedCube, new CubeFaceRotationRecords());
+        byte state = test.getState();
+        assertTrue(Integer.bitCount((int)state) > 0, "No corner in the correct position!");
     }
 }

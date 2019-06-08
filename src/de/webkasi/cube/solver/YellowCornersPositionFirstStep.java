@@ -37,7 +37,8 @@ public class YellowCornersPositionFirstStep extends AbstractYellowCornersPositio
      *                the records initially passed to solve() have been applied.
      */
     static void solve(Cube cube, CubeFaceRotationRecords records) {
-        YellowCornersPositionFirstStep step = new YellowCornersPositionFirstStep(cube, records);
+        YellowCornersPositionFirstStep step = new YellowCornersPositionFirstStep(
+                CubeFactory.create(cube, records), records);
         step.solve();
     }
 
