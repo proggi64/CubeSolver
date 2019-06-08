@@ -115,7 +115,11 @@ public class LayerByLayerSolver {
      * The corners of the yellow layer are in the right position,
      * but may still have the wrong orientation after the call.
      */
-    private void setYellowCorners() { YellowCornersPositionStep.solve(_cube, _records); }
+    private void setYellowCorners() {
+        YellowCornersPositionFirstStep.solve(_cube, _records);
+        YellowCornersPositionStep.solve(_cube, _records);
+        YellowCornersPositionStep.solve(_cube, _records);
+    }
 
     /**
      * Turns the corners of the yellow layer to the right orientation.

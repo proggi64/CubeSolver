@@ -6,8 +6,7 @@ import de.webkasi.cube.CubeFaceRotationRecords;
 /**
  * Base class for yellow cross solution steps of the Magic Cube.
  */
-@SuppressWarnings("WeakerAccess")
-public abstract class AbstractYellowCrossStep {
+abstract class AbstractYellowCrossStep {
     final Cube _cube;
     final CubeFaceRotationRecords _records;
 
