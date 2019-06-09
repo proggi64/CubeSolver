@@ -116,8 +116,6 @@ public class LayerByLayerSolver {
      * but may still have the wrong orientation after the call.
      */
     private void setYellowCorners() {
-        YellowCornersPositionFirstStep.solve(_cube, _records);
-        YellowCornersPositionStep.solve(_cube, _records);
         YellowCornersPositionStep.solve(_cube, _records);
     }
 

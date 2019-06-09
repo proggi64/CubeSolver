@@ -1,22 +1,32 @@
 package de.webkasi.cube.solver;
 
 import de.webkasi.cube.*;
+import de.webkasi.cube.ui.text.CubeTextDescriptor;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CornerTest extends AbstractYellowCornersPositionStep {
+// Only used for calling the test method getCornerPositionStates for the unit tests
+class CornerTest extends YellowCornersPositionStep {
     CornerTest(Cube cube, CubeFaceRotationRecords records) {
         super(cube, records);
     }
-
-    void solve() {}
 
     byte getState() { return getCornerPositionStates(); }
 }
 
 class YellowCornersPositionFirstStepTest {
+
+    @Test
+    void solve_SpecificSituation01() {
+        CubeTextDescriptor descriptor = new CubeTextDescriptor();
+        Cube cube = new Cube();
+        descriptor.describeCube(cube, new String[] {
+                "WWW WWW WWW", "OOO OOO YOY", "GGG GGG BGY", "RRR RRR GRG", "BBB BBB YBB", "OYR YYY RYO" });
+
+        solveAndAssertFirstYellowCornerPositionWithRecordsReport(cube, new CubeFaceRotationRecords());
+    }
 
     @Test
     void solve_RandomCubes() {
@@ -30,6 +40,17 @@ class YellowCornersPositionFirstStepTest {
         }
     }
 
+    private static Cube prepareCube(String moves) {
+        Cube cube = new Cube();
+        CubeFaceRotator rotator = new CubeFaceRotator(cube);
+        CubeFaceRotationRecords records = new CubeFaceRotationRecords();
+        SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(records);
+        interpreter.addMoves(moves);
+        CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(rotator);
+        player.play(records);
+        return cube;
+    }
+
     private static void solveAndAssertFirstYellowCornerPositionWithRecordsReport(
             final Cube cube,
             final CubeFaceRotationRecords scrambleRecords) {
@@ -41,7 +62,7 @@ class YellowCornersPositionFirstStepTest {
         YellowCrossLinearEdgesStep.solve(cube, records);
         YellowCrossAngleEdgesStep.solve(cube, records);
 
-        YellowCornersPositionFirstStep.solve(cube, records);
+        YellowCornersPositionStep.solve(cube, records);
 
         String scrambleMoves = scrambleRecords.size() > 0 ? " Moves " + SpeedCubeNotationWriter.write(scrambleRecords) : "";
 
@@ -81,12 +102,12 @@ class YellowCornersPositionFirstStepTest {
         assertEquals(CubeColor.Red, solvedCube.getFace(CubeColor.Red).getField(2, 1), "Red 2,1" + scrambleMoves);
         assertEquals(CubeColor.Blue, solvedCube.getFace(CubeColor.Blue).getField(2, 1), "Blue 2,1" + scrambleMoves);
 
-        assertAtLeastOneYellowCorner(solvedCube);
+        assertYellowCornerPositions(solvedCube, scrambleMoves);
     }
 
-    private static void assertAtLeastOneYellowCorner(Cube solvedCube) {
+    private static void assertYellowCornerPositions(Cube solvedCube, String scrambleMoves) {
         CornerTest test = new CornerTest(solvedCube, new CubeFaceRotationRecords());
         byte state = test.getState();
-        assertTrue(Integer.bitCount((int)state) > 0, "No corner in the correct position!");
+        assertEquals(0x0f, (int)state, "Corner in the correct position! " + scrambleMoves);
     }
 }
