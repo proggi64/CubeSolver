@@ -96,7 +96,7 @@ class YellowCornersOrientationStep {
             // Farben der aktuell rechts vorne stehenden Ecke ermitteln.
             // Die Prüfung muss gelb oben plus die zwei ermittelten Farben haben!
 
-            while (!isCornerSolved(solvedCube, i)) {
+            while (!isRightLowerCornerSolved(solvedCube, i)) {
                 YellowCornersOrientationStep step =
                         new YellowCornersOrientationStep(solvedCube, records, prefixes[wrongCornerIndex]);
                 step.solve(i);

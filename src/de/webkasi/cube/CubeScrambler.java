@@ -20,18 +20,10 @@ public class CubeScrambler {
      */
     public static void scrambleCube(Cube cube, int depth) {
         Random generator = new Random(System.nanoTime());
-        CubeFaceRotator rotater = new CubeFaceRotator(cube);
-        int dimension = cube.getDimension();
-
-        for (int i = 0; i < depth; i++) {
-            RotationDirection direction = generator.nextInt(2) == 0 ?
-                    RotationDirection.Clockwise : RotationDirection.Counterclockwise;
-            int face = generator.nextInt(CubeColor.values().length);
-            int countOfLayers = dimension <= 3 ? 1 : generator.nextInt(dimension / 2) + 1;
-
-            rotater.rotateFace(direction, CubeColor.values()[face], countOfLayers);
-        }
-    }
+        CubeFaceRotationPlayer player =
+                new CubeFaceRotationPlayer(new CubeFaceRotator(cube));
+        player.play(scrambleCube(depth, cube.getDimension()));
+     }
 
     /**
      * Generates a CubeFaceRotationRecords object with random rotations.
