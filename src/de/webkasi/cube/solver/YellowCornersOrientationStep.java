@@ -4,7 +4,7 @@ import de.webkasi.cube.*;
 
 /**
  * Represents the last step of the Layer-By-Layer solution that turns the
- * corners of the yellow face into their correct orientations.
+ * cornerColors of the yellow face into their correct orientations.
  */
 class YellowCornersOrientationStep {
     /**
@@ -41,7 +41,10 @@ class YellowCornersOrientationStep {
     }
 
     /**
-     * The coordinates (row, column) of the four corners of the yellow face.
+     * The coordinates (row, column) of the four cornerColors of the yellow face.
+     *
+     * The cornerIndex is used as the index to access this array to get the
+     * coordinates of the yellow corner.
      */
     private static final int[][] cornerCoordinates = {
             { 0, 0 },   // upper left
@@ -97,11 +100,11 @@ class YellowCornersOrientationStep {
     private static final int[] rotationOffsets = new int[] { 2, 1, 0, 3 };
 
     /**
-     * Turns the corners of the yellow face into the right orientation if any corner is not already
+     * Turns the cornerColors of the yellow face into the right orientation if any corner is not already
      * in its correct position.
      *
      * Internally, the solve(Cube, CubeFaceRotationRecords) method has a loop that
-     * repeats the solution steps until all corners are in their correct orientations.
+     * repeats the solution steps until all cornerColors are in their correct orientations.
      * For this strategy the steps has to be applied on the cube to test whether
      * the cube is solved. For this tests a copy of the real cube is used. The actual
      * cube will not be changed.
@@ -119,27 +122,32 @@ class YellowCornersOrientationStep {
         Cube solvedCube = CubeFactory.create(cube, records);
 
         // Get the index (0-3) of the first wrong orientated corner; or 4 if already solved
-        int cornerIndex = getUnresolvedCornerIndex(solvedCube, 0, 0);
-        String cubeRotationPrefix = prefixes[cornerIndex % 4];
+        // The coordinateIndex stays unchanged for the complete solution, because
+        // the yellow face is rotated and the corner to be solved has always the same
+        // coordinates (lower right).
+        final int coordinateIndex = getUnresolvedCornerIndex(solvedCube, 0);
+        String cubeRotationPrefix = prefixes[coordinateIndex % 4];
+        int colorIndex = coordinateIndex;
 
         // Count of rotations of the yellow face
-        int rotationOffset = 0;
-        while (cornerIndex < 4) {
+        while (colorIndex < 4) {
             // Apply solution steps until the current corner is solved
-            while (!isCurrentCornerSolved(solvedCube, cornerIndex, rotationOffset)) {
+            while (!isCornerSolved(solvedCube, coordinateIndex, colorIndex)) {
                 YellowCornersOrientationStep step =
                         new YellowCornersOrientationStep(solvedCube, records, cubeRotationPrefix);
-                step.solve(cornerIndex);
+                step.solve();
 
                 // Apply the steps to the cube's copy to test again
                 solvedCube = CubeFactory.create(cube, records);
             }
 
-            int nextCornerIndex = getUnresolvedCornerIndex(solvedCube, cornerIndex, rotationOffset);
-            int countOfYellowFaceRotations = nextCornerIndex - nextCornerIndex;
-            rotationOffset += countOfYellowFaceRotations;
+            int oldColorIndex = colorIndex;
+            colorIndex = getUnresolvedCornerIndex(solvedCube, colorIndex);
+            int countOfYellowFaceRotations = ((oldColorIndex + 4) - colorIndex) % 4;
             rotateYellowFaceForNextCorner(solvedCube, countOfYellowFaceRotations, records);
-            cornerIndex = nextCornerIndex;
+
+            // Apply the rotation steps to the cube's copy
+            solvedCube = CubeFactory.create(cube, records);
         }
         // Am Ende gelbe Fläche in korrekte Position drehen
     }
@@ -148,14 +156,16 @@ class YellowCornersOrientationStep {
      * Returns the index of the first corner that has not the correct orientation.
      *
      * @param solvedCube The Cube to test.
+     * @param colorIndex The index of the left and right colors array for the test.
      * @return The index of the first corner that has not the correct orientation.
      * 0 = upper left, 1 = upper right, 2 = lower right, and 3 = lower left.
-     * 4 means that all corners are solved.
+     * 4 means that all cornerColors are solved.
      */
-    private static int getUnresolvedCornerIndex(Cube solvedCube, int offset, int rotationOffset) {
-        int i = offset;
-
-        while (i < cornerCoordinates.length && isCurrentCornerSolved(solvedCube, i, rotationOffset)) {
+    private static int getUnresolvedCornerIndex(
+            final Cube solvedCube,
+            final int colorIndex) {
+        int i = 0;
+        while (i < cornerCoordinates.length && isCornerSolved(solvedCube, i, colorIndex)) {
             i++;
         }
         return i;
@@ -168,14 +178,17 @@ class YellowCornersOrientationStep {
      * @param count Count of clockwise rotations of the yellow face.
      * @param records The CubeFaceRotationRecords receiving the rotation.
      */
-    private static void rotateYellowFaceForNextCorner(Cube solvedCube, int count, CubeFaceRotationRecords records) {
+    private static void rotateYellowFaceForNextCorner(
+            final Cube solvedCube,
+            final int count,
+            final CubeFaceRotationRecords records) {
         CubeFaceRotationRecord record = new CubeFaceRotationRecord(CubeColor.Yellow);
         for (int c = 0; c < count; c++)
             records.add(record);
     }
 
     /**
-     * The sequence to move the corners one position further when the
+     * The sequence to move the cornerColors one position further when the
      * correct one is in the lower left position.
      */
     private static final String turnCorner = "R' D' R D ";
@@ -186,10 +199,8 @@ class YellowCornersOrientationStep {
      * The surrounding loop tests whether it was succesful. If not, the
      * method is called again. At most two calls are enough to turn the
      * corner correctly.
-     *
-     * @param i The index of the corner to solve.
      */
-    private void solve(int i) {
+    private void solve() {
         _interpreter.addMoves("x2 " + _rotationPrefix + turnCorner);
     }
 
@@ -199,10 +210,10 @@ class YellowCornersOrientationStep {
     /**
      * The colors of the two sides of each corner at the yellow face.
      *
-     * The indexes of the array correspond to the indexes of the coornerCoordinates
+     * The indexes of the array correspond to the indexes of the cornerCoordinates
      * array.
      */
-    private static final CubeColor[][] corners = {
+    private static final CubeColor[][] cornerColors = {
             { CubeColor.Orange, CubeColor.Green },
             { CubeColor.Green, CubeColor.Red },
             { CubeColor.Red, CubeColor.Blue },
@@ -218,34 +229,41 @@ class YellowCornersOrientationStep {
      * in the right orientation we must not test the corner in each right position,
      * but in the lower right position.
      *
-     * @param cube The cube to test.
-     * @param i Index of the corner to test.
-     * @param rotationOffset Index offset that describes the yellow face rotations
-     *                       done by rotateYellowFaceForNextCorner().
+     * @param cube The cube to test. The state of the cube will change during the
+     *             solution steps, because after each step the movements will be applied
+     *             to test the cubes state.
+     * @param coordinatesIndex Index of the cornerCoordinates array to get the
+     *                         coordinates of the yellow face color field, as well
+     *                         as the actual left and right face indexes (color)
+     *                         where the color fields are that should be tested.
+     * @param colorIndex Index of the cornerColors array to get the destination left and right
+     *                   side color of the yellow face corner and the
      * @return true if the corner has the correct orientation.
      */
-    static boolean isCurrentCornerSolved(Cube cube, int i, int rotationOffset) {
-        CubeFace yellowFace = cube.getFace(CubeColor.Yellow);
-
-        int calculatedIndex = Math.abs((rotationOffset - i)) % 4;
-        CubeColor leftFaceColor = corners[calculatedIndex][leftSideIndex];
-        CubeColor rightFaceColor = corners[calculatedIndex][rightSideIndex];
+    static boolean isCornerSolved(
+            final Cube cube,
+            final int coordinatesIndex,
+            final int colorIndex) {
+        CubeColor leftFaceColor = cornerColors[colorIndex][leftSideIndex];
+        CubeColor rightFaceColor = cornerColors[colorIndex][rightSideIndex];
 
         // The rotation of the yellow face has to be taken into account:
         CubeFace leftFace = cube.getFace(leftFaceColor);
         CubeFace rightFace = cube.getFace(rightFaceColor);
 
         // Coordinates of the left and right part
-        // of the corners are the same for all faces!
-        // TODO Drehung der gelben Fläche ist nicht berücksichtigt!!!! Falsche Faces!
+        // of the cornerColors are the same for all faces!
         CubeColor actualLeftColor = leftFace.getField(2, 0);
         CubeColor actualRightColor = rightFace.getField(2, 2);
 
+        CubeFace yellowFace = cube.getFace(CubeColor.Yellow);
         CubeColor actualUpColor = yellowFace.getField(
-                cornerCoordinates[calculatedIndex][rowIndex], cornerCoordinates[calculatedIndex][columnIndex]);
+                cornerCoordinates[coordinatesIndex][rowIndex], cornerCoordinates[coordinatesIndex][columnIndex]);
 
+        CubeColor leftColor = cornerColors[coordinatesIndex][leftSideIndex];
+        CubeColor rightColor = cornerColors[coordinatesIndex][rightSideIndex];
         return actualUpColor == CubeColor.Yellow &&
-                actualLeftColor == leftFaceColor &&
-                actualRightColor == rightFaceColor;
+                actualLeftColor == leftColor &&
+                actualRightColor == rightColor;
     }
 }
