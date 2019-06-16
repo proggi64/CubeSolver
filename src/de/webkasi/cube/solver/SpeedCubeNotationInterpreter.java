@@ -10,16 +10,20 @@ import de.webkasi.cube.*;
  */
 public class SpeedCubeNotationInterpreter {
 
+    /**
+     * The CubeFaceRotationRecords object that receives the move records
+     * of the addMoves() method.
+     */
     private final CubeFaceRotationRecords _records;
 
     /**
      * Initializes a new instance of the SpeedCubeNotationInterpreter class.
      *
      * @param records The CubeFaceRotationRecords object that receives
-     *                the move _records of the addMoves() method.
+     *                the move records of the addMoves() method.
      */
     public SpeedCubeNotationInterpreter(final CubeFaceRotationRecords records) {
-        this._records = records;
+        _records = records;
     }
 
     /**

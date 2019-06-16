@@ -7,7 +7,14 @@ import de.webkasi.cube.*;
  * corners of the yellow face into their correct orientations.
  */
 class YellowCornersOrientationStep {
+    /**
+     * The Cube to solve.
+     */
     private final Cube _cube;
+    /**
+     * The SpeedCubeNotationInterpreter used to translate the SpeedCube
+     * notation sequences for the solution steps into CubeFaceRotationRecords.
+     */
     private final SpeedCubeNotationInterpreter _interpreter;
     private final String _rotationPrefix;
 
@@ -20,6 +27,12 @@ class YellowCornersOrientationStep {
      * @param records The CubeFaceRotationRecords object receiving the solution steps.
      *                This must contain all previous steps until and including the
      *                yellow cross edges step.
+     * @params rotationPrefix The SpeedCube notation prefix for rotating the cube
+     *                        into the orientation to apply the solution steps. This
+     *                        must be always the initial orientation for the first
+     *                        corner that has to be in the lower right corner of the
+     *                        yellow face when this face is the upper face with the 0,0
+     *                        position in the upper left.
      */
     YellowCornersOrientationStep(Cube cube, CubeFaceRotationRecords records, String rotationPrefix) {
         _cube = cube;
@@ -38,22 +51,31 @@ class YellowCornersOrientationStep {
     };
 
     /**
-     * Cube rotation commands around the y axis to rotate a yellow
+     * The second index value of the cornerCoordinates array to access
+     * the row coordinate.
+     */
+    private static final int rowIndex = 0;
+    /**
+     * The second index value of the cornerCoordinates array to access
+     * the column coordinate.
+     */
+    private static final int columnIndex = 1;
+
+    /**
+     * Cube rotation commands around the y axis to rotate a specific yellow
      * corner to the lower right position.
      *
      * The index of the command corresponds to the cornerCoordinates array.
      * The coordinates there will be at the lower right position when the
-     * command is executed.
+     * command is executed. The yellow face must be the upper face in order
+     * to work correctly ("x2" command is previously required!).
      */
     private static final String[] prefixes = new String[] {
-            "y2 ",
-            "y ",
-            "",
-            "y' "
+            "y2 ",      // upper left (0) to lower right
+            "y' ",      // upper right (1) to lower right
+            "",         // lower right stays
+            "y "        // lower left to lower right
     };
-
-    private static final int rowIndex = 0;
-    private static final int columnIndex = 1;
 
     /*
     In der aktuellen Orientierung muss die Ecke korrekt ausgerichtet sein. Dann die gelbe Fläche zur nächsten
@@ -74,6 +96,9 @@ class YellowCornersOrientationStep {
      *
      * Internally, the solve(Cube, CubeFaceRotationRecords) method has a loop that
      * repeats the solution steps until all corners are in their correct orientations.
+     * For this strategy the steps has to be applied on the cube to test whether
+     * the cube is solved. For this tests a copy of the real cube is used. The actual
+     * cube will not be changed.
      *
      * @param cube The Cube to solve. The cube may be completely scrambled.
      * @param records The CubeFaceRotationRecords object receiving the solution steps.
@@ -84,40 +109,49 @@ class YellowCornersOrientationStep {
      */
     static void solve(Cube cube, CubeFaceRotationRecords records) {
 
-        // Aktueller Stand des Würfels nach allen Drehungen bisher
+        // Create cube with all solution steps until now
         Cube solvedCube = CubeFactory.create(cube, records);
 
-        // Ganzen Würfel drehen bis erste verdrehte Ecke rechts vorne ist.
-        // Diesen Dreh-Präfix immer voranstellen!
+        // Get the index (0-3) of the first wrong orientated corner; or 4 if already solved
         int wrongCornerIndex = getUnresolvedCornerIndex(solvedCube, 0);
-
-        for (int i = wrongCornerIndex; i < cornerCoordinates.length; i++) {
-
-            // Farben der aktuell rechts vorne stehenden Ecke ermitteln.
-            // Die Prüfung muss gelb oben plus die zwei ermittelten Farben haben!
-
+        int i = wrongCornerIndex;
+        while (i < 4) {
+            // Apply solution steps until the current corner is solved
             while (!isRightLowerCornerSolved(solvedCube, i)) {
                 YellowCornersOrientationStep step =
                         new YellowCornersOrientationStep(solvedCube, records, prefixes[wrongCornerIndex]);
                 step.solve(i);
-                solvedCube = CubeFactory.create(cube, records);
 
+                // Apply the steps to the cube's copy to test again
+                solvedCube = CubeFactory.create(cube, records);
             }
-            rotateYellowFaceForNextCorner(solvedCube, i, records);
-            // gelbe Fläche weiterdrehen bis zum !
+            // Rotate the yellow face to the next wrong corner and get its index for the next round
+            i = rotateYellowFaceForNextCorner(solvedCube, i, records);
         }
         // Am Ende gelbe Fläche in korrekte Position drehen
     }
 
-    private static void rotateYellowFaceForNextCorner(Cube solvedCube, int i, CubeFaceRotationRecords records) {
+    /**
+     * Rotates the yellow face until the next unresolved corner is at the
+     * lower right position.
+     *
+     * If all corners are solved the yellow face is not rotated.
+     *
+     * @param solvedCube The Cube with the current solution state.
+     * @param i The current index of the corner to solve (0 to 3).
+     * @param records The CubeFaceRotationRecords receiving the rotation.
+     * @return Index of the next wrong orientated corner. 4 if all corners are solved.
+     */
+    private static int rotateYellowFaceForNextCorner(Cube solvedCube, int i, CubeFaceRotationRecords records) {
         int nextIndex = getUnresolvedCornerIndex(solvedCube, i);
         if (nextIndex == 4)
-            return;
+            return 4;
 
         int count = nextIndex - i;
         CubeFaceRotationRecord record = new CubeFaceRotationRecord(CubeColor.Yellow);
         for (int c = 0; c < count; c++)
             records.add(record);
+        return nextIndex;
     }
 
     /**
@@ -189,12 +223,17 @@ class YellowCornersOrientationStep {
         CubeFace yellowFace = cube.getFace(CubeColor.Yellow);
         CubeColor leftFaceColor = corners[i][leftSideIndex];
         CubeColor rightFaceColor = corners[i][rightSideIndex];
-        CubeFace leftFace = cube.getFace(CubeColor.Blue);
-        CubeFace rightFace = cube.getFace(CubeColor.Red);
+        CubeFace leftFace = cube.getFace(leftFaceColor);
+        CubeFace rightFace = cube.getFace(rightFaceColor);
 
+        // Coordinates of the left and right part
+        // of the corners are the same for all faces!
+        // TODO Drehung der gelben Fläche ist nicht berücksichtigt!!!! Falsche Faces!
         CubeColor actualLeftColor = leftFace.getField(2, 0);
         CubeColor actualRightColor = rightFace.getField(2, 2);
-        CubeColor actualUpColor = yellowFace.getField(2, 2);
+
+        CubeColor actualUpColor = yellowFace.getField(
+                cornerCoordinates[i][rowIndex], cornerCoordinates[i][columnIndex]);
 
         return actualUpColor == CubeColor.Yellow &&
                 actualLeftColor == leftFaceColor &&

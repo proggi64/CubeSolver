@@ -4,6 +4,11 @@ import java.util.Random;
 
 /**
  * Scrambles a Cube based on random values.
+ *
+ * CubeScrambler provides two method variants to scramble a cube>
+ * One that scambles a given Cube directlz, and another one that
+ * returns a filled CubeFaceRotationRecords collection that contains
+ * random moves that have to be applied to a Cube.
  */
 public class CubeScrambler {
 
