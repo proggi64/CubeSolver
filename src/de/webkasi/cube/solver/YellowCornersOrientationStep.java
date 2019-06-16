@@ -236,6 +236,7 @@ class YellowCornersOrientationStep {
      *                         coordinates of the yellow face color field, as well
      *                         as the actual left and right face indexes (color)
      *                         where the color fields are that should be tested.
+     *                         These faces stay the same during the solution steps.
      * @param colorIndex Index of the cornerColors array to get the destination left and right
      *                   side color of the yellow face corner and the
      * @return true if the corner has the correct orientation.
@@ -244,8 +245,8 @@ class YellowCornersOrientationStep {
             final Cube cube,
             final int coordinatesIndex,
             final int colorIndex) {
-        CubeColor leftFaceColor = cornerColors[colorIndex][leftSideIndex];
-        CubeColor rightFaceColor = cornerColors[colorIndex][rightSideIndex];
+        CubeColor leftFaceColor = cornerColors[coordinatesIndex][leftSideIndex];
+        CubeColor rightFaceColor = cornerColors[coordinatesIndex][rightSideIndex];
 
         // The rotation of the yellow face has to be taken into account:
         CubeFace leftFace = cube.getFace(leftFaceColor);
@@ -260,10 +261,10 @@ class YellowCornersOrientationStep {
         CubeColor actualUpColor = yellowFace.getField(
                 cornerCoordinates[coordinatesIndex][rowIndex], cornerCoordinates[coordinatesIndex][columnIndex]);
 
-        CubeColor leftColor = cornerColors[coordinatesIndex][leftSideIndex];
-        CubeColor rightColor = cornerColors[coordinatesIndex][rightSideIndex];
+        CubeColor leftTargetColor = cornerColors[colorIndex][leftSideIndex];
+        CubeColor rightTargetColor = cornerColors[colorIndex][rightSideIndex];
         return actualUpColor == CubeColor.Yellow &&
-                actualLeftColor == leftColor &&
-                actualRightColor == rightColor;
+                actualLeftColor == leftTargetColor &&
+                actualRightColor == rightTargetColor;
     }
 }
