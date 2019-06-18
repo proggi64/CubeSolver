@@ -128,6 +128,8 @@ class YellowCornersOrientationStep {
         final int coordinateIndex = getUnresolvedCornerIndex(solvedCube, 0);
         String cubeRotationPrefix = prefixes[coordinateIndex % 4];
         int colorIndex = coordinateIndex;
+        int rotationOffset = 0;
+        int debugCount = 0;
 
         // Count of rotations of the yellow face
         while (colorIndex < 4) {
@@ -142,30 +144,37 @@ class YellowCornersOrientationStep {
             }
 
             int oldColorIndex = colorIndex;
-            colorIndex = getUnresolvedCornerIndex(solvedCube, colorIndex);
-            int countOfYellowFaceRotations = ((oldColorIndex + 4) - colorIndex) % 4;
-            rotateYellowFaceForNextCorner(solvedCube, countOfYellowFaceRotations, records);
-
+            colorIndex = getUnresolvedCornerIndex(solvedCube, rotationOffset);
+            if (colorIndex < 4) {
+                int countOfYellowFaceRotations = ((oldColorIndex + 4) - colorIndex) % 4;
+                rotateYellowFaceForNextCorner(solvedCube, countOfYellowFaceRotations, records);
+                rotationOffset = (rotationOffset + countOfYellowFaceRotations) % 4;
+            }
+            else {
+                // Ready? Rotate into the right position!
+                rotateYellowFaceForNextCorner(solvedCube, (4 - rotationOffset), records);
+            }
             // Apply the rotation steps to the cube's copy
             solvedCube = CubeFactory.create(cube, records);
+            debugCount ++;
         }
-        // Am Ende gelbe Fläche in korrekte Position drehen
     }
 
     /**
      * Returns the index of the first corner that has not the correct orientation.
      *
      * @param solvedCube The Cube to test.
-     * @param colorIndex The index of the left and right colors array for the test.
+     * @param rotationOffset The count of rotations of the yellow face
+     *                       during the solution steps until now.
      * @return The index of the first corner that has not the correct orientation.
      * 0 = upper left, 1 = upper right, 2 = lower right, and 3 = lower left.
      * 4 means that all cornerColors are solved.
      */
     private static int getUnresolvedCornerIndex(
             final Cube solvedCube,
-            final int colorIndex) {
+            final int rotationOffset) {
         int i = 0;
-        while (i < cornerCoordinates.length && isCornerSolved(solvedCube, i, colorIndex)) {
+        while (i < cornerCoordinates.length && isCornerSolved(solvedCube, i, (i + rotationOffset) % 4)) {
             i++;
         }
         return i;
