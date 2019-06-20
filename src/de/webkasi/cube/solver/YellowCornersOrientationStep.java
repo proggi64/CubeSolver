@@ -130,7 +130,7 @@ class YellowCornersOrientationStep {
             }
 
             int oldColorIndex = colorIndex;
-            colorIndex = getNextUnresolvedCornerIndex(solvedCube, colorIndex, rotationOffset);
+            colorIndex = getNextUnresolvedCornerIndex(solvedCube, rightDownIndex, colorIndex, rotationOffset);
             if (colorIndex < 4) {
                 int countOfYellowFaceRotations = ((oldColorIndex + 4) - colorIndex) % 4;
                 rotateYellowFaceForNextCorner(countOfYellowFaceRotations, records);
@@ -199,26 +199,33 @@ class YellowCornersOrientationStep {
      * @param currentColorIndex The index of the current resolved corner used as
      *                          starting point backwards.
      * @param rotationOffset The count of rotations of the yellow face
-     *                       during the solution steps until now.
+     *                       during the solution steps until now. This is necessary
+     *                       for calling the isCornerSolved() method with the
+     *                       correct colorIndex argument in the loop.
      * @return The index of the first corner that has not the correct orientation.
      * 0 = upper left, 1 = upper right, 2 = lower right, and 3 = lower left.
      * 4 means that all cornerColors are solved.
      */
     private static int getNextUnresolvedCornerIndex(
             final Cube solvedCube,
+            final int rightDownIndex,
             int currentColorIndex,
             final int rotationOffset) {
         int i = 0;
-        while (i < cornerCoordinates.length && isCornerSolved(solvedCube, currentColorIndex, (currentColorIndex + _rotationOrder[rotationOffset]) % 4)) {
+        int currentCornerIndex = decrementCornerIndex(rightDownIndex);
+        currentColorIndex = decrementCornerIndex(currentColorIndex);
+        while (i < cornerCoordinates.length && isCornerSolved(solvedCube, currentCornerIndex, (currentColorIndex + _rotationOrder[rotationOffset]) % 4)) {
             i++;
-            if (currentColorIndex == 0)
-                currentColorIndex = 3;
-            else
-                currentColorIndex--;
+            currentCornerIndex = decrementCornerIndex(currentCornerIndex);
+            currentColorIndex = decrementCornerIndex(currentColorIndex);
         }
         if (i == 4)
             return 4;
         return currentColorIndex;
+    }
+
+    private static int decrementCornerIndex(int cornerIndex) {
+        return (cornerIndex == 0) ? 3 : --cornerIndex;
     }
 
     /**
