@@ -78,9 +78,4 @@ abstract class AbstractYellowCrossStep {
         _cube = cube;
         _records = records;
     }
-
-    /**
-     * Solves the yellow cross at the down side and last layer of the cube.
-     */
-    abstract void solve();
 }

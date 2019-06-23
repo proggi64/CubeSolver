@@ -29,7 +29,7 @@ abstract class AbstractYellowCrossEdgesStep extends AbstractYellowCrossStep {
      *
      * This move can be repeated to solve a linear orientation of the parts to be moved.
      */
-    protected static final String solutionStep = "R U R' U R U2 R' ";
+    static final String solutionStep = "R U R' U R U2 R' ";
 
     /**
      * Analyzes the orientation of all four yellow edge parts and returns an enumeration
@@ -44,7 +44,7 @@ abstract class AbstractYellowCrossEdgesStep extends AbstractYellowCrossStep {
      * @return A YellowCrossState value describing the current state of the side colors
      * of the yellow edges.
      */
-    protected YellowCrossState getState() {
+    YellowCrossState getState() {
         byte bits = getSideColorState(_cube);
 
         switch (bits) {
@@ -65,11 +65,6 @@ abstract class AbstractYellowCrossEdgesStep extends AbstractYellowCrossStep {
         }
         return YellowCrossState.Undefined;
     }
-
-    /**
-     * Solves the step.
-     */
-    abstract void solve();
 
     /**
      * Rotates the cube's yellow face until at least two edges are at the correct position.

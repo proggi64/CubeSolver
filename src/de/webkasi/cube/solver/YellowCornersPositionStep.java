@@ -43,7 +43,7 @@ class YellowCornersPositionStep {
      *                the records initially passed to solve() have been applied.
      */
     static void solve(Cube cube, CubeFaceRotationRecords records) {
-        boolean ready = false;
+        boolean ready;
         do {
             YellowCornersPositionStep step = new YellowCornersPositionStep(CubeFactory.create(cube, records), records);
             step.solve();
@@ -94,7 +94,7 @@ class YellowCornersPositionStep {
      *
      * solve() does nothing if all corners are already in their correct position.
      */
-    protected void solve() {
+    private void solve() {
         byte states = getCornerPositionStates();
         String steps = solutions[states];
         _interpreter.addMoves(steps);

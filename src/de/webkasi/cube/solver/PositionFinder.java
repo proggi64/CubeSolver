@@ -154,33 +154,6 @@ class PositionFinder {
     };
 
     /**
-     * Gets the coordinates of the left down neighbor field of
-     * the specified field of a corner.
-     *
-     * The second color of the right down neigbor is not necessary,
-     * because these two colors specify the corner uniquely.
-     *
-     * @param face Face index of the main color.
-     * @param row Row of the main color.
-     * @param column Column of the main color.
-     * @return An array of six coordinate values. The first three are the
-     * arguments that have been passed to the method, the second three
-     * are the coordinates of the left down neighbor of the corner.
-     * Index 3 is the face index, index 4 the row, and index 5 the column.
-     */
-    static int[] getCornerNeighbor(int face, int row, int column) {
-        int i = 0;
-
-        while (true) {
-            if (cornerCoordinates[i][upFaceIndex] == face &&
-                cornerCoordinates[i][upRowIndex] == row &&
-                cornerCoordinates[i][upColumnIndex] == column)
-                return cornerCoordinates[i];
-            i++;
-        }
-    }
-
-    /**
      * Searches the position of the specified corner on the cube.
      *
      * The frontColor of a corner is always to the left of the topColor. These two colors are

@@ -99,13 +99,14 @@ class SpeedCubeNotationWriter {
      *
      */
     private void writeTwoIfDoubleRotation(final CubeFaceRotationRecord record)  {
-        if (_records.size() > _recordIndex + 1) {
-            CubeFaceRotationRecord followingRecord = _records.get(_recordIndex + 1);
-            if (!record.equals(followingRecord))
-                return;
-            _recordIndex++;
-            _builder.append('2');
-        }
+        if (_records.size() <= _recordIndex + 1)
+            return;
+
+        CubeFaceRotationRecord followingRecord = _records.get(_recordIndex + 1);
+        if (!record.equals(followingRecord))
+            return;
+        _recordIndex++;
+        _builder.append('2');
     }
 
     /**

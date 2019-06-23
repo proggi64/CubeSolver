@@ -5,6 +5,11 @@ import de.webkasi.cube.*;
 /**
  * Represents the last step of the Layer-By-Layer solution that turns the
  * cornerColors of the yellow face into their correct orientations.
+ *
+ * This is the most complex step, because it is necessary to test
+ * the current state of the cube after each movement. It is also complex
+ * because the yellow face may be rotated during the steps and the
+ * coordinates have to be mapped to new positions.
  */
 class YellowCornersOrientationStep {
     /**
@@ -12,6 +17,13 @@ class YellowCornersOrientationStep {
      * notation sequences for the solution steps into CubeFaceRotationRecords.
      */
     private final SpeedCubeNotationInterpreter _interpreter;
+    /**
+     * The cube rotation that is necessary to apply the moves with the correct orientation.
+     *
+     * This is calculated when the first corner is found that has no correct orientation.
+     * The cube is rotated to move this corner to the lower right corner. Each additional
+     * corner is moved to this position by rotating only the yellow face.
+     */
     private final String _rotationPrefix;
 
     /**
@@ -20,14 +32,14 @@ class YellowCornersOrientationStep {
      * @param records The CubeFaceRotationRecords object receiving the solution steps.
      *                This must contain all previous steps until and including the
      *                yellow cross edges step.
-     * @params rotationPrefix The SpeedCube notation prefix for rotating the cube
+     * @param rotationPrefix The SpeedCube notation prefix for rotating the cube
      *                        into the orientation to apply the solution steps. This
      *                        must be always the initial orientation for the first
      *                        corner that has to be in the lower right corner of the
      *                        yellow face when this face is the upper face with the 0,0
      *                        position in the upper left.
      */
-    YellowCornersOrientationStep(CubeFaceRotationRecords records, String rotationPrefix) {
+    private YellowCornersOrientationStep(CubeFaceRotationRecords records, String rotationPrefix) {
         _interpreter = new SpeedCubeNotationInterpreter(records);
         _rotationPrefix = rotationPrefix;
     }
@@ -71,25 +83,6 @@ class YellowCornersOrientationStep {
             "",         // lower right stays
             "y "        // lower left to lower right
     };
-
-    /*
-    In der aktuellen Orientierung muss die Ecke korrekt ausgerichtet sein. Dann die gelbe Fläche zur nächsten
-    verdrehten Ecke rechts vorne drehen und wieder Algorithmus anwenden.
-
-    Die Prüfung muss also auf die aktuell rechts vorne stehende Ecke prüfen! Dafür die passenden drei Farben
-    prüfen!
-
-    Wenn der restliche Würfel kaputt ist, ist das richtig, solange der Algorithmus mit der nächsten verdrehten Ecke
-    ausgeführt wird.
-
-    Es kann sein, dass die Ebene am Ende vollständig ist, aber noch 1-2 mal gedreht werden muss!
-     */
-
-    /**
-     * Count of cube rotations that have been applied to position the
-     * wrong orientated corner to the lower right.
-     */
-    private static final int[] rotationOffsets = new int[] { 2, 1, 0, 3 };
 
     /**
      * Turns the cornerColors of the yellow face into the right orientation if any corner is not already
@@ -178,6 +171,10 @@ class YellowCornersOrientationStep {
     /**
      * Returns the index of the first corner that has not the correct orientation.
      *
+     * The complete cube has to be rotated to position this corner to the lower right
+     * of the yellow face. The _rotationPrefix is created based on the result of
+     * this method.
+     *
      * @param solvedCube The Cube to test.
      * @return The index of the first corner that has not the correct orientation.
      * 0 = upper left, 1 = upper right, 2 = lower right, and 3 = lower left.
@@ -193,7 +190,7 @@ class YellowCornersOrientationStep {
     }
 
     /**
-     * Returns the index of the first corner that has not the correct orientation.
+     * Returns the index of the next corner that has not the correct orientation.
      *
      * @param solvedCube The Cube to test.
      * @param currentColorIndex The index of the current resolved corner used as
@@ -202,9 +199,10 @@ class YellowCornersOrientationStep {
      *                       during the solution steps until now. This is necessary
      *                       for calling the isCornerSolved() method with the
      *                       correct colorIndex argument in the loop.
-     * @return The index of the first corner that has not the correct orientation.
+     * @return The index of the next corner that has not the correct orientation.
      * 0 = upper left, 1 = upper right, 2 = lower right, and 3 = lower left.
-     * 4 means that all cornerColors are solved.
+     * 4 means that all cornerColors are solved. The yellow face will be
+     * rotated until this corner is at the lower right position by the caller.
      */
     private static int getNextUnresolvedCornerIndex(
             final Cube solvedCube,
@@ -224,6 +222,15 @@ class YellowCornersOrientationStep {
         return currentColorIndex;
     }
 
+    /**
+     * Decrement the given corner index by one.
+     *
+     * decrementCornerIndex() returns always a value between 0 and 3. When
+     * decrementing 0, a value of 3 is returned.
+     *
+     * @param cornerIndex The index of the current processed corner.
+     * @return New index of the corner.
+     */
     private static int decrementCornerIndex(int cornerIndex) {
         return (cornerIndex == 0) ? 3 : --cornerIndex;
     }
@@ -296,7 +303,7 @@ class YellowCornersOrientationStep {
      *                   side color of the yellow face corner and the
      * @return true if the corner has the correct orientation.
      */
-    static boolean isCornerSolved(
+    private static boolean isCornerSolved(
             final Cube cube,
             final int coordinatesIndex,
             final int colorIndex) {
