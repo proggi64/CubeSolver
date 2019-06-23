@@ -66,7 +66,7 @@ class YellowCrossLinearEdgesStep extends AbstractYellowCrossEdgesStep {
      * In some cases the solution steps must be applied in a loop of two runs in this
      * method.
      */
-    void solve() {
+    private void solve() {
         rotateYellowFaceIfNeeded();
         String moves = solutions[getState().ordinal()];
         _interpreter.addMoves(moves);

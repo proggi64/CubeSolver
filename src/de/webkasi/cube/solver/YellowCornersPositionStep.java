@@ -94,7 +94,7 @@ class YellowCornersPositionStep {
      *
      * solve() does nothing if all corners are already in their correct position.
      */
-    protected void solve() {
+    private void solve() {
         byte states = getCornerPositionStates();
         String steps = solutions[states];
         _interpreter.addMoves(steps);

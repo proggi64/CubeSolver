@@ -39,7 +39,7 @@ class YellowCornersOrientationStep {
      *                        yellow face when this face is the upper face with the 0,0
      *                        position in the upper left.
      */
-    YellowCornersOrientationStep(CubeFaceRotationRecords records, String rotationPrefix) {
+    private YellowCornersOrientationStep(CubeFaceRotationRecords records, String rotationPrefix) {
         _interpreter = new SpeedCubeNotationInterpreter(records);
         _rotationPrefix = rotationPrefix;
     }
@@ -83,12 +83,6 @@ class YellowCornersOrientationStep {
             "",         // lower right stays
             "y "        // lower left to lower right
     };
-
-    /**
-     * Count of cube rotations that have been applied to position the
-     * wrong orientated corner to the lower right.
-     */
-    private static final int[] rotationOffsets = new int[] { 2, 1, 0, 3 };
 
     /**
      * Turns the cornerColors of the yellow face into the right orientation if any corner is not already
@@ -309,7 +303,7 @@ class YellowCornersOrientationStep {
      *                   side color of the yellow face corner and the
      * @return true if the corner has the correct orientation.
      */
-    static boolean isCornerSolved(
+    private static boolean isCornerSolved(
             final Cube cube,
             final int coordinatesIndex,
             final int colorIndex) {

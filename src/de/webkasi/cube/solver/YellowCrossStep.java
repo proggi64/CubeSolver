@@ -74,7 +74,7 @@ final class YellowCrossStep extends AbstractYellowCrossStep {
     /**
      * Solves the yellow cross at the down side and last layer of the cube.
      */
-    void solve() {
+    private void solve() {
         String moves = solutions[getState().ordinal()];
         SpeedCubeNotationInterpreter interpreter = new SpeedCubeNotationInterpreter(_records);
         interpreter.addMoves(moves);
