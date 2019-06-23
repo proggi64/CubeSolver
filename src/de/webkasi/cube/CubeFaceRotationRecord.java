@@ -1,7 +1,7 @@
 package de.webkasi.cube;
 
 /**
- * Represents a cube rotation for playing rotations.
+ * Represents a cube face rotation for playing rotations.s
  */
 public class CubeFaceRotationRecord {
     private final CubeColor _face;
@@ -19,10 +19,7 @@ public class CubeFaceRotationRecord {
      * @param face The CubeColor of the face to rotate.
      */
     public CubeFaceRotationRecord(CubeColor face) {
-        _face = face;
-        _direction = RotationDirection.Clockwise;
-        _startRow = 0;
-        _countOfLayers = 1;
+        this(face, RotationDirection.Clockwise, 0, 1);
     }
 
     /**
@@ -34,10 +31,7 @@ public class CubeFaceRotationRecord {
      * @param face The CubeColor of the face to rotate.
      */
     public CubeFaceRotationRecord(CubeColor face, int countOfLayers) {
-        _face = face;
-        _direction = RotationDirection.Clockwise;
-        _startRow = 0;
-        _countOfLayers = countOfLayers;
+        this(face, RotationDirection.Clockwise, 0, countOfLayers);
     }
 
     /**
@@ -49,10 +43,7 @@ public class CubeFaceRotationRecord {
      * @param countOfLayers The count of layers to rotate.
      */
     public CubeFaceRotationRecord(CubeColor face, RotationDirection direction, int countOfLayers) {
-        _face = face;
-        _direction = direction;
-        _startRow = 0;
-        _countOfLayers = countOfLayers;
+        this(face, direction, 0, countOfLayers);
     }
 
     /**
@@ -103,7 +94,6 @@ public class CubeFaceRotationRecord {
         return _direction;
     }
 
-
     /**
      * Gets the index of the first row to rotate.
      *
@@ -114,7 +104,6 @@ public class CubeFaceRotationRecord {
 
     /**
      * Sets the index of the first row to rotate.
-     * When greater zero then the face will not be rotated.
      *
      * @param startRow Index of the first row to rotate.
      */
