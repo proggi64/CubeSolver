@@ -39,7 +39,7 @@ public class Cube {
     /**
      * Creates a copy of the specified Cube.
      *
-     * The new instance uses copies of all internal data, so it is completely
+     * The new instance uses a copy of all internal data, so it is completely
      * independent after the copy and can be manipulated without any effect
      * to the source.
      *
@@ -54,7 +54,7 @@ public class Cube {
     }
 
     /**
-     * Gets the count of and columns of the magic cube.
+     * Gets the count of rows and columns of the magic cube.
      *
      * That value cannot be changed during the lifetime of the Cube's instance.
      * It can only be passed to the constructor.
