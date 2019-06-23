@@ -24,7 +24,6 @@ public class CubeScrambler {
      * @param depth Count of random rotations.
      */
     public static void scrambleCube(Cube cube, int depth) {
-        Random generator = new Random(System.nanoTime());
         CubeFaceRotationPlayer player =
                 new CubeFaceRotationPlayer(new CubeFaceRotator(cube));
         player.play(scrambleCube(depth, cube.getDimension()));

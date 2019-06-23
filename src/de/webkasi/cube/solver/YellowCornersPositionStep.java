@@ -43,7 +43,7 @@ class YellowCornersPositionStep {
      *                the records initially passed to solve() have been applied.
      */
     static void solve(Cube cube, CubeFaceRotationRecords records) {
-        boolean ready = false;
+        boolean ready;
         do {
             YellowCornersPositionStep step = new YellowCornersPositionStep(CubeFactory.create(cube, records), records);
             step.solve();

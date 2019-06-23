@@ -104,7 +104,6 @@ public class CubeFaceRotationRecord {
 
     /**
      * Sets the index of the first row to rotate.
-     * When greater zero then the face will not be rotated.
      *
      * @param startRow Index of the first row to rotate.
      */

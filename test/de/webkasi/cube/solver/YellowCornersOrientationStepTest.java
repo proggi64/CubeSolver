@@ -78,5 +78,4 @@ class YellowCornersOrientationStepTest {
         CubeAssertion.assertCubeFace(solvedCube, CubeColor.Blue, "BBB BBB BBB");
         CubeAssertion.assertCubeFace(solvedCube, CubeColor.Yellow, "YYY YYY YYY");
     }
-
 }
