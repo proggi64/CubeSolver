@@ -50,7 +50,6 @@ public class Cube {
         for (int faceIndex = 0; faceIndex < _faces.length; faceIndex++) {
             _faces[faceIndex] = new CubeFace(copy._faces[faceIndex]);
         }
-
     }
 
     /**
