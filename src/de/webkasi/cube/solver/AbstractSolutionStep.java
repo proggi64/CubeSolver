@@ -3,7 +3,7 @@ package de.webkasi.cube.solver;
 import de.webkasi.cube.*;
 
 /**
- * Base class for the solution step classes.
+ * Base class for some of the solution step classes.
  *
  * AbstractSolutionStep provides the base algorithm and methods that are common for
  * the cube solution step classes.
