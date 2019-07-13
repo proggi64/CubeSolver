@@ -39,7 +39,7 @@ public class CubeTextDescriptor {
      *              (W)hite, (O)range, (G)reen, (R)ed, (B)lue, and (Y)ellow.
      *              The configuration must match the possible color combinations
      *              of a magic cube in order to be solved. Each other character
-     *              is ignored an can be used for formatting.
+     *              is ignored and can be used for formatting.
      */
     public void describeCube(Cube cube, String[] faces) {
         for (int i = 0; i < faces.length; i++) {
