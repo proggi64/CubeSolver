@@ -8,7 +8,7 @@ class LayerByLayerSolverTest {
     void solve_RandomCubes() {
         for (int i = 0; i < 500; i++) {
             Cube cube = new Cube();
-            CubeFaceRotationRecords records = CubeScrambler.scrambleCube(15 + i % 10, cube.getDimension());
+            CubeFaceRotationRecords records = CubeScrambler.scrambleCube(25 + i % 10, cube.getDimension());
             CubeFaceRotator rotator = new CubeFaceRotator(cube);
             CubeFaceRotationPlayer player = new CubeFaceRotationPlayer(rotator);
             player.play(records);
